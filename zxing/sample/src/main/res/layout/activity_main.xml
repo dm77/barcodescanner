@@ -7,11 +7,19 @@
               android:layout_height="match_parent"
               android:gravity="center">
     <Button android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/simple_activity_sample"
+            android:onClick="launchSimpleActivity" />
+    <Button android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/simple_fragment_sample"
+            android:onClick="launchSimpleFragmentActivity" />
+    <Button android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:text="@string/activity_sample"
             android:onClick="launchActivity" />
     <Button android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:text="@string/fragment_sample"
             android:onClick="launchFragmentActivity" />
 </LinearLayout>

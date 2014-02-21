@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">ZXing Scanner Sample</string>
-    <string name="scanner_activity">ZXing Scanner Activity</string>
-    <string name="scanner_fragment_activity">ZXing Scanner Fragment Activity</string>
-    <string name="activity_sample">Activity Sample</string>
-    <string name="fragment_sample">Fragment Sample</string>
+    <string name="scanner_activity">ZXing Scanner - Full Activity</string>
+    <string name="scanner_fragment_activity">ZXing Scanner - Full Fragment Activity</string>
+    <string name="simple_scanner_activity">ZXing Scanner - Simple Activity</string>
+    <string name="simple_scanner_fragment_activity">ZXing Scanner - Simple Fragment Activity</string>
+    <string name="simple_activity_sample">Simple Activity Sample</string>
+    <string name="simple_fragment_sample">Simple Fragment Sample</string>
+    <string name="activity_sample">Full Activity Sample</string>
+    <string name="fragment_sample">Full Fragment Sample</string>
+    <string name="toggle_flash">Flash</string>
+    <string name="toggle_auto_focus">Toggle Auto Focus</string>
 </resources>

@@ -1,18 +1,15 @@
 apply plugin: 'android-library'
 
-uploadArchives {
-    repositories.mavenDeployer {
-        pom.project {
-            name 'Barcode Scanner View'
-            packaging 'aar'
-            artifactId "core"
-            description 'An android library project which contains the core barcode scanner view'
-        }
-    }
+ext {
+    isLibrary = true
+    pomPackaging = "aar"
+    pomArtifactId = "core"
+    pomName = "Barcode Scanner View"
+    pomDescription = 'An android library project which contains the core barcode scanner view'
 }
 
 dependencies {
-    compile supportLibraryDependency
+    compile ext.supportLibraryDependency
 }
 
 android {

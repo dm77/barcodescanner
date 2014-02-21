@@ -20,6 +20,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private Camera mCamera;
     private Handler mAutoFocusHandler;
     private boolean mPreviewing = true;
+    private boolean mAutoFocus = true;
     private Camera.PreviewCallback mPreviewCallback;
 
     public CameraPreview(Context context) {
@@ -76,7 +77,9 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 mCamera.setDisplayOrientation(getDisplayOrientation());
                 mCamera.setOneShotPreviewCallback(mPreviewCallback);
                 mCamera.startPreview();
-                mCamera.autoFocus(autoFocusCB);
+                if(mAutoFocus) {
+                    mCamera.autoFocus(autoFocusCB);
+                }
             } catch (Exception e) {
                 Log.e(TAG, e.toString(), e);
             }
@@ -171,9 +174,25 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         return optimalSize;
     }
 
+    public void setAutoFocus(boolean state) {
+        if(mCamera != null && mPreviewing) {
+            if(state == mAutoFocus) {
+                return;
+            }
+            mAutoFocus = state;
+            if(mAutoFocus) {
+                Log.v(TAG, "Starting autofocus");
+                mCamera.autoFocus(autoFocusCB);
+            } else {
+                Log.v(TAG, "Cancelling autofocus");
+                mCamera.cancelAutoFocus();
+            }
+        }
+    }
+
     private Runnable doAutoFocus = new Runnable() {
         public void run() {
-            if(mCamera != null && mPreviewing) {
+            if(mCamera != null && mPreviewing && mAutoFocus) {
                 mCamera.autoFocus(autoFocusCB);
             }
         }

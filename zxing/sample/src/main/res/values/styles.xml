@@ -15,6 +15,7 @@
     <style name="ActionBarStyle.Transparent" parent="@android:Widget.ActionBar">
         <item name="android:background">#99000000</item>
         <item name="android:titleTextStyle">@style/ActionBarStyle.Transparent.TitleTextStyle</item>
+        <item name="android:backgroundSplit">#99000000</item>
     </style>
 
     <style name="ActionBarStyle.Transparent.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">

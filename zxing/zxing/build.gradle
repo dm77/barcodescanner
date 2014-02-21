@@ -1,14 +1,11 @@
 apply plugin: 'android-library'
 
-uploadArchives {
-    repositories.mavenDeployer {
-        pom.project {
-            name 'ZXing Scanner View'
-            packaging 'aar'
-            artifactId "zxing"
-            description 'An android library project which contains the zxing barcode scanner view'
-        }
-    }
+ext {
+    isLibrary = true
+    pomPackaging = "aar"
+    pomArtifactId = "zxing"
+    pomName = "ZXing Scanner View"
+    pomDescription = 'An android library project which contains the zxing barcode scanner view'
 }
 
 dependencies {
