@@ -1,0 +1,13 @@
+apply plugin: 'android'
+
+dependencies {
+    compile project(":zxing/zxing")
+    compile supportLibraryDependency
+    compile 'com.android.support:appcompat-v7:19.0.1'
+}
+
+android {
+    defaultConfig {
+        packageName "${project.group}.zxing.sample"
+    }
+}

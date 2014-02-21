@@ -1,0 +1,1 @@
+include "core", "zxing/zxing", "zxing/sample"

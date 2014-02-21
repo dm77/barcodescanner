@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ZXing Scanner Sample</string>
+    <string name="scanner_activity">ZXing Scanner Activity</string>
+    <string name="scanner_fragment_activity">ZXing Scanner Fragment Activity</string>
+    <string name="activity_sample">Activity Sample</string>
+    <string name="fragment_sample">Fragment Sample</string>
+</resources>

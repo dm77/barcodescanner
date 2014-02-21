@@ -1,0 +1,23 @@
+apply plugin: 'android-library'
+
+uploadArchives {
+    repositories.mavenDeployer {
+        pom.project {
+            name 'ZXing Scanner View'
+            packaging 'aar'
+            artifactId "zxing"
+            description 'An android library project which contains the zxing barcode scanner view'
+        }
+    }
+}
+
+dependencies {
+    compile project(":core")
+    compile 'com.google.zxing:core:2.2'
+}
+
+android {
+    defaultConfig {
+        packageName "${project.group}.zxing"
+    }
+}
