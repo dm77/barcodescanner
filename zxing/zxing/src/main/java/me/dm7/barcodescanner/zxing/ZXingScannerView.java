@@ -15,9 +15,10 @@ import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
-import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
 
 import me.dm7.barcodescanner.core.BarcodeScannerView;
@@ -29,24 +30,24 @@ public class ZXingScannerView extends BarcodeScannerView {
     }
 
     private MultiFormatReader mMultiFormatReader;
-    public static final Collection<BarcodeFormat> ALL_FORMATS;
-    private Collection<BarcodeFormat> mFormats;
+    public static final List<BarcodeFormat> ALL_FORMATS = new ArrayList<BarcodeFormat>();
+    private List<BarcodeFormat> mFormats;
     private ResultHandler mResultHandler;
 
     static {
-        ALL_FORMATS = EnumSet.of(BarcodeFormat.UPC_A,
-                BarcodeFormat.UPC_E,
-                BarcodeFormat.EAN_13,
-                BarcodeFormat.EAN_8,
-                BarcodeFormat.RSS_14,
-                BarcodeFormat.CODE_39,
-                BarcodeFormat.CODE_93,
-                BarcodeFormat.CODE_128,
-                BarcodeFormat.ITF,
-                BarcodeFormat.CODABAR,
-                BarcodeFormat.QR_CODE,
-                BarcodeFormat.DATA_MATRIX,
-                BarcodeFormat.PDF_417);
+        ALL_FORMATS.add(BarcodeFormat.UPC_A);
+        ALL_FORMATS.add(BarcodeFormat.UPC_E);
+        ALL_FORMATS.add(BarcodeFormat.EAN_13);
+        ALL_FORMATS.add(BarcodeFormat.EAN_8);
+        ALL_FORMATS.add(BarcodeFormat.RSS_14);
+        ALL_FORMATS.add(BarcodeFormat.CODE_39);
+        ALL_FORMATS.add(BarcodeFormat.CODE_93);
+        ALL_FORMATS.add(BarcodeFormat.CODE_128);
+        ALL_FORMATS.add(BarcodeFormat.ITF);
+        ALL_FORMATS.add(BarcodeFormat.CODABAR);
+        ALL_FORMATS.add(BarcodeFormat.QR_CODE);
+        ALL_FORMATS.add(BarcodeFormat.DATA_MATRIX);
+        ALL_FORMATS.add(BarcodeFormat.PDF_417);
     }
 
     public ZXingScannerView(Context context) {
@@ -59,8 +60,9 @@ public class ZXingScannerView extends BarcodeScannerView {
         initMultiFormatReader();
     }
 
-    public void setFormats(Collection<BarcodeFormat> formats) {
+    public void setFormats(List<BarcodeFormat> formats) {
         mFormats = formats;
+        initMultiFormatReader();
     }
 
     public void setResultHandler(ResultHandler resultHandler) {
@@ -111,6 +113,8 @@ public class ZXingScannerView extends BarcodeScannerView {
                 // continue
             } catch (NullPointerException npe) {
                 // This is terrible
+            } catch (ArrayIndexOutOfBoundsException aoe) {
+
             } finally {
                 mMultiFormatReader.reset();
             }

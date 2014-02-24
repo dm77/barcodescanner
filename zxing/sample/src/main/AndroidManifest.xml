@@ -25,7 +25,10 @@
 
         <activity android:name=".ScannerFragmentActivity"
                   android:theme="@style/AppOverlayTheme"
+                  android:uiOptions="splitActionBarWhenNarrow"
                   android:label="@string/scanner_fragment_activity">
+            <meta-data android:name="android.support.UI_OPTIONS"
+                       android:value="splitActionBarWhenNarrow" />
         </activity>
 
         <activity android:name=".SimpleScannerActivity"

@@ -15,6 +15,10 @@ public class MessageDialogFragment extends DialogFragment {
     private String mMessage;
     private MessageDialogListener mListener;
 
+    public void onCreate(Bundle state) {
+        super.onCreate(state);
+        setRetainInstance(true);
+    }
 
     public static MessageDialogFragment newInstance(String title, String message, MessageDialogListener listener) {
         MessageDialogFragment fragment = new MessageDialogFragment();

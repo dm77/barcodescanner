@@ -9,5 +9,12 @@
     <string name="activity_sample">Full Activity Sample</string>
     <string name="fragment_sample">Full Fragment Sample</string>
     <string name="toggle_flash">Flash</string>
-    <string name="toggle_auto_focus">Toggle Auto Focus</string>
+    <string name="flash_on">Flash [ON]</string>
+    <string name="flash_off">Flash [OFF]</string>
+    <string name="auto_focus_on">Auto Focus [ON]</string>
+    <string name="auto_focus_off">Auto Focus [OFF]</string>
+    <string name="formats">Formats</string>
+    <string name="choose_formats">Choose Formats</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Cancel</string>
 </resources>
