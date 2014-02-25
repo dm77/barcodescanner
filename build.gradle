@@ -10,7 +10,7 @@ buildscript {
 
 allprojects {
     group = 'me.dm7.barcodescanner'
-    version = '1.0-SNAPSHOT'
+    version = '1.0'
 
     repositories {
         mavenCentral()
