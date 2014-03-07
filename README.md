@@ -6,6 +6,7 @@ Android library projects that provides easy to use and extensible Barcode Scanne
 Screenshots
 ===========
 ![Portrait](https://raw.github.com/dm77/barcodescanner/master/screenshots/portrait_small.png)
+
 ![Landscape](https://raw.github.com/dm77/barcodescanner/master/screenshots/landscape_small.png)
 
 ZXing
@@ -63,7 +64,7 @@ public class SimpleScannerActivity extends Activity implements ZXingScannerView.
 
 ```
 
-Please take a look at the zxing/sample project for a full working example.
+Please take a look at the [a link] (https://github.com/dm77/barcodescanner/tree/master/zxing/sample) project for a full working example.
 
 Advanced Usage
 --------------
@@ -156,7 +157,7 @@ public class SimpleScannerActivity extends Activity implements ZBarScannerView.R
 
 ```
 
-Please take a look at the zbar/sample project for a full working example.
+Please take a look at the [a link] (https://github.com/dm77/barcodescanner/tree/master/zbar/sample)  project for a full working example.
 
 Advanced Usage
 --------------
