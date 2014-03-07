@@ -64,12 +64,12 @@ public class SimpleScannerActivity extends Activity implements ZXingScannerView.
 
 ```
 
-Please take a look at the [a link] (https://github.com/dm77/barcodescanner/tree/master/zxing/sample) project for a full working example.
+Please take a look at the [zxing/sample] (https://github.com/dm77/barcodescanner/tree/master/zxing/sample) project for a full working example.
 
 Advanced Usage
 --------------
 
-Take a look at the ScannerActivity.java or ScannerFragmentActivity.java classes to get an idea on advanced usage.
+Take a look at the [ScannerActivity.java] (https://github.com/dm77/barcodescanner/blob/master/zxing/sample/src/main/java/me/dm7/barcodescanner/zxing/sample/ScannerActivity.java) or [ScannerFragment.java] (https://github.com/dm77/barcodescanner/blob/master/zxing/sample/src/main/java/me/dm7/barcodescanner/zxing/sample/ScannerFragment.java) classes to get an idea on advanced usage.
 
 Interesting methods on the ZXingScannerView include:
 
@@ -157,12 +157,13 @@ public class SimpleScannerActivity extends Activity implements ZBarScannerView.R
 
 ```
 
-Please take a look at the [a link] (https://github.com/dm77/barcodescanner/tree/master/zbar/sample)  project for a full working example.
+Please take a look at the [zbar/sample] (https://github.com/dm77/barcodescanner/tree/master/zbar/sample)  project for a full working example.
 
 Advanced Usage
 --------------
 
-Take a look at the ScannerActivity.java or ScannerFragmentActivity.java classes to get an idea on advanced usage.
+
+Take a look at the [ScannerActivity.java] (https://github.com/dm77/barcodescanner/blob/master/zbar/sample/src/main/java/me/dm7/barcodescanner/zbar/sample/ScannerActivity.java) or [ScannerFragment.java] (https://github.com/dm77/barcodescanner/blob/master/zbar/sample/src/main/java/me/dm7/barcodescanner/zbar/sample/ScannerFragment.java) classes to get an idea on advanced usage.
 
 Interesting methods on the ZBarScannerView include:
 
