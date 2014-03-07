@@ -5,7 +5,8 @@ Android library projects that provides easy to use and extensible Barcode Scanne
 
 Screenshots
 ===========
-
+![Portrait](https://raw.github.com/dm77/barcodescanner/master/screenshots/portrait.png)
+![Landscape](https://raw.github.com/dm77/barcodescanner/master/screenshots/landscape.png)
 
 ZXing
 =====
@@ -72,17 +73,17 @@ Take a look at the ScannerActivity.java or ScannerFragmentActivity.java classes 
 Interesting methods on the ZXingScannerView include:
 
 ```java
-// Toggle flash:     
-void setFlash(boolean);        
+// Toggle flash:
+void setFlash(boolean);
 
-// Toogle autofocus: 
+// Toogle autofocus:
 void setAutoFocus(boolean);
 
 // Specify interested barcode formats:
-void setFormats(List<BarcodeFormat> formats); 
+void setFormats(List<BarcodeFormat> formats);
 ```
 
-Supported Formats: 
+Supported Formats:
 
 ```java
 BarcodeFormat.UPC_A
@@ -122,7 +123,7 @@ Simple Usage
 2.) A very basic activity would look like this:
 
 ```java
-public class SimpleScannerActivity extends Activity implements ZXingScannerView.ResultHandler {
+public class SimpleScannerActivity extends Activity implements ZBarScannerView.ResultHandler {
     private ZBarScannerView mScannerView;
 
     @Override
@@ -165,14 +166,14 @@ Take a look at the ScannerActivity.java or ScannerFragmentActivity.java classes 
 Interesting methods on the ZBarScannerView include:
 
 ```java
-// Toggle flash:     
-void setFlash(boolean);        
+// Toggle flash:
+void setFlash(boolean);
 
-// Toogle autofocus: 
+// Toogle autofocus:
 void setAutoFocus(boolean);
 
 // Specify interested barcode formats:
-void setFormats(List<BarcodeFormat> formats); 
+void setFormats(List<BarcodeFormat> formats);
 ```
 
 Supported Formats:
@@ -201,9 +202,9 @@ Credits
 
 Almost all of the code for these library projects is based on:
 
-1.) CameraPreview app from Android SDK APIDemos
-2.) The ZXing project: https://github.com/zxing/zxing
-3.) The ZBar Android SDK: http://sourceforge.net/projects/zbar/files/AndroidSDK/
+1. CameraPreview app from Android SDK APIDemos
+2. The ZXing project: https://github.com/zxing/zxing
+3. The ZBar Android SDK: http://sourceforge.net/projects/zbar/files/AndroidSDK/
 
 License
 =======
