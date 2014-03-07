@@ -5,8 +5,8 @@ Android library projects that provides easy to use and extensible Barcode Scanne
 
 Screenshots
 ===========
-![Portrait](https://raw.github.com/dm77/barcodescanner/master/screenshots/portrait.png =500x)
-![Landscape](https://raw.github.com/dm77/barcodescanner/master/screenshots/landscape.png =500x)
+![Portrait](https://raw.github.com/dm77/barcodescanner/master/screenshots/portrait_small.png)
+![Landscape](https://raw.github.com/dm77/barcodescanner/master/screenshots/landscape_small.png)
 
 ZXing
 =====
