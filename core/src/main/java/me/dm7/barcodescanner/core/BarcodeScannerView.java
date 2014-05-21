@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -30,23 +31,20 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         addView(mViewFinderView);
     }
 
-    private Camera.PreviewCallback getPreviewCallback(){
-        return this;
-    }
-    
     public void startCamera() {
         AsyncTask<Void, Void, Camera> getCameraInst = new AsyncTask<Void, Void, Camera>() {
-            //Get a camera instance on a worked thread
+            //Get a camera instance on a worker thread
             @Override
             protected Camera doInBackground(Void... param) {
                 mCamera = CameraUtils.getCameraInstance();
                 return mCamera;
             }
+
             @Override
             protected void onPostExecute(Camera mCamera) {
                 if(mCamera != null) {
                     mViewFinderView.setupViewFinder();
-                    mPreview.setCamera(mCamera, getPreviewCallback());
+                    mPreview.setCamera(mCamera, BarcodeScannerView.this);
                     mPreview.initCameraPreview();
                 }
             }
