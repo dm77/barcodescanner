@@ -9,7 +9,7 @@ ext {
 }
 
 dependencies {
-    compile ext.supportLibraryDependency
+    compile supportLibraryDependency
 }
 
 android {

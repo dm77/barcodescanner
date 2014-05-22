@@ -33,6 +33,12 @@ subprojects {
                 compileSdkVersion 19
                 buildToolsVersion '19.0.1'
 
+                android {
+                    lintOptions {
+                        abortOnError false
+                    }
+                }
+
                 defaultConfig {
                     minSdkVersion 8
                     targetSdkVersion 19
@@ -41,7 +47,7 @@ subprojects {
                 }
             }
         }
-        if(project.isLibrary) {
+        if(project.isLibrary && rootProject.hasProperty('sonatypeUsername') && rootProject.hasProperty('sonatypePassword')) {
             configure(project) {
                 apply plugin: 'maven'
                 apply plugin: 'signing'
