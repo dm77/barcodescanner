@@ -61,16 +61,6 @@ subprojects {
                     repositories.mavenDeployer {
                         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-                        repository(url: sonatypeRepo) {
-                            authentication(userName: sonatypeUsername , password: sonatypePassword)
-                            releases(updatePolicy: 'always')
-                        }
-
-                        snapshotRepository(url: sonatypeSnapshotRepo) {
-                            authentication(userName: sonatypeUsername , password: sonatypePassword)
-                            snapshots(updatePolicy: 'always')
-                        }
-
                         pom.project {
                             name project.pomName
                             version project.version
