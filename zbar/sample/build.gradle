@@ -3,7 +3,7 @@ apply plugin: 'android'
 dependencies {
     compile 'me.dm7.barcodescanner:zbar:1.0'
     compile supportLibraryDependency
-    compile 'com.android.support:appcompat-v7:19.0.1'
+    compile 'com.android.support:appcompat-v7:19.1.0'
 }
 
 android {
