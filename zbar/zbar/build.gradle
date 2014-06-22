@@ -9,7 +9,8 @@ ext {
 }
 
 dependencies {
-    compile 'me.dm7.barcodescanner:core:1.0'
+    //compile project(":core")
+    compile 'me.dm7.barcodescanner:core:1.1'
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 
