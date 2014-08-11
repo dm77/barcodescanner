@@ -5,7 +5,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <fragment android:name="me.dm7.barcodescanner.zxing.sample.SimpleScannerFragment"
+    <fragment android:name="me.dm7.barcodescanner.zbar.sample.SimpleScannerFragment"
               android:id="@+id/scanner_fragment"
               android:layout_weight="1"
               android:layout_width="match_parent"

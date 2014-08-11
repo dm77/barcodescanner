@@ -10,12 +10,12 @@ ext {
 
 dependencies {
     //compile project(":core")
-    compile 'me.dm7.barcodescanner:core:1.1'
+    compile 'me.dm7.barcodescanner:core:1.2'
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
     defaultConfig {
-        packageName "${project.group}.zbar"
+        applicationId "${project.group}.zbar"
     }
 }

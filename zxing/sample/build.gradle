@@ -1,14 +1,14 @@
 apply plugin: 'android'
 
 dependencies {
-    // compile project(":zxing:zxing")
-    compile 'me.dm7.barcodescanner:zxing:1.1'
+    //compile project(":zxing:zxing")
+    compile 'me.dm7.barcodescanner:zxing:1.2'
     compile supportLibraryDependency
-    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile 'com.android.support:appcompat-v7:20.0.0'
 }
 
 android {
     defaultConfig {
-        packageName "${project.group}.zxing.sample"
+        applicationId "${project.group}.zxing.sample"
     }
 }
