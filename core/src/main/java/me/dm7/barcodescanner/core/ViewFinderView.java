@@ -43,7 +43,7 @@ public class ViewFinderView extends View {
     }
 
     public void setupViewFinder() {
-        initFramingRect();
+        updateFramingRect();
         invalidate();
     }
 
@@ -115,9 +115,14 @@ public class ViewFinderView extends View {
                 mFramingRect.bottom + POINT_SIZE);
     }
 
-    public synchronized void initFramingRect() {
-        Point screenResolution = DisplayUtils.getScreenResolution(getContext());
-        if (screenResolution == null) {
+    @Override
+    protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld) {
+        updateFramingRect();
+    }
+
+    public synchronized void updateFramingRect() {
+        Point viewResolution = new Point(getWidth(), getHeight());
+        if (viewResolution == null) {
             return;
         }
         int width;
@@ -125,15 +130,15 @@ public class ViewFinderView extends View {
         int orientation = DisplayUtils.getScreenOrientation(getContext());
 
         if(orientation != Configuration.ORIENTATION_PORTRAIT) {
-            width = findDesiredDimensionInRange(LANDSCAPE_WIDTH_RATIO, screenResolution.x, MIN_FRAME_WIDTH, LANDSCAPE_MAX_FRAME_WIDTH);
-            height = findDesiredDimensionInRange(LANDSCAPE_HEIGHT_RATIO, screenResolution.y, MIN_FRAME_HEIGHT, LANDSCAPE_MAX_FRAME_HEIGHT);
+            width = findDesiredDimensionInRange(LANDSCAPE_WIDTH_RATIO, viewResolution.x, MIN_FRAME_WIDTH, LANDSCAPE_MAX_FRAME_WIDTH);
+            height = findDesiredDimensionInRange(LANDSCAPE_HEIGHT_RATIO, viewResolution.y, MIN_FRAME_HEIGHT, LANDSCAPE_MAX_FRAME_HEIGHT);
         } else {
-            width = findDesiredDimensionInRange(PORTRAIT_WIDTH_RATIO, screenResolution.x, MIN_FRAME_WIDTH, PORTRAIT_MAX_FRAME_WIDTH);
-            height = findDesiredDimensionInRange(PORTRAIT_HEIGHT_RATIO, screenResolution.y, MIN_FRAME_HEIGHT, PORTRAIT_MAX_FRAME_HEIGHT);
+            width = findDesiredDimensionInRange(PORTRAIT_WIDTH_RATIO, viewResolution.x, MIN_FRAME_WIDTH, PORTRAIT_MAX_FRAME_WIDTH);
+            height = findDesiredDimensionInRange(PORTRAIT_HEIGHT_RATIO, viewResolution.y, MIN_FRAME_HEIGHT, PORTRAIT_MAX_FRAME_HEIGHT);
         }
 
-        int leftOffset = (screenResolution.x - width) / 2;
-        int topOffset = (screenResolution.y - height) / 2;
+        int leftOffset = (viewResolution.x - width) / 2;
+        int topOffset = (viewResolution.y - height) / 2;
         mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
     }
 
