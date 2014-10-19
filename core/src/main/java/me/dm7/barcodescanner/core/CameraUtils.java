@@ -1,15 +1,24 @@
 package me.dm7.barcodescanner.core;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.os.Build;
 
 public class CameraUtils {
     /** A safe way to get an instance of the Camera object. */
-    public static Camera getCameraInstance(){
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    public static Camera getCameraInstance(int cameraId){
         Camera c = null;
         try {
-            c = Camera.open(); // attempt to get a Camera instance
+            // attempt to get a Camera instance
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD
+                && cameraId >= 0 && cameraId < Camera.getNumberOfCameras()) {
+              c = Camera.open(cameraId);
+            } else {
+              c = Camera.open();
+            }
         }
         catch (Exception e){
             // Camera is not available (in use or does not exist)
