@@ -80,7 +80,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 mCamera.setOneShotPreviewCallback(mPreviewCallback);
                 mCamera.startPreview();
                 if(mAutoFocus) {
-                    mCamera.autoFocus(autoFocusCB);
+                    if (mSurfaceCreated) { // check if surface created before using autofocus
+                        mCamera.autoFocus(autoFocusCB);
+                    } else {
+                        scheduleAutoFocus(); // wait 1 sec and then do check again
+                    }
                 }
             } catch (Exception e) {
                 Log.e(TAG, e.toString(), e);
@@ -183,8 +187,12 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             }
             mAutoFocus = state;
             if(mAutoFocus) {
-                Log.v(TAG, "Starting autofocus");
-                mCamera.autoFocus(autoFocusCB);
+                if (mSurfaceCreated) { // check if surface created before using autofocus
+                    Log.v(TAG, "Starting autofocus");
+                    mCamera.autoFocus(autoFocusCB);
+                } else {
+                    scheduleAutoFocus(); // wait 1 sec and then do check again
+                }
             } else {
                 Log.v(TAG, "Cancelling autofocus");
                 mCamera.cancelAutoFocus();
@@ -203,7 +211,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     // Mimic continuous auto-focusing
     Camera.AutoFocusCallback autoFocusCB = new Camera.AutoFocusCallback() {
         public void onAutoFocus(boolean success, Camera camera) {
-            mAutoFocusHandler.postDelayed(doAutoFocus, 1000);
+            scheduleAutoFocus();
         }
     };
+
+    private void scheduleAutoFocus() {
+        mAutoFocusHandler.postDelayed(doAutoFocus, 1000);
+    }
 }
