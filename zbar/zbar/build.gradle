@@ -16,6 +16,6 @@ dependencies {
 
 android {
     defaultConfig {
-        applicationId "${project.group}.zbar"
+        //applicationId "${project.group}.zbar"
     }
 }

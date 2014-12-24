@@ -16,6 +16,6 @@ dependencies {
 
 android {
     defaultConfig {
-        applicationId "${project.group}.zxing"
+        //applicationId "${project.group}.zxing"
     }
 }
