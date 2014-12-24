@@ -1,6 +1,7 @@
 package me.dm7.barcodescanner.core;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.os.Handler;
@@ -142,6 +143,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         Point screenResolution = DisplayUtils.getScreenResolution(getContext());
         int w = screenResolution.x;
         int h = screenResolution.y;
+        if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
+            w = screenResolution.y;
+            h = screenResolution.x;
+        }
 
 
         final double ASPECT_TOLERANCE = 0.1;
