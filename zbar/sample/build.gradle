@@ -2,9 +2,9 @@ apply plugin: 'android'
 
 dependencies {
     //compile project(":zbar:zbar")
-    compile 'me.dm7.barcodescanner:zbar:1.5'
+    compile 'me.dm7.barcodescanner:zbar:1.6'
     compile supportLibraryDependency
-    compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.3'
 }
 
 android {
