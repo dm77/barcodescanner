@@ -97,7 +97,7 @@ BarcodeFormat.CODE_93
 BarcodeFormat.CODE_128
 BarcodeFormat.ITF
 BarcodeFormat.CODABAR
-BarcodeFormat.QR_CODE
+BarcodeFormat.QRCODE
 BarcodeFormat.DATA_MATRIX
 BarcodeFormat.PDF_417
 ```
