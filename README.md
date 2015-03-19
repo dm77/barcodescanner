@@ -17,7 +17,7 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-compile 'me.dm7.barcodescanner:zxing:1.6.3'
+`compile 'me.dm7.barcodescanner:zxing:1.6.3'`
 
 Simple Usage
 ------------
