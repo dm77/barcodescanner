@@ -15,6 +15,7 @@
     <string name="auto_focus_off">Auto Focus [OFF]</string>
     <string name="formats">Formats</string>
     <string name="choose_formats">Choose Formats</string>
+    <string name="select_camera">Select a Camera</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
 </resources>

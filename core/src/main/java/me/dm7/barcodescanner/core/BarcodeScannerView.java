@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
-import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -31,13 +30,21 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         addView(mViewFinderView);
     }
 
-    public void startCamera() {
-        mCamera = CameraUtils.getCameraInstance();
+    public void startCamera(int cameraId) {
+        startCamera(CameraUtils.getCameraInstance(cameraId));
+    }
+
+    public void startCamera(Camera camera) {
+        mCamera = camera;
         if(mCamera != null) {
             mViewFinderView.setupViewFinder();
             mPreview.setCamera(mCamera, this);
             mPreview.initCameraPreview();
         }
+    }
+
+    public void startCamera() {
+        startCamera(CameraUtils.getCameraInstance());
     }
 
     public void stopCamera() {
@@ -76,6 +83,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
 
     public void setFlash(boolean flag) {
         if(mCamera != null && CameraUtils.isFlashSupported(mCamera)) {
+
             Camera.Parameters parameters = mCamera.getParameters();
             if(flag) {
                 if(parameters.getFlashMode().equals(Camera.Parameters.FLASH_MODE_TORCH)) {

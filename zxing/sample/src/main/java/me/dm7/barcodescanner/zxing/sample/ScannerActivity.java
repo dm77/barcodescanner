@@ -20,14 +20,17 @@ import java.util.List;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScannerActivity extends ActionBarActivity implements MessageDialogFragment.MessageDialogListener,
-        ZXingScannerView.ResultHandler, FormatSelectorDialogFragment.FormatSelectorDialogListener  {
+        ZXingScannerView.ResultHandler, FormatSelectorDialogFragment.FormatSelectorDialogListener,
+        CameraSelectorDialogFragment.CameraSelectorDialogListener {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
+    private static final String CAMERA_ID = "CAMERA_ID";
     private ZXingScannerView mScannerView;
     private boolean mFlash;
     private boolean mAutoFocus;
     private ArrayList<Integer> mSelectedIndices;
+    private int mCameraId = -1;
 
     @Override
     public void onCreate(Bundle state) {
@@ -36,10 +39,12 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
             mFlash = state.getBoolean(FLASH_STATE, false);
             mAutoFocus = state.getBoolean(AUTO_FOCUS_STATE, true);
             mSelectedIndices = state.getIntegerArrayList(SELECTED_FORMATS);
+            mCameraId = state.getInt(CAMERA_ID, -1);
         } else {
             mFlash = false;
             mAutoFocus = true;
             mSelectedIndices = null;
+            mCameraId = -1;
         }
 
         mScannerView = new ZXingScannerView(this);
@@ -51,7 +56,7 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
     public void onResume() {
         super.onResume();
         mScannerView.setResultHandler(this);
-        mScannerView.startCamera();
+        mScannerView.startCamera(mCameraId);
         mScannerView.setFlash(mFlash);
         mScannerView.setAutoFocus(mAutoFocus);
     }
@@ -62,6 +67,7 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
         outState.putBoolean(FLASH_STATE, mFlash);
         outState.putBoolean(AUTO_FOCUS_STATE, mAutoFocus);
         outState.putIntegerArrayList(SELECTED_FORMATS, mSelectedIndices);
+        outState.putInt(CAMERA_ID, mCameraId);
     }
 
     @Override
@@ -84,6 +90,9 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
         MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         menuItem = menu.add(Menu.NONE, R.id.menu_formats, 0, R.string.formats);
+        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        menuItem = menu.add(Menu.NONE, R.id.menu_camera_selector, 0, R.string.select_camera);
         MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         return super.onCreateOptionsMenu(menu);
@@ -114,6 +123,12 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
             case R.id.menu_formats:
                 DialogFragment fragment = FormatSelectorDialogFragment.newInstance(this, mSelectedIndices);
                 fragment.show(getSupportFragmentManager(), "format_selector");
+                return true;
+            case R.id.menu_camera_selector:
+                mScannerView.stopCamera();
+                DialogFragment cFragment = CameraSelectorDialogFragment.newInstance(this, mCameraId);
+                cFragment.show(getSupportFragmentManager(), "camera_selector");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -153,7 +168,7 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // Resume the camera
-        mScannerView.startCamera();
+        mScannerView.startCamera(mCameraId);
         mScannerView.setFlash(mFlash);
         mScannerView.setAutoFocus(mAutoFocus);
     }
@@ -162,6 +177,14 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
     public void onFormatsSaved(ArrayList<Integer> selectedIndices) {
         mSelectedIndices = selectedIndices;
         setupFormats();
+    }
+
+    @Override
+    public void onCameraSelected(int cameraId) {
+        mCameraId = cameraId;
+        mScannerView.startCamera(mCameraId);
+        mScannerView.setFlash(mFlash);
+        mScannerView.setAutoFocus(mAutoFocus);
     }
 
     public void setupFormats() {
