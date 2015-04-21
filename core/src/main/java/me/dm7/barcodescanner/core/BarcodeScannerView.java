@@ -40,13 +40,21 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         addView(mViewFinderView);
     }
 
-    public void startCamera() {
-        mCamera = CameraUtils.getCameraInstance();
+    public void startCamera(int cameraId) {
+        startCamera(CameraUtils.getCameraInstance(cameraId));
+    }
+
+    public void startCamera(Camera camera) {
+        mCamera = camera;
         if(mCamera != null) {
             mViewFinderView.setupViewFinder();
             mPreview.setCamera(mCamera, this);
             mPreview.initCameraPreview();
         }
+    }
+
+    public void startCamera() {
+        startCamera(CameraUtils.getCameraInstance());
     }
 
     public void stopCamera() {
@@ -58,25 +66,20 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         }
     }
 
-    public synchronized Rect getFramingRectInPreview(int width, int height) {
+    public synchronized Rect getFramingRectInPreview(int previewWidth, int previewHeight) {
         if (mFramingRectInPreview == null) {
             Rect framingRect = mViewFinderView.getFramingRect();
-            if (framingRect == null) {
+            int viewFinderViewWidth = mViewFinderView.getWidth();
+            int viewFinderViewHeight = mViewFinderView.getHeight();
+            if (framingRect == null || viewFinderViewWidth == 0 || viewFinderViewHeight == 0) {
                 return null;
             }
+
             Rect rect = new Rect(framingRect);
-            Point screenResolution = DisplayUtils.getScreenResolution(getContext());
-            Point cameraResolution = new Point(width, height);
-
-            if (cameraResolution == null || screenResolution == null) {
-                // Called early, before init even finished
-                return null;
-            }
-
-            rect.left = rect.left * cameraResolution.x / screenResolution.x;
-            rect.right = rect.right * cameraResolution.x / screenResolution.x;
-            rect.top = rect.top * cameraResolution.y / screenResolution.y;
-            rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
+            rect.left = rect.left * previewWidth / viewFinderViewWidth;
+            rect.right = rect.right * previewWidth / viewFinderViewWidth;
+            rect.top = rect.top * previewHeight / viewFinderViewHeight;
+            rect.bottom = rect.bottom * previewHeight / viewFinderViewHeight;
 
             mFramingRectInPreview = rect;
         }
