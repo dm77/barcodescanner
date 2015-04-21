@@ -1,12 +1,15 @@
 package me.dm7.barcodescanner.core;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 public abstract class BarcodeScannerView extends FrameLayout implements Camera.PreviewCallback  {
     private Camera mCamera;
@@ -27,7 +30,13 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     public void setupLayout() {
         mPreview = new CameraPreview(getContext());
         mViewFinderView = new ViewFinderView(getContext());
-        addView(mPreview);
+
+        RelativeLayout relativeLayout = new RelativeLayout(getContext());
+        relativeLayout.setGravity(Gravity.CENTER);
+        relativeLayout.setBackgroundColor(Color.BLACK);
+        relativeLayout.addView(mPreview);
+        addView(relativeLayout);
+
         addView(mViewFinderView);
     }
 
