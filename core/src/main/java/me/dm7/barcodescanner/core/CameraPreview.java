@@ -11,6 +11,7 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import java.util.List;
@@ -107,6 +108,40 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         Camera.Parameters parameters = mCamera.getParameters();
         parameters.setPreviewSize(optimalSize.width, optimalSize.height);
         mCamera.setParameters(parameters);
+        adjustViewSize(optimalSize);
+    }
+
+    private void adjustViewSize(Camera.Size cameraSize) {
+        Point screenSize =
+                convertSizeToLandscapeOrientation(DisplayUtils.getScreenResolution(getContext()));
+        float cameraRatio = ((float) cameraSize.width) / cameraSize.height;
+        float screenRatio = ((float) screenSize.x) / screenSize.y;
+
+        if (screenRatio > cameraRatio) {
+            setViewSize((int) (screenSize.y * cameraRatio), screenSize.y);
+        } else {
+            setViewSize(screenSize.x, (int) (screenSize.x / cameraRatio));
+        }
+    }
+
+    private Point convertSizeToLandscapeOrientation(Point size) {
+        if (getDisplayOrientation() % 180 == 0) {
+            return size;
+        } else {
+            return new Point(size.y, size.x);
+        }
+    }
+
+    private void setViewSize(int width, int height) {
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        if (getDisplayOrientation() % 180 == 0) {
+            layoutParams.width = width;
+            layoutParams.height = height;
+        } else {
+            layoutParams.width = height;
+            layoutParams.height = width;
+        }
+        setLayoutParams(layoutParams);
     }
 
     public int getDisplayOrientation() {
