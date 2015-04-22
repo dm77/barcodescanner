@@ -218,9 +218,7 @@ Almost all of the code for these library projects is based on:
 Contributors
 ============
 
-* [Rking788](https://github.com/Rking788)
-* [furedal](https://github.com/furedal)
-* [Yarikx](https://github.com/Yarikx)
+https://github.com/dm77/barcodescanner/graphs/contributors
 
 License
 =======
