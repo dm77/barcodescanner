@@ -17,7 +17,7 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`compile 'me.dm7.barcodescanner:zxing:1.6.3'`
+`compile 'me.dm7.barcodescanner:zxing:1.7'`
 
 Simple Usage
 ------------
@@ -82,7 +82,12 @@ void setAutoFocus(boolean);
 
 // Specify interested barcode formats:
 void setFormats(List<BarcodeFormat> formats);
+
+// Specify the cameraId to start with:
+void startCamera(int cameraId);
 ```
+
+Specify front-facing or rear-facing cameras by using the `void startCamera(int cameraId);` method.
 
 Supported Formats:
 
@@ -110,7 +115,7 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-compile 'me.dm7.barcodescanner:zbar:1.6.3'
+`compile 'me.dm7.barcodescanner:zbar:1.7'`
 
 Simple Usage
 ------------
@@ -177,6 +182,8 @@ void setAutoFocus(boolean);
 // Specify interested barcode formats:
 void setFormats(List<BarcodeFormat> formats);
 ```
+
+Specify front-facing or rear-facing cameras by using the `void startCamera(int cameraId);` method.
 
 Supported Formats:
 
