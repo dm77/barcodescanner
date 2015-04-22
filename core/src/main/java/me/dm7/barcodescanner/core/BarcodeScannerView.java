@@ -2,7 +2,6 @@ package me.dm7.barcodescanner.core;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.util.AttributeSet;

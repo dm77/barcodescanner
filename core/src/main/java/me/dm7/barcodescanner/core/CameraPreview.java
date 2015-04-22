@@ -112,15 +112,14 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     private void adjustViewSize(Camera.Size cameraSize) {
-        Point screenSize =
-                convertSizeToLandscapeOrientation(DisplayUtils.getScreenResolution(getContext()));
+        Point previewSize = convertSizeToLandscapeOrientation(new Point(getWidth(), getHeight()));
         float cameraRatio = ((float) cameraSize.width) / cameraSize.height;
-        float screenRatio = ((float) screenSize.x) / screenSize.y;
+        float screenRatio = ((float) previewSize.x) / previewSize.y;
 
         if (screenRatio > cameraRatio) {
-            setViewSize((int) (screenSize.y * cameraRatio), screenSize.y);
+            setViewSize((int) (previewSize.y * cameraRatio), previewSize.y);
         } else {
-            setViewSize(screenSize.x, (int) (screenSize.x / cameraRatio));
+            setViewSize(previewSize.x, (int) (previewSize.x / cameraRatio));
         }
     }
 
