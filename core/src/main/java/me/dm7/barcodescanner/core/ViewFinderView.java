@@ -10,7 +10,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class ViewFinderView extends View {
+public class ViewFinderView extends View implements IViewFinder {
     private static final String TAG = "ViewFinderView";
 
     private Rect mFramingRect;
