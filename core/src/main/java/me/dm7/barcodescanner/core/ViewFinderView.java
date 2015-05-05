@@ -2,7 +2,6 @@ package me.dm7.barcodescanner.core;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -32,6 +31,13 @@ public class ViewFinderView extends View implements IViewFinder {
     private int scannerAlpha;
     private static final int POINT_SIZE = 10;
     private static final long ANIMATION_DELAY = 80l;
+
+    private final int mDefaultLaserColor = getResources().getColor(R.color.viewfinder_laser);
+    private final int mDefaultMaskColor = getResources().getColor(R.color.viewfinder_mask);
+    private final int mDefaultBorderColor = getResources().getColor(R.color.viewfinder_border);
+    private final int mDefaultBorderStrokeWidth = getResources().getInteger(R.integer.viewfinder_border_width);
+    private final int mDefaultBorderLineLength = getResources().getInteger(R.integer.viewfinder_border_length);
+
     protected Paint mLaserPaint;
     protected Paint mFinderMaskPaint;
     protected Paint mBorderPaint;
@@ -48,24 +54,38 @@ public class ViewFinderView extends View implements IViewFinder {
     }
 
     private void init() {
-        Resources resources = getResources();
-
         //set up laser paint
         mLaserPaint = new Paint();
-        mLaserPaint.setColor(resources.getColor(R.color.viewfinder_laser));
+        mLaserPaint.setColor(mDefaultLaserColor);
         mLaserPaint.setStyle(Paint.Style.FILL);
 
         //finder mask paint
         mFinderMaskPaint = new Paint();
-        mFinderMaskPaint.setColor(resources.getColor(R.color.viewfinder_mask));
+        mFinderMaskPaint.setColor(mDefaultMaskColor);
 
         //border paint
         mBorderPaint = new Paint();
-        mBorderPaint.setColor(resources.getColor(R.color.viewfinder_border));
+        mBorderPaint.setColor(mDefaultBorderColor);
         mBorderPaint.setStyle(Paint.Style.STROKE);
-        mBorderPaint.setStrokeWidth(resources.getInteger(R.integer.viewfinder_border_width));
+        mBorderPaint.setStrokeWidth(mDefaultBorderStrokeWidth);
 
-        mBorderLineLength = resources.getInteger(R.integer.viewfinder_border_length);
+        mBorderLineLength = mDefaultBorderLineLength;
+    }
+
+    public void setLaserColor(int laserColor) {
+        mLaserPaint.setColor(laserColor);
+    }
+    public void setMaskColor(int maskColor) {
+        mFinderMaskPaint.setColor(maskColor);
+    }
+    public void setBorderColor(int borderColor) {
+        mBorderPaint.setColor(borderColor);
+    }
+    public void setBorderStrokeWidth(int borderStrokeWidth) {
+        mBorderPaint.setStrokeWidth(borderStrokeWidth);
+    }
+    public void setBorderLineLength(int borderLineLength) {
+        mBorderLineLength = borderLineLength;
     }
 
     public void setupViewFinder() {
