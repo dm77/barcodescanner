@@ -250,8 +250,12 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     // Mimic continuous auto-focusing
     Camera.AutoFocusCallback autoFocusCB = new Camera.AutoFocusCallback() {
         public void onAutoFocus(boolean success, Camera camera) {
-            mAutoFocusHandler.postDelayed(doAutoFocus, 1000);
+            scheduleAutoFocus();
         }
     };
+    
+    private void scheduleAutoFocus() {
+        mAutoFocusHandler.postDelayed(doAutoFocus, 1000);
+    }
     
 }
