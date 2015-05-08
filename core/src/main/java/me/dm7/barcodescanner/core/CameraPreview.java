@@ -181,10 +181,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         Point screenResolution = DisplayUtils.getScreenResolution(getContext());
         int w = screenResolution.x;
         int h = screenResolution.y;
-        if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
+     /*   if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
             w = screenResolution.y;
             h = screenResolution.x;
-        }
+        }*/
 
 
         final double ASPECT_TOLERANCE = 0.1;
