@@ -10,7 +10,7 @@ buildscript {
 
 allprojects {
     group = 'me.dm7.barcodescanner'
-    version = '1.7'
+    version = '1.7.1'
 
     repositories {
         mavenCentral()
@@ -43,7 +43,7 @@ subprojects {
                     minSdkVersion 9
                     targetSdkVersion 21
                     versionCode 170
-                    versionName "1.7.0"
+                    versionName "1.7.1"
                 }
             }
         }
