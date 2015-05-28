@@ -83,13 +83,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 mCamera.startPreview();
                 if(mAutoFocus) {
                     if (mSurfaceCreated) { // check if surface created before using autofocus
-                        try {
-                            mCamera.autoFocus(autoFocusCB);
-                        } catch (RuntimeException re) {
-                            // Horrible hack to deal with autofocus errors on Sony devices
-                            // See https://github.com/dm77/barcodescanner/issues/7 for example
-                            scheduleAutoFocus(); // wait 1 sec and then do check again
-                        }
+                        safeAutoFocus();
                     } else {
                         scheduleAutoFocus(); // wait 1 sec and then do check again
                     }
@@ -97,6 +91,16 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             } catch (Exception e) {
                 Log.e(TAG, e.toString(), e);
             }
+        }
+    }
+
+    public void safeAutoFocus() {
+        try {
+            mCamera.autoFocus(autoFocusCB);
+        } catch (RuntimeException re) {
+            // Horrible hack to deal with autofocus errors on Sony devices
+            // See https://github.com/dm77/barcodescanner/issues/7 for example
+            scheduleAutoFocus(); // wait 1 sec and then do check again
         }
     }
 
@@ -234,7 +238,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             if(mAutoFocus) {
                 if (mSurfaceCreated) { // check if surface created before using autofocus
                     Log.v(TAG, "Starting autofocus");
-                    mCamera.autoFocus(autoFocusCB);
+                    safeAutoFocus();
                 } else {
                     scheduleAutoFocus(); // wait 1 sec and then do check again
                 }
@@ -248,7 +252,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private Runnable doAutoFocus = new Runnable() {
         public void run() {
             if(mCamera != null && mPreviewing && mAutoFocus && mSurfaceCreated) {
-                mCamera.autoFocus(autoFocusCB);
+                safeAutoFocus();
             }
         }
     };
