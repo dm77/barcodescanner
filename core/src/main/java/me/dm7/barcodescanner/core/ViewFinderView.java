@@ -2,7 +2,6 @@ package me.dm7.barcodescanner.core;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -10,7 +9,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class ViewFinderView extends View {
+public class ViewFinderView extends View implements IViewFinder {
     private static final String TAG = "ViewFinderView";
 
     private Rect mFramingRect;
@@ -33,12 +32,60 @@ public class ViewFinderView extends View {
     private static final int POINT_SIZE = 10;
     private static final long ANIMATION_DELAY = 80l;
 
+    private final int mDefaultLaserColor = getResources().getColor(R.color.viewfinder_laser);
+    private final int mDefaultMaskColor = getResources().getColor(R.color.viewfinder_mask);
+    private final int mDefaultBorderColor = getResources().getColor(R.color.viewfinder_border);
+    private final int mDefaultBorderStrokeWidth = getResources().getInteger(R.integer.viewfinder_border_width);
+    private final int mDefaultBorderLineLength = getResources().getInteger(R.integer.viewfinder_border_length);
+
+    protected Paint mLaserPaint;
+    protected Paint mFinderMaskPaint;
+    protected Paint mBorderPaint;
+    protected int mBorderLineLength;
+
     public ViewFinderView(Context context) {
         super(context);
+        init();
     }
 
     public ViewFinderView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
+
+    private void init() {
+        //set up laser paint
+        mLaserPaint = new Paint();
+        mLaserPaint.setColor(mDefaultLaserColor);
+        mLaserPaint.setStyle(Paint.Style.FILL);
+
+        //finder mask paint
+        mFinderMaskPaint = new Paint();
+        mFinderMaskPaint.setColor(mDefaultMaskColor);
+
+        //border paint
+        mBorderPaint = new Paint();
+        mBorderPaint.setColor(mDefaultBorderColor);
+        mBorderPaint.setStyle(Paint.Style.STROKE);
+        mBorderPaint.setStrokeWidth(mDefaultBorderStrokeWidth);
+
+        mBorderLineLength = mDefaultBorderLineLength;
+    }
+
+    public void setLaserColor(int laserColor) {
+        mLaserPaint.setColor(laserColor);
+    }
+    public void setMaskColor(int maskColor) {
+        mFinderMaskPaint.setColor(maskColor);
+    }
+    public void setBorderColor(int borderColor) {
+        mBorderPaint.setColor(borderColor);
+    }
+    public void setBorderStrokeWidth(int borderStrokeWidth) {
+        mBorderPaint.setStrokeWidth(borderStrokeWidth);
+    }
+    public void setBorderLineLength(int borderLineLength) {
+        mBorderLineLength = borderLineLength;
     }
 
     public void setupViewFinder() {
@@ -62,50 +109,35 @@ public class ViewFinderView extends View {
     }
 
     public void drawViewFinderMask(Canvas canvas) {
-        Paint paint = new Paint();
-        Resources resources = getResources();
-        paint.setColor(resources.getColor(R.color.viewfinder_mask));
-
         int width = canvas.getWidth();
         int height = canvas.getHeight();
 
-        canvas.drawRect(0, 0, width, mFramingRect.top, paint);
-        canvas.drawRect(0, mFramingRect.top, mFramingRect.left, mFramingRect.bottom + 1, paint);
-        canvas.drawRect(mFramingRect.right + 1, mFramingRect.top, width, mFramingRect.bottom + 1, paint);
-        canvas.drawRect(0, mFramingRect.bottom + 1, width, height, paint);
+        canvas.drawRect(0, 0, width, mFramingRect.top, mFinderMaskPaint);
+        canvas.drawRect(0, mFramingRect.top, mFramingRect.left, mFramingRect.bottom + 1, mFinderMaskPaint);
+        canvas.drawRect(mFramingRect.right + 1, mFramingRect.top, width, mFramingRect.bottom + 1, mFinderMaskPaint);
+        canvas.drawRect(0, mFramingRect.bottom + 1, width, height, mFinderMaskPaint);
     }
 
     public void drawViewFinderBorder(Canvas canvas) {
-        Paint paint = new Paint();
-        Resources resources = getResources();
-        paint.setColor(resources.getColor(R.color.viewfinder_border));
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(resources.getInteger(R.integer.viewfinder_border_width));
-        int lineLength = resources.getInteger(R.integer.viewfinder_border_length);
+        canvas.drawLine(mFramingRect.left - 1, mFramingRect.top - 1, mFramingRect.left - 1, mFramingRect.top - 1 + mBorderLineLength, mBorderPaint);
+        canvas.drawLine(mFramingRect.left - 1, mFramingRect.top - 1, mFramingRect.left - 1 + mBorderLineLength, mFramingRect.top - 1, mBorderPaint);
 
-        canvas.drawLine(mFramingRect.left - 1, mFramingRect.top - 1, mFramingRect.left - 1, mFramingRect.top - 1 + lineLength, paint);
-        canvas.drawLine(mFramingRect.left - 1, mFramingRect.top - 1, mFramingRect.left - 1 + lineLength, mFramingRect.top - 1, paint);
+        canvas.drawLine(mFramingRect.left - 1, mFramingRect.bottom + 1, mFramingRect.left - 1, mFramingRect.bottom + 1 - mBorderLineLength, mBorderPaint);
+        canvas.drawLine(mFramingRect.left - 1, mFramingRect.bottom + 1, mFramingRect.left - 1 + mBorderLineLength, mFramingRect.bottom + 1, mBorderPaint);
 
-        canvas.drawLine(mFramingRect.left - 1, mFramingRect.bottom + 1, mFramingRect.left - 1, mFramingRect.bottom + 1 - lineLength, paint);
-        canvas.drawLine(mFramingRect.left - 1, mFramingRect.bottom + 1, mFramingRect.left - 1 + lineLength, mFramingRect.bottom + 1, paint);
+        canvas.drawLine(mFramingRect.right + 1, mFramingRect.top - 1, mFramingRect.right + 1, mFramingRect.top - 1 + mBorderLineLength, mBorderPaint);
+        canvas.drawLine(mFramingRect.right + 1, mFramingRect.top - 1, mFramingRect.right + 1 - mBorderLineLength, mFramingRect.top - 1, mBorderPaint);
 
-        canvas.drawLine(mFramingRect.right + 1, mFramingRect.top - 1, mFramingRect.right + 1, mFramingRect.top - 1 + lineLength, paint);
-        canvas.drawLine(mFramingRect.right + 1, mFramingRect.top - 1, mFramingRect.right + 1 - lineLength, mFramingRect.top - 1, paint);
-
-        canvas.drawLine(mFramingRect.right + 1, mFramingRect.bottom + 1, mFramingRect.right + 1, mFramingRect.bottom + 1 - lineLength, paint);
-        canvas.drawLine(mFramingRect.right + 1, mFramingRect.bottom + 1, mFramingRect.right + 1 - lineLength, mFramingRect.bottom + 1, paint);
+        canvas.drawLine(mFramingRect.right + 1, mFramingRect.bottom + 1, mFramingRect.right + 1, mFramingRect.bottom + 1 - mBorderLineLength, mBorderPaint);
+        canvas.drawLine(mFramingRect.right + 1, mFramingRect.bottom + 1, mFramingRect.right + 1 - mBorderLineLength, mFramingRect.bottom + 1, mBorderPaint);
     }
 
     public void drawLaser(Canvas canvas) {
-        Paint paint = new Paint();
-        Resources resources = getResources();
         // Draw a red "laser scanner" line through the middle to show decoding is active
-        paint.setColor(resources.getColor(R.color.viewfinder_laser));
-        paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
-        paint.setStyle(Paint.Style.FILL);
+        mLaserPaint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
         scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
         int middle = mFramingRect.height() / 2 + mFramingRect.top;
-        canvas.drawRect(mFramingRect.left + 2, middle - 1, mFramingRect.right - 1, middle + 2, paint);
+        canvas.drawRect(mFramingRect.left + 2, middle - 1, mFramingRect.right - 1, middle + 2, mLaserPaint);
 
         postInvalidateDelayed(ANIMATION_DELAY,
                 mFramingRect.left - POINT_SIZE,
@@ -121,9 +153,6 @@ public class ViewFinderView extends View {
 
     public synchronized void updateFramingRect() {
         Point viewResolution = new Point(getWidth(), getHeight());
-        if (viewResolution == null) {
-            return;
-        }
         int width;
         int height;
         int orientation = DisplayUtils.getScreenOrientation(getContext());
@@ -151,5 +180,4 @@ public class ViewFinderView extends View {
         }
         return dim;
     }
-
 }
