@@ -25,6 +25,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private boolean mAutoFocus = true;
     private boolean mSurfaceCreated = false;
     private Camera.PreviewCallback mPreviewCallback;
+    private int cameraPreviewRotation;
 
     public CameraPreview(Context context) {
         super(context);
@@ -164,12 +165,22 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         Display display = wm.getDefaultDisplay();
 
         int rotation = display.getRotation();
-        int degrees = 0;
-        switch (rotation) {
-            case Surface.ROTATION_0: degrees = 0; break;
-            case Surface.ROTATION_90: degrees = 90; break;
-            case Surface.ROTATION_180: degrees = 180; break;
-            case Surface.ROTATION_270: degrees = 270; break;
+        int degrees = getCameraPreviewRotation();
+        if(degrees == 0) { // only continue if we're not adjusting the rotation.
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                    degrees = 0;
+                    break;
+                case Surface.ROTATION_90:
+                    degrees = 90;
+                    break;
+                case Surface.ROTATION_180:
+                    degrees = 180;
+                    break;
+                case Surface.ROTATION_270:
+                    degrees = 270;
+                    break;
+            }
         }
 
         int result;
@@ -266,5 +277,13 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     private void scheduleAutoFocus() {
         mAutoFocusHandler.postDelayed(doAutoFocus, 1000);
+    }
+
+    public void setCameraPreviewRotation(int cameraRotation) {
+        this.cameraPreviewRotation = cameraRotation;
+    }
+
+    public int getCameraPreviewRotation() {
+        return cameraPreviewRotation;
     }
 }

@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -22,6 +26,8 @@ public class SimpleScannerActivity extends ActionBarActivity implements ZXingSca
     public void onResume() {
         super.onResume();
         mScannerView.setResultHandler(this);
+        mScannerView.setFormats(Arrays.asList(BarcodeFormat.QR_CODE));
+        mScannerView.setCameraPreviewRotation(90);
         mScannerView.startCamera();
     }
 
@@ -29,6 +35,7 @@ public class SimpleScannerActivity extends ActionBarActivity implements ZXingSca
     public void onPause() {
         super.onPause();
         mScannerView.stopCamera();
+
     }
 
     @Override
