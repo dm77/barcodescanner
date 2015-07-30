@@ -30,8 +30,8 @@ subprojects {
         ext.pluginContainer = project.getPlugins()
         if(ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
             android {
-                compileSdkVersion 21
-                buildToolsVersion '21.1.2'
+                compileSdkVersion 22
+                buildToolsVersion '22.0.1'
 
                 android {
                     lintOptions {
@@ -41,7 +41,7 @@ subprojects {
 
                 defaultConfig {
                     minSdkVersion 9
-                    targetSdkVersion 21
+                    targetSdkVersion 22
                     versionCode 180
                     versionName "1.8.0"
                 }
