@@ -189,6 +189,12 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         List<Camera.Size> sizes = mCamera.getParameters().getSupportedPreviewSizes();
         int w = getWidth();
         int h = getHeight();
+        if (w < h) {
+            // The view is in portrait -> swap h & w to keep ratio consistent
+            int portraitWidth = h;
+            h = w;
+            w = portraitWidth;
+        }
 
         final double ASPECT_TOLERANCE = 0.1;
         double targetRatio = (double) w / h;
