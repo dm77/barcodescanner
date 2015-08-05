@@ -1,6 +1,7 @@
 package me.dm7.barcodescanner.core;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.os.Handler;
@@ -189,8 +190,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         List<Camera.Size> sizes = mCamera.getParameters().getSupportedPreviewSizes();
         int w = getWidth();
         int h = getHeight();
-        if (w < h) {
-            // The view is in portrait -> swap h & w to keep ratio consistent
+        if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
             int portraitWidth = h;
             h = w;
             w = portraitWidth;
