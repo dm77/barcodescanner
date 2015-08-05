@@ -31,4 +31,9 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, ScannerFragmentActivity.class);
         startActivity(intent);
     }
+
+    public void launchFullScreenScannerFragmentActivity(View v) {
+        Intent intent = new Intent(this, FullScreenScannerFragmentActivity.class);
+        startActivity(intent);
+    }
 }

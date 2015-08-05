@@ -12,6 +12,13 @@
         <item name="windowActionBarOverlay">true</item>
     </style>
 
+    <style name="AppFullScreenTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <style name="ActionBarStyle.Transparent" parent="@android:Widget.ActionBar">
         <item name="android:background">#99000000</item>
         <item name="android:titleTextStyle">@style/ActionBarStyle.Transparent.TitleTextStyle</item>

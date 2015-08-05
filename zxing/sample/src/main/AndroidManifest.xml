@@ -40,5 +40,10 @@
                 android:theme="@style/AppOverlayTheme"
                 android:label="@string/simple_scanner_fragment_activity">
         </activity>
+
+        <activity android:name=".FullScreenScannerFragmentActivity"
+                android:theme="@style/AppFullScreenTheme"
+                android:label="@string/full_screen_scanner_fragment_activity">
+          </activity>
     </application>
 </manifest>
