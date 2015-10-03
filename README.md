@@ -221,7 +221,9 @@ vim libiconv-1.14/libcharset/lib/localcharset.c
 
 On line 48, add the following line of code:
 
+```
 #undef HAVE_LANGINFO_CODESET
+```
 
 Save the file and continue with steps below:
 ```
