@@ -206,6 +206,42 @@ BarcodeFormat.CODE93
 BarcodeFormat.CODE128
 ```
 
+Rebuilding ZBar Libraries
+=========================
+
+```
+mkdir some_work_dir
+cd work_dir
+wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+tar zxvf libiconv-1.14.tar.gz
+```
+
+Patch the localcharset.c file:
+vim libiconv-1.14/libcharset/lib/localcharset.c
+
+On line 48, add the following line of code:
+
+#undef HAVE_LANGINFO_CODESET
+
+Save the file and continue with steps below:
+```
+cd libiconv-1.14
+./configure
+cd ..
+hg clone http://hg.code.sf.net/p/zbar/code zbar-code
+cd zbar-code/android
+android update project -p . -t 'android-19'
+```
+
+Open jni/Android.mk file and add fPIC flag to LOCAL_C_FLAGS.
+Open jni/Application.mk file and specify APP_ABI targets as needed.
+
+```
+ant -Dndk.dir=$NDK_HOME  -Diconv.src=some_work_dir/libiconv-1.14 zbar-clean zbar-all
+```
+
+Upon completion you can grab the .so and .jar files from the libs folder.
+
 Credits
 =======
 
