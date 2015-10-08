@@ -10,7 +10,7 @@ buildscript {
 
 allprojects {
     group = 'me.dm7.barcodescanner'
-    version = '1.8.2'
+    version = '1.8.3'
 
     repositories {
         mavenCentral()
@@ -20,7 +20,7 @@ allprojects {
     }
 
     ext {
-        supportLibraryDependency = 'com.android.support:support-v4:21.0.3'
+        supportLibraryDependency = 'com.android.support:support-v4:23.0.1'
         isLibrary = false
     }
 }
@@ -30,8 +30,8 @@ subprojects {
         ext.pluginContainer = project.getPlugins()
         if(ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
             android {
-                compileSdkVersion 22
-                buildToolsVersion '22.0.1'
+                compileSdkVersion 23
+                buildToolsVersion '23.0.1'
 
                 android {
                     lintOptions {
@@ -41,9 +41,9 @@ subprojects {
 
                 defaultConfig {
                     minSdkVersion 9
-                    targetSdkVersion 22
-                    versionCode 182
-                    versionName "1.8.2"
+                    targetSdkVersion 23
+                    versionCode 183
+                    versionName "1.8.3"
                 }
             }
         }
