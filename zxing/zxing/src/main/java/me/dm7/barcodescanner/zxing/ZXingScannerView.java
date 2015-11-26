@@ -2,6 +2,7 @@ package me.dm7.barcodescanner.zxing;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.util.AttributeSet;
@@ -51,12 +52,31 @@ public class ZXingScannerView extends BarcodeScannerView {
     }
 
     public ZXingScannerView(Context context) {
-        super(context);
+        this(context, false);
+    }
+
+    public ZXingScannerView(Context context, boolean stretchCameraToFill) {
+        super(context, stretchCameraToFill);
+
         initMultiFormatReader();
     }
 
     public ZXingScannerView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+
+        // See if stretchCameraToFill was specified in the XML layout file
+        TypedArray attrs = context.getTheme().obtainStyledAttributes(
+                attributeSet,
+                R.styleable.ZXingScannerView,
+                0, 0);
+
+        try {
+            setStretchCameraToFill(attrs.getBoolean(R.styleable.ZXingScannerView_stretchCameraToFill, false));
+        }
+        finally {
+            attrs.recycle();
+        }
+
         initMultiFormatReader();
     }
 

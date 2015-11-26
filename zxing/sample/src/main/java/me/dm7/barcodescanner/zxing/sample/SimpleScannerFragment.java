@@ -16,7 +16,7 @@ public class SimpleScannerFragment extends Fragment implements ZXingScannerView.
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mScannerView = new ZXingScannerView(getActivity());
+        mScannerView = new ZXingScannerView(getActivity(), false);
         return mScannerView;
     }
 

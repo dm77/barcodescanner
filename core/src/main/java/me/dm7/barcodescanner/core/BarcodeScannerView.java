@@ -1,6 +1,7 @@
 package me.dm7.barcodescanner.core;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
@@ -15,9 +16,16 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private CameraPreview mPreview;
     private IViewFinder mViewFinderView;
     private Rect mFramingRectInPreview;
+    protected boolean mStretchCameraToFill = false;
 
     public BarcodeScannerView(Context context) {
+        this(context, false);
+    }
+
+    public BarcodeScannerView(Context context, boolean stretchCameraToFill) {
         super(context);
+        mStretchCameraToFill = stretchCameraToFill;
+
         setupLayout();
     }
 
@@ -28,6 +36,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
 
     public final void setupLayout() {
         mPreview = new CameraPreview(getContext());
+        mPreview.setStretchToFill(mStretchCameraToFill);
         RelativeLayout relativeLayout = new RelativeLayout(getContext());
         relativeLayout.setGravity(Gravity.CENTER);
         relativeLayout.setBackgroundColor(Color.BLACK);
@@ -147,5 +156,16 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         if(mPreview != null) {
             mPreview.setAutoFocus(state);
         }
+    }
+
+    public void setStretchCameraToFill(boolean stretchCameraToFill) {
+        mStretchCameraToFill = stretchCameraToFill;
+        if (mPreview != null) {
+            mPreview.setStretchToFill(mStretchCameraToFill);
+        }
+    }
+
+    public boolean shouldStretchCameraToFill() {
+        return mStretchCameraToFill;
     }
 }

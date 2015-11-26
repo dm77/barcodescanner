@@ -2,6 +2,7 @@ package me.dm7.barcodescanner.core;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.os.Handler;
@@ -24,14 +25,32 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private boolean mPreviewing = true;
     private boolean mAutoFocus = true;
     private boolean mSurfaceCreated = false;
+    private boolean mStretchToFill = false;
     private Camera.PreviewCallback mPreviewCallback;
 
     public CameraPreview(Context context) {
-        super(context);
+        this(context, false);
     }
 
-    public CameraPreview(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public CameraPreview(Context context, boolean stretchToFill) {
+        super(context);
+        mStretchToFill = stretchToFill;
+    }
+
+    public CameraPreview(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+
+        TypedArray attrs = context.getTheme().obtainStyledAttributes(
+                attributeSet,
+                R.styleable.CameraPreview,
+                0, 0);
+
+        try {
+            mStretchToFill = attrs.getBoolean(R.styleable.CameraPreview_stretchToFill, false);
+        }
+        finally {
+            attrs.recycle();
+        }
     }
 
     public void setCamera(Camera camera, Camera.PreviewCallback previewCallback) {
@@ -118,6 +137,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void setupCameraParameters() {
+        if (mStretchToFill) {
+            return;
+        }
+
         Camera.Size optimalSize = getOptimalPreviewSize();
         Camera.Parameters parameters = mCamera.getParameters();
         parameters.setPreviewSize(optimalSize.width, optimalSize.height);
@@ -265,5 +288,13 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     private void scheduleAutoFocus() {
         mAutoFocusHandler.postDelayed(doAutoFocus, 1000);
+    }
+
+    public void setStretchToFill(boolean stretchToFill) {
+        mStretchToFill = stretchToFill;
+    }
+
+    public boolean shouldStretchToFill() {
+        return mStretchToFill;
     }
 }
