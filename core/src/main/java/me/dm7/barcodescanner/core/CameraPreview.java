@@ -21,7 +21,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     private Camera mCamera;
     private Handler mAutoFocusHandler;
-    private boolean mPreviewing = true;
+    private boolean mPreviewing = false;
     private boolean mAutoFocus = true;
     private boolean mSurfaceCreated = false;
     private Camera.PreviewCallback mPreviewCallback;
