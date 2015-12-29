@@ -49,7 +49,7 @@ public class SimpleScannerActivity extends ActionBarActivity implements ZXingSca
     public void handleResult(Result rawResult) {
         Toast.makeText(this, "Contents = " + rawResult.getText() +
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
-        mScannerView.startCamera();
+        mScannerView.resumePreview();
     }
 
     private static class CustomViewFinderView extends ViewFinderView {

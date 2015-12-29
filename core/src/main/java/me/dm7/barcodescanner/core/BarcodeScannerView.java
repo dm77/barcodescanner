@@ -15,19 +15,18 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private CameraPreview mPreview;
     private IViewFinder mViewFinderView;
     private Rect mFramingRectInPreview;
+    private CameraHandlerThread mCameraHandlerThread;
 
     public BarcodeScannerView(Context context) {
         super(context);
-        setupLayout();
     }
 
     public BarcodeScannerView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        setupLayout();
     }
 
-    public final void setupLayout() {
-        mPreview = new CameraPreview(getContext());
+    public final void setupLayout(Camera camera) {
+        mPreview = new CameraPreview(getContext(), camera, this);
         RelativeLayout relativeLayout = new RelativeLayout(getContext());
         relativeLayout.setGravity(Gravity.CENTER);
         relativeLayout.setBackgroundColor(Color.BLACK);
@@ -55,20 +54,22 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     }
 
     public void startCamera(int cameraId) {
-        startCamera(CameraUtils.getCameraInstance(cameraId));
+        if(mCameraHandlerThread == null) {
+            mCameraHandlerThread = new CameraHandlerThread(this);
+        }
+        mCameraHandlerThread.startCamera(cameraId);
     }
 
-    public void startCamera(Camera camera) {
+    public void setupCameraPreview(Camera camera) {
         mCamera = camera;
         if(mCamera != null) {
+            setupLayout(mCamera);
             mViewFinderView.setupViewFinder();
-            mPreview.setCamera(mCamera, this);
-            mPreview.initCameraPreview();
         }
     }
 
     public void startCamera() {
-        startCamera(CameraUtils.getCameraInstance());
+        startCamera(-1);
     }
 
     public void stopCamera() {
@@ -77,6 +78,13 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
             mPreview.setCamera(null, null);
             mCamera.release();
             mCamera = null;
+        }
+    }
+
+    public void resumePreview() {
+        if(mCamera != null) {
+            mCamera.startPreview();
+            mCamera.setOneShotPreviewCallback(this);
         }
     }
 

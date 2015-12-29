@@ -26,30 +26,26 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private boolean mSurfaceCreated = false;
     private Camera.PreviewCallback mPreviewCallback;
 
-    public CameraPreview(Context context) {
+    public CameraPreview(Context context, Camera camera, Camera.PreviewCallback previewCallback) {
         super(context);
+        init(camera, previewCallback);
     }
 
-    public CameraPreview(Context context, AttributeSet attrs) {
+    public CameraPreview(Context context, AttributeSet attrs, Camera camera, Camera.PreviewCallback previewCallback) {
         super(context, attrs);
+        init(camera, previewCallback);
+    }
+
+    public void init(Camera camera, Camera.PreviewCallback previewCallback) {
+        setCamera(camera, previewCallback);
+        mAutoFocusHandler = new Handler();
+        getHolder().addCallback(this);
+        getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
     public void setCamera(Camera camera, Camera.PreviewCallback previewCallback) {
         mCamera = camera;
         mPreviewCallback = previewCallback;
-        mAutoFocusHandler = new Handler();
-    }
-
-    public void initCameraPreview() {
-        if(mCamera != null) {
-            getHolder().addCallback(this);
-            getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-            if(mPreviewing) {
-                requestLayout();
-            } else {
-                showCameraPreview();
-            }
-        }
     }
 
     @Override
