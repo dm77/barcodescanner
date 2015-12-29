@@ -4,8 +4,8 @@ package me.dm7.barcodescanner.core;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import android.util.Log;
 
+// This code is mostly based on the top answer here: http://stackoverflow.com/questions/18149964/best-use-of-handlerthread-over-other-similar-classes
 public class CameraHandlerThread extends HandlerThread {
     private static final String LOG_TAG = "CameraHandlerThread";
 
@@ -23,7 +23,6 @@ public class CameraHandlerThread extends HandlerThread {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Log.v(LOG_TAG, "Trying to setup camera now");
                 mScannerView.setupCameraPreview(CameraUtils.getCameraInstance(cameraId));
             }
         });
