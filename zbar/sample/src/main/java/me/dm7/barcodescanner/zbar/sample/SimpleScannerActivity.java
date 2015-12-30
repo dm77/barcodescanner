@@ -43,7 +43,7 @@ public class SimpleScannerActivity extends ActionBarActivity implements ZBarScan
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mScannerView.resumePreview(SimpleScannerActivity.this);
+                mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
             }
         }, 2000);
     }

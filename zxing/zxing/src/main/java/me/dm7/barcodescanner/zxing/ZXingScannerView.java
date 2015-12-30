@@ -143,7 +143,7 @@ public class ZXingScannerView extends BarcodeScannerView {
                         ResultHandler tmpResultHandler = mResultHandler;
                         mResultHandler = null;
 
-                        stopPreview();
+                        stopCameraPreview();
                         if (tmpResultHandler != null) {
                             tmpResultHandler.handleResult(finalRawResult);
                         }
@@ -158,9 +158,9 @@ public class ZXingScannerView extends BarcodeScannerView {
         }
     }
 
-    public void resumePreview(ResultHandler resultHandler) {
+    public void resumeCameraPreview(ResultHandler resultHandler) {
         mResultHandler = resultHandler;
-        super.resumePreview();
+        super.resumeCameraPreview();
     }
 
     public PlanarYUVLuminanceSource buildLuminanceSource(byte[] data, int width, int height) {

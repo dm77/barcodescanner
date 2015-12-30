@@ -40,7 +40,7 @@ public class SimpleScannerFragment extends Fragment implements ZXingScannerView.
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mScannerView.resumePreview(SimpleScannerFragment.this);
+                mScannerView.resumeCameraPreview(SimpleScannerFragment.this);
             }
         }, 2000);
     }

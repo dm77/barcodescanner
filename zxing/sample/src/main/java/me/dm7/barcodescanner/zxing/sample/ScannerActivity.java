@@ -168,7 +168,7 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // Resume the camera
-        mScannerView.resumePreview(this);
+        mScannerView.resumeCameraPreview(this);
     }
 
     @Override
