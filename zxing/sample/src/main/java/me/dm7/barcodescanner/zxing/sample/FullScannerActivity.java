@@ -1,4 +1,4 @@
-package me.dm7.barcodescanner.zbar.sample;
+package me.dm7.barcodescanner.zxing.sample;
 
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -7,25 +7,26 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.Result;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.dm7.barcodescanner.zbar.BarcodeFormat;
-import me.dm7.barcodescanner.zbar.Result;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class ScannerActivity extends ActionBarActivity implements MessageDialogFragment.MessageDialogListener,
-        ZBarScannerView.ResultHandler, FormatSelectorDialogFragment.FormatSelectorDialogListener,
+public class FullScannerActivity extends AppCompatActivity implements MessageDialogFragment.MessageDialogListener,
+        ZXingScannerView.ResultHandler, FormatSelectorDialogFragment.FormatSelectorDialogListener,
         CameraSelectorDialogFragment.CameraSelectorDialogListener {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
     private static final String CAMERA_ID = "CAMERA_ID";
-    private ZBarScannerView mScannerView;
+    private ZXingScannerView mScannerView;
     private boolean mFlash;
     private boolean mAutoFocus;
     private ArrayList<Integer> mSelectedIndices;
@@ -46,7 +47,7 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
             mCameraId = -1;
         }
 
-        mScannerView = new ZBarScannerView(this);
+        mScannerView = new ZXingScannerView(this);
         setupFormats();
         setContentView(mScannerView);
     }
@@ -78,7 +79,7 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
         } else {
             menuItem = menu.add(Menu.NONE, R.id.menu_flash, 0, R.string.flash_off);
         }
-        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
+        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_NEVER);
 
 
         if(mAutoFocus) {
@@ -86,13 +87,13 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
         } else {
             menuItem = menu.add(Menu.NONE, R.id.menu_auto_focus, 0, R.string.auto_focus_off);
         }
-        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
+        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_NEVER);
 
         menuItem = menu.add(Menu.NONE, R.id.menu_formats, 0, R.string.formats);
-        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
+        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_NEVER);
 
         menuItem = menu.add(Menu.NONE, R.id.menu_camera_selector, 0, R.string.select_camera);
-        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
+        MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_NEVER);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -140,7 +141,7 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
             Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
             r.play();
         } catch (Exception e) {}
-        showMessageDialog("Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
+        showMessageDialog("Contents = " + rawResult.getText() + ", Format = " + rawResult.getBarcodeFormat().toString());
     }
 
     public void showMessageDialog(String message) {
@@ -184,18 +185,17 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
         mScannerView.setAutoFocus(mAutoFocus);
     }
 
-
     public void setupFormats() {
         List<BarcodeFormat> formats = new ArrayList<BarcodeFormat>();
         if(mSelectedIndices == null || mSelectedIndices.isEmpty()) {
             mSelectedIndices = new ArrayList<Integer>();
-            for(int i = 0; i < BarcodeFormat.ALL_FORMATS.size(); i++) {
+            for(int i = 0; i < ZXingScannerView.ALL_FORMATS.size(); i++) {
                 mSelectedIndices.add(i);
             }
         }
 
         for(int index : mSelectedIndices) {
-            formats.add(BarcodeFormat.ALL_FORMATS.get(index));
+            formats.add(ZXingScannerView.ALL_FORMATS.get(index));
         }
         if(mScannerView != null) {
             mScannerView.setFormats(formats);

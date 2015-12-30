@@ -4,7 +4,7 @@ dependencies {
     compile project(":zbar:zbar")
     //compile 'me.dm7.barcodescanner:zbar:1.8.3'
     compile supportLibraryDependency
-    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
 }
 
 android {

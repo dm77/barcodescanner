@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -17,11 +16,11 @@
     <Button android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:text="@string/activity_sample"
-            android:onClick="launchActivity" />
+            android:onClick="launchFullActivity" />
     <Button android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:text="@string/fragment_sample"
-            android:onClick="launchFragmentActivity" />
+            android:onClick="launchFullFragmentActivity" />
     <Button android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/full_screen_sample"

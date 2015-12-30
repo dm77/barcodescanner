@@ -15,7 +15,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ScannerActivity"
+        <activity android:name=".FullScannerActivity"
                   android:theme="@style/AppOverlayTheme"
                   android:uiOptions="splitActionBarWhenNarrow"
                   android:label="@string/scanner_activity">
@@ -23,7 +23,7 @@
                        android:value="splitActionBarWhenNarrow" />
         </activity>
 
-        <activity android:name=".ScannerFragmentActivity"
+        <activity android:name=".FullScannerFragmentActivity"
                   android:theme="@style/AppOverlayTheme"
                   android:uiOptions="splitActionBarWhenNarrow"
                   android:label="@string/scanner_fragment_activity">
