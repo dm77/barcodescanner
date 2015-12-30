@@ -168,9 +168,7 @@ public class ScannerActivity extends ActionBarActivity implements MessageDialogF
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // Resume the camera
-        mScannerView.startCamera(mCameraId);
-        mScannerView.setFlash(mFlash);
-        mScannerView.setAutoFocus(mAutoFocus);
+        mScannerView.resumePreview(this);
     }
 
     @Override

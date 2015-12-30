@@ -174,9 +174,7 @@ public class ScannerFragment extends Fragment implements MessageDialogFragment.M
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // Resume the camera
-        mScannerView.startCamera(mCameraId);
-        mScannerView.setFlash(mFlash);
-        mScannerView.setAutoFocus(mAutoFocus);
+        mScannerView.resumePreview(this);
     }
 
     @Override

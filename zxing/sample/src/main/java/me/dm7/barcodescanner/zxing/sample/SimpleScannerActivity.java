@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -49,7 +50,18 @@ public class SimpleScannerActivity extends ActionBarActivity implements ZXingSca
     public void handleResult(Result rawResult) {
         Toast.makeText(this, "Contents = " + rawResult.getText() +
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
-        mScannerView.resumePreview();
+
+        // Note:
+        // * Wait 2 seconds to resume the preview.
+        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
+        // * I don't know why this is the case but I don't have the time to figure out.
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mScannerView.resumePreview(SimpleScannerActivity.this);
+            }
+        }, 2000);
     }
 
     private static class CustomViewFinderView extends ViewFinderView {

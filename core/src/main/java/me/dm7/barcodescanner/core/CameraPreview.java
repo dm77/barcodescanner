@@ -71,6 +71,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     public void showCameraPreview() {
         if(mCamera != null) {
             try {
+                getHolder().addCallback(this);
                 mPreviewing = true;
                 setupCameraParameters();
                 mCamera.setPreviewDisplay(getHolder());
@@ -104,6 +105,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         if(mCamera != null) {
             try {
                 mPreviewing = false;
+                getHolder().removeCallback(this);
                 mCamera.cancelAutoFocus();
                 mCamera.setOneShotPreviewCallback(null);
                 mCamera.stopPreview();

@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
@@ -25,6 +28,8 @@ import me.dm7.barcodescanner.core.BarcodeScannerView;
 import me.dm7.barcodescanner.core.DisplayUtils;
 
 public class ZXingScannerView extends BarcodeScannerView {
+    private static final String TAG = "ZXingScannerView";
+
     public interface ResultHandler {
         public void handleResult(Result rawResult);
     }
@@ -85,49 +90,77 @@ public class ZXingScannerView extends BarcodeScannerView {
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-        Camera.Parameters parameters = camera.getParameters();
-        Camera.Size size = parameters.getPreviewSize();
-        int width = size.width;
-        int height = size.height;
-
-        if(DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
-            byte[] rotatedData = new byte[data.length];
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++)
-                    rotatedData[x * height + height - y - 1] = data[x + y * width];
-            }
-            int tmp = width;
-            width = height;
-            height = tmp;
-            data = rotatedData;
+        if(mResultHandler == null) {
+            return;
         }
+        
+        try {
+            Camera.Parameters parameters = camera.getParameters();
+            Camera.Size size = parameters.getPreviewSize();
+            int width = size.width;
+            int height = size.height;
 
-        Result rawResult = null;
-        PlanarYUVLuminanceSource source = buildLuminanceSource(data, width, height);
-
-        if(source != null) {
-            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-            try {
-                rawResult = mMultiFormatReader.decodeWithState(bitmap);
-            } catch (ReaderException re) {
-                // continue
-            } catch (NullPointerException npe) {
-                // This is terrible
-            } catch (ArrayIndexOutOfBoundsException aoe) {
-
-            } finally {
-                mMultiFormatReader.reset();
+            if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
+                byte[] rotatedData = new byte[data.length];
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++)
+                        rotatedData[x * height + height - y - 1] = data[x + y * width];
+                }
+                int tmp = width;
+                width = height;
+                height = tmp;
+                data = rotatedData;
             }
-        }
 
-        if (rawResult != null) {
-            camera.startPreview();
-            if(mResultHandler != null) {
-                mResultHandler.handleResult(rawResult);
+            Result rawResult = null;
+            PlanarYUVLuminanceSource source = buildLuminanceSource(data, width, height);
+
+            if (source != null) {
+                BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+                try {
+                    rawResult = mMultiFormatReader.decodeWithState(bitmap);
+                } catch (ReaderException re) {
+                    // continue
+                } catch (NullPointerException npe) {
+                    // This is terrible
+                } catch (ArrayIndexOutOfBoundsException aoe) {
+
+                } finally {
+                    mMultiFormatReader.reset();
+                }
             }
-        } else {
-            camera.setOneShotPreviewCallback(this);
+
+            final Result finalRawResult = rawResult;
+
+            if (finalRawResult != null) {
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Stopping the preview can take a little long.
+                        // So we want to set result handler to null to discard subsequent calls to
+                        // onPreviewFrame.
+                        ResultHandler tmpResultHandler = mResultHandler;
+                        mResultHandler = null;
+
+                        stopPreview();
+                        if (tmpResultHandler != null) {
+                            tmpResultHandler.handleResult(finalRawResult);
+                        }
+                    }
+                });
+            } else {
+                camera.setOneShotPreviewCallback(this);
+            }
+        } catch(RuntimeException e) {
+            // TODO: Terrible hack. It is possible that this method is invoked after camera is released.
+            Log.e(TAG, e.toString(), e);
         }
+    }
+
+    public void resumePreview(ResultHandler resultHandler) {
+        mResultHandler = resultHandler;
+        super.resumePreview();
     }
 
     public PlanarYUVLuminanceSource buildLuminanceSource(byte[] data, int width, int height) {

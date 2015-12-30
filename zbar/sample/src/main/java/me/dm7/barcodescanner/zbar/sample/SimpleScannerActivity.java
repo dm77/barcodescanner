@@ -1,6 +1,7 @@
 package me.dm7.barcodescanner.zbar.sample;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
@@ -34,6 +35,16 @@ public class SimpleScannerActivity extends ActionBarActivity implements ZBarScan
     public void handleResult(Result rawResult) {
         Toast.makeText(this, "Contents = " + rawResult.getContents() +
                 ", Format = " + rawResult.getBarcodeFormat().getName(), Toast.LENGTH_SHORT).show();
-        mScannerView.startCamera();
+        // Note:
+        // * Wait 2 seconds to resume the preview.
+        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
+        // * I don't know why this is the case but I don't have the time to figure out.
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mScannerView.resumePreview(SimpleScannerActivity.this);
+            }
+        }, 2000);
     }
 }
