@@ -2,20 +2,23 @@ package me.dm7.barcodescanner.zbar.sample;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
-public class SimpleScannerActivity extends AppCompatActivity implements ZBarScannerView.ResultHandler {
+public class SimpleScannerActivity extends BaseScannerActivity implements ZBarScannerView.ResultHandler {
     private ZBarScannerView mScannerView;
 
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
+        setContentView(R.layout.activity_simple_scanner);
+        setupToolbar();
+        ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZBarScannerView(this);
-        setContentView(mScannerView);
+        contentFrame.addView(mScannerView);
     }
 
     @Override

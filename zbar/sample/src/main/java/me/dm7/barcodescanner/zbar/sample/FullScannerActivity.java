@@ -10,6 +10,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import me.dm7.barcodescanner.zbar.BarcodeFormat;
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
-public class FullScannerActivity extends AppCompatActivity implements MessageDialogFragment.MessageDialogListener,
+public class FullScannerActivity extends BaseScannerActivity implements MessageDialogFragment.MessageDialogListener,
         ZBarScannerView.ResultHandler, FormatSelectorDialogFragment.FormatSelectorDialogListener,
         CameraSelectorDialogFragment.CameraSelectorDialogListener {
     private static final String FLASH_STATE = "FLASH_STATE";
@@ -46,9 +47,12 @@ public class FullScannerActivity extends AppCompatActivity implements MessageDia
             mCameraId = -1;
         }
 
+        setContentView(R.layout.activity_full_scanner);
+        setupToolbar();
+        ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZBarScannerView(this);
         setupFormats();
-        setContentView(mScannerView);
+        contentFrame.addView(mScannerView);
     }
 
     @Override

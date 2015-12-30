@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
@@ -19,7 +19,7 @@ import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class FullScannerActivity extends AppCompatActivity implements MessageDialogFragment.MessageDialogListener,
+public class FullScannerActivity extends BaseScannerActivity implements MessageDialogFragment.MessageDialogListener,
         ZXingScannerView.ResultHandler, FormatSelectorDialogFragment.FormatSelectorDialogListener,
         CameraSelectorDialogFragment.CameraSelectorDialogListener {
     private static final String FLASH_STATE = "FLASH_STATE";
@@ -47,9 +47,13 @@ public class FullScannerActivity extends AppCompatActivity implements MessageDia
             mCameraId = -1;
         }
 
+        setContentView(R.layout.activity_simple_scanner);
+        setupToolbar();
+
+        ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZXingScannerView(this);
         setupFormats();
-        setContentView(mScannerView);
+        contentFrame.addView(mScannerView);
     }
 
     @Override

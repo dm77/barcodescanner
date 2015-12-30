@@ -42,7 +42,7 @@
         </activity>
 
         <activity android:name=".FullScreenScannerFragmentActivity"
-                android:theme="@style/AppFullScreenTheme"
+                  android:theme="@style/AppOverlayTheme"
                 android:label="@string/full_screen_scanner_fragment_activity">
           </activity>
     </application>
