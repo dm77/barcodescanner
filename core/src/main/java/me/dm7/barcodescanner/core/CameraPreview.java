@@ -28,17 +28,19 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private boolean mStretchToFill = false;
     private Camera.PreviewCallback mPreviewCallback;
 
-    public CameraPreview(Context context) {
-        this(context, false);
+    public CameraPreview(Context context, Camera camera, Camera.PreviewCallback previewCallback) {
+        this(context, camera, previewCallback, false);
     }
 
-    public CameraPreview(Context context, boolean stretchToFill) {
+    public CameraPreview(Context context, Camera camera, Camera.PreviewCallback previewCallback, boolean stretchToFill) {
         super(context);
         mStretchToFill = stretchToFill;
+        init(camera, previewCallback);
     }
 
-    public CameraPreview(Context context, AttributeSet attributeSet) {
+    public CameraPreview(Context context, AttributeSet attributeSet, Camera camera, Camera.PreviewCallback previewCallback) {
         super(context, attributeSet);
+        init(camera, previewCallback);
 
         TypedArray attrs = context.getTheme().obtainStyledAttributes(
                 attributeSet,
@@ -47,28 +49,21 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
         try {
             mStretchToFill = attrs.getBoolean(R.styleable.CameraPreview_stretchToFill, false);
-        }
-        finally {
+        } finally {
             attrs.recycle();
         }
+    }
+
+    public void init(Camera camera, Camera.PreviewCallback previewCallback) {
+        setCamera(camera, previewCallback);
+        mAutoFocusHandler = new Handler();
+        getHolder().addCallback(this);
+        getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
     public void setCamera(Camera camera, Camera.PreviewCallback previewCallback) {
         mCamera = camera;
         mPreviewCallback = previewCallback;
-        mAutoFocusHandler = new Handler();
-    }
-
-    public void initCameraPreview() {
-        if(mCamera != null) {
-            getHolder().addCallback(this);
-            getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-            if(mPreviewing) {
-                requestLayout();
-            } else {
-                showCameraPreview();
-            }
-        }
     }
 
     @Override
@@ -94,6 +89,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     public void showCameraPreview() {
         if(mCamera != null) {
             try {
+                getHolder().addCallback(this);
                 mPreviewing = true;
                 setupCameraParameters();
                 mCamera.setPreviewDisplay(getHolder());
@@ -127,6 +123,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         if(mCamera != null) {
             try {
                 mPreviewing = false;
+                getHolder().removeCallback(this);
                 mCamera.cancelAutoFocus();
                 mCamera.setOneShotPreviewCallback(null);
                 mCamera.stopPreview();

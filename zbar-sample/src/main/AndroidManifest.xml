@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="me.dm7.barcodescanner.zbar.sample">
+  <uses-permission android:name="android.permission.CAMERA" />
+
+  <application android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher">
+        <activity android:name=".MainActivity"
+                  android:theme="@style/AppTheme"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".FullScannerActivity"
+                  android:theme="@style/AppOverlayTheme"
+                  android:uiOptions="splitActionBarWhenNarrow"
+                  android:label="@string/scanner_activity">
+            <meta-data android:name="android.support.UI_OPTIONS"
+                       android:value="splitActionBarWhenNarrow" />
+        </activity>
+
+        <activity android:name=".FullScannerFragmentActivity"
+                  android:theme="@style/AppOverlayTheme"
+                  android:uiOptions="splitActionBarWhenNarrow"
+                  android:label="@string/scanner_fragment_activity">
+            <meta-data android:name="android.support.UI_OPTIONS"
+                       android:value="splitActionBarWhenNarrow" />
+        </activity>
+
+        <activity android:name=".SimpleScannerActivity"
+                android:theme="@style/AppOverlayTheme"
+                android:label="@string/simple_scanner_activity">
+        </activity>
+
+        <activity android:name=".SimpleScannerFragmentActivity"
+                android:theme="@style/AppOverlayTheme"
+                android:label="@string/simple_scanner_fragment_activity">
+        </activity>
+    </application>
+</manifest>

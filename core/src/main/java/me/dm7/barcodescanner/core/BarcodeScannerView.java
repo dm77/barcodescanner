@@ -17,6 +17,9 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private IViewFinder mViewFinderView;
     private Rect mFramingRectInPreview;
     protected boolean mStretchCameraToFill = false;
+    private CameraHandlerThread mCameraHandlerThread;
+    private Boolean mFlashState;
+    private boolean mAutofocusState = true;
 
     public BarcodeScannerView(Context context) {
         this(context, false);
@@ -24,18 +27,18 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
 
     public BarcodeScannerView(Context context, boolean stretchCameraToFill) {
         super(context);
-        mStretchCameraToFill = stretchCameraToFill;
 
-        setupLayout();
+        mStretchCameraToFill = stretchCameraToFill;
     }
 
     public BarcodeScannerView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        setupLayout();
     }
 
-    public final void setupLayout() {
-        mPreview = new CameraPreview(getContext());
+    public final void setupLayout(Camera camera) {
+            removeAllViews();
+
+        mPreview = new CameraPreview(getContext(), camera, this);
         mPreview.setStretchToFill(mStretchCameraToFill);
         RelativeLayout relativeLayout = new RelativeLayout(getContext());
         relativeLayout.setGravity(Gravity.CENTER);
@@ -64,20 +67,26 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     }
 
     public void startCamera(int cameraId) {
-        startCamera(CameraUtils.getCameraInstance(cameraId));
+        if(mCameraHandlerThread == null) {
+            mCameraHandlerThread = new CameraHandlerThread(this);
+        }
+        mCameraHandlerThread.startCamera(cameraId);
     }
 
-    public void startCamera(Camera camera) {
+    public void setupCameraPreview(Camera camera) {
         mCamera = camera;
         if(mCamera != null) {
+            setupLayout(mCamera);
             mViewFinderView.setupViewFinder();
-            mPreview.setCamera(mCamera, this);
-            mPreview.initCameraPreview();
+            if(mFlashState != null) {
+                setFlash(mFlashState);
+            }
+            setAutoFocus(mAutofocusState);
         }
     }
 
     public void startCamera() {
-        startCamera(CameraUtils.getCameraInstance());
+        startCamera(-1);
     }
 
     public void stopCamera() {
@@ -86,6 +95,22 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
             mPreview.setCamera(null, null);
             mCamera.release();
             mCamera = null;
+        }
+        if(mCameraHandlerThread != null) {
+            mCameraHandlerThread.quit();
+            mCameraHandlerThread = null;
+        }
+    }
+
+    public void stopCameraPreview() {
+        if(mPreview != null) {
+            mPreview.stopCameraPreview();
+        }
+    }
+
+    protected void resumeCameraPreview() {
+        if(mPreview != null) {
+            mPreview.showCameraPreview();
         }
     }
 
@@ -110,6 +135,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     }
 
     public void setFlash(boolean flag) {
+        mFlashState = flag;
         if(mCamera != null && CameraUtils.isFlashSupported(mCamera)) {
 
             Camera.Parameters parameters = mCamera.getParameters();
@@ -153,6 +179,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     }
 
     public void setAutoFocus(boolean state) {
+        mAutofocusState = state;
         if(mPreview != null) {
             mPreview.setAutoFocus(state);
         }
