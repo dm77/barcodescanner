@@ -9,6 +9,14 @@ Screenshots
 
 ![Landscape](https://raw.github.com/dm77/barcodescanner/master/screenshots/landscape_small.png)
 
+
+Minor BREAKING CHANGE in 1.8.4
+==============================
+Version 1.8.4 introduces a couple of new changes:
+
+* Open Camera and handle preview frames in a separate HandlerThread (#1, #99): Though this has worked fine in my testing on 3 devices, I would advise you to test on your own devices before blindly releasing apps with this version. If you run into any issues please file a bug report.
+* Do not automatically stopCamera after a result is found #115: This means that upon a successful scan only the cameraPreview is stopped but the camera is not released. So previously if your code was calling mScannerView.startCamera() in the handleResult() method, please replace that with a call to mScannerView.resumeCameraPreview(this);
+
 ZXing
 =====
 
@@ -17,7 +25,7 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`compile 'me.dm7.barcodescanner:zxing:1.8.3'`
+`compile 'me.dm7.barcodescanner:zxing:1.8.4'`
 
 Simple Usage
 ------------
@@ -59,6 +67,9 @@ public class SimpleScannerActivity extends Activity implements ZXingScannerView.
         // Do something with the result here
         Log.v(TAG, rawResult.getText()); // Prints scan results
         Log.v(TAG, rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
+
+        // If you would like to resume scanning, call this method below:
+        mScannerView.resumeCameraPreview(this);
     }
 }
 
@@ -115,7 +126,7 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`compile 'me.dm7.barcodescanner:zbar:1.8.3'`
+`compile 'me.dm7.barcodescanner:zbar:1.8.4'`
 
 Simple Usage
 ------------
@@ -157,6 +168,9 @@ public class SimpleScannerActivity extends Activity implements ZBarScannerView.R
         // Do something with the result here
         Log.v(TAG, rawResult.getContents()); // Prints scan results
         Log.v(TAG, rawResult.getBarcodeFormat().getName()); // Prints the scan format (qrcode, pdf417 etc.)
+
+        // If you would like to resume scanning, call this method below:
+        mScannerView.resumeCameraPreview(this);
     }
 }
 

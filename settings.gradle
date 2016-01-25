@@ -1,1 +1,1 @@
-include "core", "zxing:zxing", "zxing:sample", "zbar:zbar", "zbar:sample"
+include "core", "zxing", "zxing-sample", "zbar", "zbar-sample"
