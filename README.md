@@ -1,5 +1,6 @@
 Introduction
 ============
+[![Badge](http://www.libtastic.com/static/osbadges/281.png)](http://www.libtastic.com/technology/281/)
 
 Android library projects that provides easy to use and extensible Barcode Scanner views based on ZXing and ZBar.
 
