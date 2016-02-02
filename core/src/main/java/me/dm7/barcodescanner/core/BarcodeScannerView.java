@@ -6,18 +6,18 @@ import android.graphics.Rect;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 public abstract class BarcodeScannerView extends FrameLayout implements Camera.PreviewCallback  {
     private Camera mCamera;
     private CameraPreview mPreview;
-    private IViewFinder mViewFinderView;
+    private ViewFinder mViewFinderView;
     private Rect mFramingRectInPreview;
     private CameraHandlerThread mCameraHandlerThread;
     private Boolean mFlashState;
     private boolean mAutofocusState = true;
+    private ViewFinder.FramingRectConfiguration mFramingRectConfiguration;
 
     public BarcodeScannerView(Context context) {
         super(context);
@@ -38,12 +38,16 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         addView(relativeLayout);
 
         mViewFinderView = createViewFinderView(getContext());
-        if (mViewFinderView instanceof View) {
-            addView((View) mViewFinderView);
-        } else {
-            throw new IllegalArgumentException("IViewFinder object returned by " +
-                    "'createViewFinderView()' should be instance of android.view.View");
-        }
+        addView(mViewFinderView);
+    }
+
+    /**
+     * Set a custom configuration for the framing rectangle
+     *
+     * @param framingRectConfiguration the configuration for the framing rectangle
+     */
+    public void setFramingRectConfiguration(ViewFinder.FramingRectConfiguration framingRectConfiguration){
+        this.mFramingRectConfiguration = framingRectConfiguration;
     }
 
     /**
@@ -53,8 +57,12 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
      * @param context {@link Context}
      * @return {@link android.view.View} that implements {@link ViewFinderView}
      */
-    protected IViewFinder createViewFinderView(Context context) {
-        return new ViewFinderView(context);
+    protected ViewFinder createViewFinderView(Context context) {
+        ViewFinder viewFinder = new ViewFinderView(context);
+        if(mFramingRectConfiguration != null){
+            viewFinder.setFramingRectConfiguration(mFramingRectConfiguration);
+        }
+        return viewFinder;
     }
 
     public void startCamera(int cameraId) {

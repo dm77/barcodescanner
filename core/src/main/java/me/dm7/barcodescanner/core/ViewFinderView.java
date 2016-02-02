@@ -7,36 +7,13 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.view.View;
 
-public class ViewFinderView extends View implements IViewFinder {
+public class ViewFinderView extends ViewFinder {
     private static final String TAG = "ViewFinderView";
 
+    private boolean initComplete = false;
     private Rect mFramingRect;
-
-    private static final int MIN_FRAME_WIDTH = 240;
-    private static final int MIN_FRAME_HEIGHT = 240;
-
-    private static final float LANDSCAPE_WIDTH_RATIO = 5f/8;
-    private static final float LANDSCAPE_HEIGHT_RATIO = 5f/8;
-    private static final int LANDSCAPE_MAX_FRAME_WIDTH = (int) (1920 * LANDSCAPE_WIDTH_RATIO); // = 5/8 * 1920
-    private static final int LANDSCAPE_MAX_FRAME_HEIGHT = (int) (1080 * LANDSCAPE_HEIGHT_RATIO); // = 5/8 * 1080
-
-    private static final float PORTRAIT_WIDTH_RATIO = 7f/8;
-    private static final float PORTRAIT_HEIGHT_RATIO = 3f/8;
-    private static final int PORTRAIT_MAX_FRAME_WIDTH = (int) (1080 * PORTRAIT_WIDTH_RATIO); // = 7/8 * 1080
-    private static final int PORTRAIT_MAX_FRAME_HEIGHT = (int) (1920 * PORTRAIT_HEIGHT_RATIO); // = 3/8 * 1920
-
-    private static final int[] SCANNER_ALPHA = {0, 64, 128, 192, 255, 192, 128, 64};
     private int scannerAlpha;
-    private static final int POINT_SIZE = 10;
-    private static final long ANIMATION_DELAY = 80l;
-
-    private final int mDefaultLaserColor = getResources().getColor(R.color.viewfinder_laser);
-    private final int mDefaultMaskColor = getResources().getColor(R.color.viewfinder_mask);
-    private final int mDefaultBorderColor = getResources().getColor(R.color.viewfinder_border);
-    private final int mDefaultBorderStrokeWidth = getResources().getInteger(R.integer.viewfinder_border_width);
-    private final int mDefaultBorderLineLength = getResources().getInteger(R.integer.viewfinder_border_length);
 
     protected Paint mLaserPaint;
     protected Paint mFinderMaskPaint;
@@ -45,54 +22,45 @@ public class ViewFinderView extends View implements IViewFinder {
 
     public ViewFinderView(Context context) {
         super(context);
-        init();
     }
 
     public ViewFinderView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
+
     private void init() {
+        if(initComplete){
+            return;
+        }
+
         //set up laser paint
         mLaserPaint = new Paint();
-        mLaserPaint.setColor(mDefaultLaserColor);
+        mLaserPaint.setColor(getFramingRectConfiguration().getLaserColor());
         mLaserPaint.setStyle(Paint.Style.FILL);
 
         //finder mask paint
         mFinderMaskPaint = new Paint();
-        mFinderMaskPaint.setColor(mDefaultMaskColor);
+        mFinderMaskPaint.setColor(getFramingRectConfiguration().getMaskColor());
 
         //border paint
         mBorderPaint = new Paint();
-        mBorderPaint.setColor(mDefaultBorderColor);
+        mBorderPaint.setColor(getFramingRectConfiguration().getBorderColor());
         mBorderPaint.setStyle(Paint.Style.STROKE);
-        mBorderPaint.setStrokeWidth(mDefaultBorderStrokeWidth);
+        mBorderPaint.setStrokeWidth(getFramingRectConfiguration().getBorderStrokeWidth());
 
-        mBorderLineLength = mDefaultBorderLineLength;
-    }
+        mBorderLineLength = getFramingRectConfiguration().getBorderLineLength();
 
-    public void setLaserColor(int laserColor) {
-        mLaserPaint.setColor(laserColor);
-    }
-    public void setMaskColor(int maskColor) {
-        mFinderMaskPaint.setColor(maskColor);
-    }
-    public void setBorderColor(int borderColor) {
-        mBorderPaint.setColor(borderColor);
-    }
-    public void setBorderStrokeWidth(int borderStrokeWidth) {
-        mBorderPaint.setStrokeWidth(borderStrokeWidth);
-    }
-    public void setBorderLineLength(int borderLineLength) {
-        mBorderLineLength = borderLineLength;
+        initComplete = true;
     }
 
     public void setupViewFinder() {
+        init();
         updateFramingRect();
         invalidate();
     }
 
+    @Override
     public Rect getFramingRect() {
         return mFramingRect;
     }
@@ -134,16 +102,16 @@ public class ViewFinderView extends View implements IViewFinder {
 
     public void drawLaser(Canvas canvas) {
         // Draw a red "laser scanner" line through the middle to show decoding is active
-        mLaserPaint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
-        scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
+        mLaserPaint.setAlpha(getFramingRectConfiguration().getScannerAlpha()[scannerAlpha]);
+        scannerAlpha = (scannerAlpha + 1) % getFramingRectConfiguration().getScannerAlpha().length;
         int middle = mFramingRect.height() / 2 + mFramingRect.top;
         canvas.drawRect(mFramingRect.left + 2, middle - 1, mFramingRect.right - 1, middle + 2, mLaserPaint);
 
-        postInvalidateDelayed(ANIMATION_DELAY,
-                mFramingRect.left - POINT_SIZE,
-                mFramingRect.top - POINT_SIZE,
-                mFramingRect.right + POINT_SIZE,
-                mFramingRect.bottom + POINT_SIZE);
+        postInvalidateDelayed(getFramingRectConfiguration().getAnimationDelay(),
+                mFramingRect.left - getFramingRectConfiguration().getPointSize(),
+                mFramingRect.top - getFramingRectConfiguration().getPointSize(),
+                mFramingRect.right + getFramingRectConfiguration().getPointSize(),
+                mFramingRect.bottom + getFramingRectConfiguration().getPointSize());
     }
 
     @Override
@@ -158,11 +126,15 @@ public class ViewFinderView extends View implements IViewFinder {
         int orientation = DisplayUtils.getScreenOrientation(getContext());
 
         if(orientation != Configuration.ORIENTATION_PORTRAIT) {
-            width = findDesiredDimensionInRange(LANDSCAPE_WIDTH_RATIO, viewResolution.x, MIN_FRAME_WIDTH, LANDSCAPE_MAX_FRAME_WIDTH);
-            height = findDesiredDimensionInRange(LANDSCAPE_HEIGHT_RATIO, viewResolution.y, MIN_FRAME_HEIGHT, LANDSCAPE_MAX_FRAME_HEIGHT);
+            width = findDesiredDimensionInRange(getFramingRectConfiguration().getLandscapeWidthRatio(), viewResolution.x,
+                    getFramingRectConfiguration().getMinFrameWidth(), getFramingRectConfiguration().getLandscapeMaxFrameWidth());
+            height = findDesiredDimensionInRange(getFramingRectConfiguration().getLandscapeHeightRatio(), viewResolution.y,
+                    getFramingRectConfiguration().getMinFrameHeight(), getFramingRectConfiguration().getLandscapeMaxFrameHeight());
         } else {
-            width = findDesiredDimensionInRange(PORTRAIT_WIDTH_RATIO, viewResolution.x, MIN_FRAME_WIDTH, PORTRAIT_MAX_FRAME_WIDTH);
-            height = findDesiredDimensionInRange(PORTRAIT_HEIGHT_RATIO, viewResolution.y, MIN_FRAME_HEIGHT, PORTRAIT_MAX_FRAME_HEIGHT);
+            width = findDesiredDimensionInRange(getFramingRectConfiguration().getPortraitWidthRatio(), viewResolution.x,
+                    getFramingRectConfiguration().getMinFrameWidth(), getFramingRectConfiguration().getPortraitMaxFrameWidth());
+            height = findDesiredDimensionInRange(getFramingRectConfiguration().getPortraitHeightRatio(), viewResolution.y,
+                    getFramingRectConfiguration().getMinFrameHeight(), getFramingRectConfiguration().getPortraitMaxFrameHeight());
         }
 
         int leftOffset = (viewResolution.x - width) / 2;
