@@ -42,6 +42,7 @@ public class ViewFinderView extends View implements IViewFinder {
     protected Paint mFinderMaskPaint;
     protected Paint mBorderPaint;
     protected int mBorderLineLength;
+    protected boolean mSquareViewFinder;
 
     public ViewFinderView(Context context) {
         super(context);
@@ -70,6 +71,10 @@ public class ViewFinderView extends View implements IViewFinder {
         mBorderPaint.setStrokeWidth(mDefaultBorderStrokeWidth);
 
         mBorderLineLength = mDefaultBorderLineLength;
+    }
+
+    public void setSquareViewFinder(boolean set) {
+        mSquareViewFinder = set;
     }
 
     public void setLaserColor(int laserColor) {
@@ -157,12 +162,18 @@ public class ViewFinderView extends View implements IViewFinder {
         int height;
         int orientation = DisplayUtils.getScreenOrientation(getContext());
 
-        if(orientation != Configuration.ORIENTATION_PORTRAIT) {
-            width = findDesiredDimensionInRange(LANDSCAPE_WIDTH_RATIO, viewResolution.x, MIN_FRAME_WIDTH, LANDSCAPE_MAX_FRAME_WIDTH);
+        if (mSquareViewFinder) {
             height = findDesiredDimensionInRange(LANDSCAPE_HEIGHT_RATIO, viewResolution.y, MIN_FRAME_HEIGHT, LANDSCAPE_MAX_FRAME_HEIGHT);
+            width = height;
         } else {
-            width = findDesiredDimensionInRange(PORTRAIT_WIDTH_RATIO, viewResolution.x, MIN_FRAME_WIDTH, PORTRAIT_MAX_FRAME_WIDTH);
-            height = findDesiredDimensionInRange(PORTRAIT_HEIGHT_RATIO, viewResolution.y, MIN_FRAME_HEIGHT, PORTRAIT_MAX_FRAME_HEIGHT);
+
+            if (orientation != Configuration.ORIENTATION_PORTRAIT) {
+                width = findDesiredDimensionInRange(LANDSCAPE_WIDTH_RATIO, viewResolution.x, MIN_FRAME_WIDTH, LANDSCAPE_MAX_FRAME_WIDTH);
+                height = findDesiredDimensionInRange(LANDSCAPE_HEIGHT_RATIO, viewResolution.y, MIN_FRAME_HEIGHT, LANDSCAPE_MAX_FRAME_HEIGHT);
+            } else {
+                width = findDesiredDimensionInRange(PORTRAIT_WIDTH_RATIO, viewResolution.x, MIN_FRAME_WIDTH, PORTRAIT_MAX_FRAME_WIDTH);
+                height = findDesiredDimensionInRange(PORTRAIT_HEIGHT_RATIO, viewResolution.y, MIN_FRAME_HEIGHT, PORTRAIT_MAX_FRAME_HEIGHT);
+            }
         }
 
         int leftOffset = (viewResolution.x - width) / 2;
