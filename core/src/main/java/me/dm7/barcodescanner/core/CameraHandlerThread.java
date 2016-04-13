@@ -28,7 +28,7 @@ public class CameraHandlerThread extends HandlerThread {
                 mainHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mScannerView.setupCameraPreview(camera);
+                        mScannerView.setupCameraPreview(new CameraWrapper(camera, cameraId));
                     }
                 });
             }
