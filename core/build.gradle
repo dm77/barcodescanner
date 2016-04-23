@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: "maven"
 ext {
     isLibrary = true
     pomPackaging = "aar"
@@ -15,5 +15,38 @@ dependencies {
 android {
     defaultConfig {
         //applicationId "${project.group}.core"
+    }
+}
+
+def coreAarFile = file('build/outputs/aar/core.aar')
+artifacts {
+    archives coreAarFile
+}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: 'https://nexus.poynt.co/content/repositories/releases') {
+                authentication(userName: mavenUser, password: mavenPassword)
+            }
+            snapshotRepository(url: 'https://nexus.poynt.co/content/repositories/snapshots') {
+                authentication(userName: mavenUser, password: mavenPassword)
+            }
+            pom.groupId = 'co.poynt.android'
+            pom.artifactId = 'poynt-barcodescanner-core'
+            pom.version = '1.7.2-SNAPSHOT'
+        }
+    }
+}
+// custom task to install locally
+task installArchives(type: Upload) {
+    description "Installs the artifacts to the local Maven repository."
+    configuration = configurations['archives']
+    repositories {
+        mavenDeployer {
+            repository url: "file://${System.properties['user.home']}/.m2/repository"
+            pom.groupId = 'co.poynt.android'
+            pom.artifactId = 'poynt-barcodescanner-core'
+            pom.version = 'development-SNAPSHOT'
+        }
     }
 }
