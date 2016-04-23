@@ -30,7 +30,7 @@ uploadArchives {
             }
             pom.groupId = 'co.poynt.android'
             pom.artifactId = 'poynt-barcodescanner-zxing'
-            pom.version = '1.7.2-SNAPSHOT'
+            pom.version = '1.7.2'
         }
     }
 }
