@@ -25,6 +25,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZBarSc
     public void onResume() {
         super.onResume();
         mScannerView.setResultHandler(this);
+        // Defaults to CAMERA_FACING_FRONT (1).
         mScannerView.startCamera();
     }
 
