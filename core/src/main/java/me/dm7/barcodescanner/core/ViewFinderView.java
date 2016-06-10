@@ -2,6 +2,7 @@ package me.dm7.barcodescanner.core;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -32,12 +33,6 @@ public class ViewFinderView extends View implements IViewFinder {
     private static final int POINT_SIZE = 10;
     private static final long ANIMATION_DELAY = 80l;
 
-    private final int mDefaultLaserColor = getResources().getColor(R.color.viewfinder_laser);
-    private final int mDefaultMaskColor = getResources().getColor(R.color.viewfinder_mask);
-    private final int mDefaultBorderColor = getResources().getColor(R.color.viewfinder_border);
-    private final int mDefaultBorderStrokeWidth = getResources().getInteger(R.integer.viewfinder_border_width);
-    private final int mDefaultBorderLineLength = getResources().getInteger(R.integer.viewfinder_border_length);
-
     protected Paint mLaserPaint;
     protected Paint mFinderMaskPaint;
     protected Paint mBorderPaint;
@@ -54,22 +49,24 @@ public class ViewFinderView extends View implements IViewFinder {
     }
 
     private void init() {
+        final Resources res = getResources();
+        
         //set up laser paint
         mLaserPaint = new Paint();
-        mLaserPaint.setColor(mDefaultLaserColor);
+        mLaserPaint.setColor(res.getColor(R.color.viewfinder_laser));
         mLaserPaint.setStyle(Paint.Style.FILL);
 
         //finder mask paint
         mFinderMaskPaint = new Paint();
-        mFinderMaskPaint.setColor(mDefaultMaskColor);
+        mFinderMaskPaint.setColor(res.getColor(R.color.viewfinder_mask));
 
         //border paint
         mBorderPaint = new Paint();
-        mBorderPaint.setColor(mDefaultBorderColor);
+        mBorderPaint.setColor(res.getColor(R.color.viewfinder_border));
         mBorderPaint.setStyle(Paint.Style.STROKE);
-        mBorderPaint.setStrokeWidth(mDefaultBorderStrokeWidth);
+        mBorderPaint.setStrokeWidth(res.getInteger(R.integer.viewfinder_border_width));
 
-        mBorderLineLength = mDefaultBorderLineLength;
+        mBorderLineLength = res.getInteger(R.integer.viewfinder_border_length);
     }
 
     public void setLaserColor(int laserColor) {
