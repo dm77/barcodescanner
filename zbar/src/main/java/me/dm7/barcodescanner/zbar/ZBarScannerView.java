@@ -106,7 +106,11 @@ public class ZBarScannerView extends BarcodeScannerView {
                 SymbolSet syms = mScanner.getResults();
                 final Result rawResult = new Result();
                 for (Symbol sym : syms) {
-                    String symData = sym.getData();
+                    // In order to retreive QR codes containing null bytes we need to
+                    // use getDataBytes() rather than getData() which uses C strings.
+                    // Weirdly ZBar transforms all data to UTF-8, even the data returned
+                    // by getDataBytes() so we have to decode it as UTF-8.
+                    String symData = new String(sym.getDataBytes(), StandardCharsets.UTF_8);
                     if (!TextUtils.isEmpty(symData)) {
                         rawResult.setContents(symData);
                         rawResult.setBarcodeFormat(BarcodeFormat.getFormatById(sym.getType()));
