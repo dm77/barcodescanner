@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         launchActivity(FullScreenScannerFragmentActivity.class);
     }
 
+    public void launchScalingScannerActivity(View v) {
+        launchActivity(ScalingScannerActivity.class);
+    }
+
     public void launchActivity(Class<?> clss) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
