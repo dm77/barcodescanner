@@ -2,6 +2,7 @@ package me.dm7.barcodescanner.zbar;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
@@ -37,12 +38,31 @@ public class ZBarScannerView extends BarcodeScannerView {
     private ResultHandler mResultHandler;
 
     public ZBarScannerView(Context context) {
-        super(context);
+        this(context, false);
+    }
+
+    public ZBarScannerView(Context context, boolean stretchCameraToFill) {
+        super(context, stretchCameraToFill);
+
         setupScanner();
     }
 
     public ZBarScannerView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+
+        // See if stretchCameraToFill was specified in the XML layout file
+        TypedArray attrs = context.getTheme().obtainStyledAttributes(
+                attributeSet,
+                R.styleable.ZBarScannerView,
+                0, 0);
+
+        try {
+            setStretchCameraToFill(attrs.getBoolean(R.styleable.ZBarScannerView_stretchCameraToFill, false));
+        }
+        finally {
+            attrs.recycle();
+        }
+
         setupScanner();
     }
 
