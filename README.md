@@ -75,7 +75,7 @@ public class SimpleScannerActivity extends Activity implements ZXingScannerView.
 
 ```
 
-Please take a look at the [zxing/sample] (https://github.com/dm77/barcodescanner/tree/master/zxing-sample) project for a full working example.
+Please take a look at the [zxing-sample] (https://github.com/dm77/barcodescanner/tree/master/zxing-sample) project for a full working example.
 
 Advanced Usage
 --------------
