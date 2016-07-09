@@ -22,4 +22,5 @@
     <string name="select_camera">Select a Camera</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
+    <bool name="cameraPreviewShouldFillView">true</bool>
 </resources>
