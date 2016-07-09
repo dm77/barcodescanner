@@ -11,6 +11,7 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
@@ -135,6 +136,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
+    @SuppressWarnings("SuspiciousNameCombination")
     private Point convertSizeToLandscapeOrientation(Point size) {
         if (getDisplayOrientation() % 180 == 0) {
             return size;
@@ -143,15 +145,41 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
+    @SuppressWarnings("SuspiciousNameCombination")
     private void setViewSize(int width, int height) {
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        int tmpWidth;
+        int tmpHeight;
         if (getDisplayOrientation() % 180 == 0) {
-            layoutParams.width = width;
-            layoutParams.height = height;
+            tmpWidth = width;
+            tmpHeight = height;
         } else {
-            layoutParams.width = height;
-            layoutParams.height = width;
+            tmpWidth = height;
+            tmpHeight = width;
         }
+
+        boolean shouldFillView = getContext().getResources().getBoolean(R.bool.cameraPreviewShouldFillView);
+
+        if (shouldFillView) {
+            int parentWidth = ((View) getParent()).getWidth();
+            int parentHeight = ((View) getParent()).getHeight();
+            float ratioWidth = (float) parentWidth / (float) tmpWidth;
+            float ratioHeight = (float) parentHeight / (float) tmpHeight;
+
+            float compensation;
+
+            if (ratioWidth > ratioHeight) {
+                compensation = ratioWidth;
+            } else {
+                compensation = ratioHeight;
+            }
+
+            tmpWidth = Math.round(tmpWidth * compensation);
+            tmpHeight = Math.round(tmpHeight * compensation);
+        }
+
+        layoutParams.width = tmpWidth;
+        layoutParams.height = tmpHeight;
         setLayoutParams(layoutParams);
     }
 

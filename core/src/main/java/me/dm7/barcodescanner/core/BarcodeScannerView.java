@@ -31,11 +31,16 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         removeAllViews();
 
         mPreview = new CameraPreview(getContext(), camera, this);
-        RelativeLayout relativeLayout = new RelativeLayout(getContext());
-        relativeLayout.setGravity(Gravity.CENTER);
-        relativeLayout.setBackgroundColor(Color.BLACK);
-        relativeLayout.addView(mPreview);
-        addView(relativeLayout);
+        boolean shouldFillView = getContext().getResources().getBoolean(R.bool.cameraPreviewShouldFillView);
+        if (!shouldFillView) {
+            RelativeLayout relativeLayout = new RelativeLayout(getContext());
+            relativeLayout.setGravity(Gravity.CENTER);
+            relativeLayout.setBackgroundColor(Color.BLACK);
+            relativeLayout.addView(mPreview);
+            addView(relativeLayout);
+        } else {
+            addView(mPreview);
+        }
 
         mViewFinderView = createViewFinderView(getContext());
         if (mViewFinderView instanceof View) {
