@@ -1,6 +1,7 @@
 package me.dm7.barcodescanner.core;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
@@ -18,6 +19,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private CameraHandlerThread mCameraHandlerThread;
     private Boolean mFlashState;
     private boolean mAutofocusState = true;
+    private boolean mShouldScaleToFill = true;
 
     public BarcodeScannerView(Context context) {
         super(context);
@@ -25,14 +27,24 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
 
     public BarcodeScannerView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                attributeSet,
+                R.styleable.BarcodeScannerView,
+                0, 0);
+
+        try {
+            setShouldScaleToFill(a.getBoolean(R.styleable.BarcodeScannerView_shouldScaleToFill, true));
+        } finally {
+            a.recycle();
+        }
     }
 
     public final void setupLayout(Camera camera) {
         removeAllViews();
 
         mPreview = new CameraPreview(getContext(), camera, this);
-        boolean shouldFillView = getContext().getResources().getBoolean(R.bool.cameraPreviewShouldFillView);
-        if (!shouldFillView) {
+        mPreview.setShouldScaleToFill(mShouldScaleToFill);
+        if (!mShouldScaleToFill) {
             RelativeLayout relativeLayout = new RelativeLayout(getContext());
             relativeLayout.setGravity(Gravity.CENTER);
             relativeLayout.setBackgroundColor(Color.BLACK);
@@ -179,5 +191,9 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         if(mPreview != null) {
             mPreview.setAutoFocus(state);
         }
+    }
+
+    public void setShouldScaleToFill(boolean shouldScaleToFill) {
+        mShouldScaleToFill = shouldScaleToFill;
     }
 }

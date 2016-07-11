@@ -25,6 +25,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private boolean mPreviewing = true;
     private boolean mAutoFocus = true;
     private boolean mSurfaceCreated = false;
+    private boolean mShouldScaleToFill = true;
     private Camera.PreviewCallback mPreviewCallback;
 
     public CameraPreview(Context context, Camera camera, Camera.PreviewCallback previewCallback) {
@@ -47,6 +48,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     public void setCamera(Camera camera, Camera.PreviewCallback previewCallback) {
         mCamera = camera;
         mPreviewCallback = previewCallback;
+    }
+
+    public void setShouldScaleToFill(boolean scaleToFill) {
+        mShouldScaleToFill = scaleToFill;
     }
 
     @Override
@@ -158,9 +163,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             tmpHeight = width;
         }
 
-        boolean shouldFillView = getContext().getResources().getBoolean(R.bool.cameraPreviewShouldFillView);
-
-        if (shouldFillView) {
+        if (mShouldScaleToFill) {
             int parentWidth = ((View) getParent()).getWidth();
             int parentHeight = ((View) getParent()).getHeight();
             float ratioWidth = (float) parentWidth / (float) tmpWidth;
