@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.9] - July 25, 2016
+* Scale camera preview when the view size isn't full screen. Thanks to @xolan for this pull request PR #219
+* Fix inverted camera in devices with differently oriented back and forward facing cameras. Thanks to @thadcodes for PR #191
+* Add ability switch view finder view to square. Thanks to @squeeish for PR #163
+
 ## [1.8.4] - Dec 30, 2015
 * Improve performance by opening camera and handling preview frames in a separate HandlerThread (#1, #99)
 * Do not automatically stopCamera after a result is found #115

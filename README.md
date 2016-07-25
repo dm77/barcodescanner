@@ -5,9 +5,11 @@ Android library projects that provides easy to use and extensible Barcode Scanne
 
 Screenshots
 ===========
-![Portrait](https://raw.github.com/dm77/barcodescanner/master/screenshots/portrait_small.png)
+![Demo App](https://raw.github.com/dm77/barcodescanner/master/screenshots/main_activity.png)
 
-![Landscape](https://raw.github.com/dm77/barcodescanner/master/screenshots/landscape_small.png)
+![Scanner](https://raw.github.com/dm77/barcodescanner/master/screenshots/scanner.png)
+
+![Scan Results](https://raw.github.com/dm77/barcodescanner/master/screenshots/scan_results.png)
 
 
 Minor BREAKING CHANGE in 1.8.4
@@ -25,7 +27,7 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`compile 'me.dm7.barcodescanner:zxing:1.8.4'`
+`compile 'me.dm7.barcodescanner:zxing:1.9'`
 
 Simple Usage
 ------------
@@ -126,7 +128,7 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`compile 'me.dm7.barcodescanner:zbar:1.8.4'`
+`compile 'me.dm7.barcodescanner:zbar:1.9'`
 
 Simple Usage
 ------------
