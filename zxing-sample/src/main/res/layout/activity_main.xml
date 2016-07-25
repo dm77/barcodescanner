@@ -42,5 +42,9 @@
             android:layout_width="match_parent"
             android:text="@string/full_screen_sample"
             android:onClick="launchFullScreenScannerFragmentActivity" />
+        <Button android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/scaling_sample"
+                android:onClick="launchScalingScannerActivity" />
     </LinearLayout>
 </LinearLayout>
