@@ -1,7 +1,6 @@
 package me.dm7.barcodescanner.core;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -14,18 +13,10 @@ public class ViewFinderView extends View implements IViewFinder {
 
     private Rect mFramingRect;
 
-    private static final int MIN_FRAME_WIDTH = 240;
-    private static final int MIN_FRAME_HEIGHT = 240;
+    private static final int FRAME_HEIGHT = 240;
 
-    private static final float LANDSCAPE_WIDTH_RATIO = 5f/8;
-    private static final float LANDSCAPE_HEIGHT_RATIO = 5f/8;
-    private static final int LANDSCAPE_MAX_FRAME_WIDTH = (int) (1920 * LANDSCAPE_WIDTH_RATIO); // = 5/8 * 1920
-    private static final int LANDSCAPE_MAX_FRAME_HEIGHT = (int) (1080 * LANDSCAPE_HEIGHT_RATIO); // = 5/8 * 1080
-
-    private static final float PORTRAIT_WIDTH_RATIO = 7f/8;
-    private static final float PORTRAIT_HEIGHT_RATIO = 3f/8;
-    private static final int PORTRAIT_MAX_FRAME_WIDTH = (int) (1080 * PORTRAIT_WIDTH_RATIO); // = 7/8 * 1080
-    private static final int PORTRAIT_MAX_FRAME_HEIGHT = (int) (1920 * PORTRAIT_HEIGHT_RATIO); // = 3/8 * 1920
+    private static final float HEIGHT_RATIO = 5f/8;
+    private static final int MAX_FRAME_HEIGHT = (int) (1080 * HEIGHT_RATIO); // = 5/8 * 1080
 
     private static final int[] SCANNER_ALPHA = {0, 64, 128, 192, 255, 192, 128, 64};
     private int scannerAlpha;
@@ -158,18 +149,8 @@ public class ViewFinderView extends View implements IViewFinder {
 
     public synchronized void updateFramingRect() {
         Point viewResolution = new Point(getWidth(), getHeight());
-        int width;
-        int height;
-        int orientation = DisplayUtils.getScreenOrientation(getContext());
-
-        if(orientation != Configuration.ORIENTATION_PORTRAIT) {
-            width = findDesiredDimensionInRange(LANDSCAPE_WIDTH_RATIO, viewResolution.x, MIN_FRAME_WIDTH, LANDSCAPE_MAX_FRAME_WIDTH);
-            height = findDesiredDimensionInRange(LANDSCAPE_HEIGHT_RATIO, viewResolution.y, MIN_FRAME_HEIGHT, LANDSCAPE_MAX_FRAME_HEIGHT);
-        } else {
-            width = findDesiredDimensionInRange(PORTRAIT_WIDTH_RATIO, viewResolution.x, MIN_FRAME_WIDTH, PORTRAIT_MAX_FRAME_WIDTH);
-            height = findDesiredDimensionInRange(PORTRAIT_HEIGHT_RATIO, viewResolution.y, MIN_FRAME_HEIGHT, PORTRAIT_MAX_FRAME_HEIGHT);
-        }
-
+        int height = findDesiredDimensionInRange(HEIGHT_RATIO, viewResolution.y, FRAME_HEIGHT, MAX_FRAME_HEIGHT);;
+        int width = height;
         int leftOffset = (viewResolution.x - width) / 2;
         int topOffset = (viewResolution.y - height) / 2;
         mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
