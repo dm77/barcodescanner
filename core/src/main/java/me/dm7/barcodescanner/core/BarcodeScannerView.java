@@ -132,10 +132,16 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
             }
 
             Rect rect = new Rect(framingRect);
-            rect.left = rect.left * previewWidth / viewFinderViewWidth;
-            rect.right = rect.right * previewWidth / viewFinderViewWidth;
-            rect.top = rect.top * previewHeight / viewFinderViewHeight;
-            rect.bottom = rect.bottom * previewHeight / viewFinderViewHeight;
+
+            if(previewWidth < viewFinderViewWidth) {
+                rect.left = rect.left * previewWidth / viewFinderViewWidth;
+                rect.right = rect.right * previewWidth / viewFinderViewWidth;
+            }
+
+            if(previewHeight < viewFinderViewHeight) {
+                rect.top = rect.top * previewHeight / viewFinderViewHeight;
+                rect.bottom = rect.bottom * previewHeight / viewFinderViewHeight;
+            }
 
             mFramingRectInPreview = rect;
         }
