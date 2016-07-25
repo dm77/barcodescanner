@@ -5,9 +5,9 @@ Android library projects that provides easy to use and extensible Barcode Scanne
 
 Screenshots
 ===========
-<img src="https://raw.github.com/dm77/barcodescanner/master/screenshots/main_activity.png" width="400">
-<img src="https://raw.github.com/dm77/barcodescanner/master/screenshots/scanner.png" width="400">
-<img src="https://raw.github.com/dm77/barcodescanner/master/screenshots/scan_results.png" width="400">
+<img src="https://raw.github.com/dm77/barcodescanner/master/screenshots/main_activity.png" width="266">
+<img src="https://raw.github.com/dm77/barcodescanner/master/screenshots/scanner.png" width="266">
+<img src="https://raw.github.com/dm77/barcodescanner/master/screenshots/scan_results.png" width="266">
 
 
 Minor BREAKING CHANGE in 1.8.4
