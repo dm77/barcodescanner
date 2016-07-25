@@ -38,15 +38,15 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         init(cameraWrapper, previewCallback);
     }
 
-    public void init(CameraWrapper camera, Camera.PreviewCallback previewCallback) {
-        setCamera(camera, previewCallback);
+    public void init(CameraWrapper cameraWrapper, Camera.PreviewCallback previewCallback) {
+        setCamera(cameraWrapper, previewCallback);
         mAutoFocusHandler = new Handler();
         getHolder().addCallback(this);
         getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
-    public void setCamera(CameraWrapper camera, Camera.PreviewCallback previewCallback) {
-        mCameraWrapper = camera;
+    public void setCamera(CameraWrapper cameraWrapper, Camera.PreviewCallback previewCallback) {
+        mCameraWrapper = cameraWrapper;
         mPreviewCallback = previewCallback;
     }
 
@@ -193,7 +193,12 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
 
         Camera.CameraInfo info = new Camera.CameraInfo();
-        Camera.getCameraInfo(mCameraWrapper.mCameraId, info);
+        if(mCameraWrapper.mCameraId == -1) {
+            Camera.getCameraInfo(Camera.CameraInfo.CAMERA_FACING_BACK, info);
+        } else {
+            Camera.getCameraInfo(mCameraWrapper.mCameraId, info);
+        }
+
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
 
