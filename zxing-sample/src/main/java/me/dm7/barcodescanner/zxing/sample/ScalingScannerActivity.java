@@ -2,6 +2,7 @@ package me.dm7.barcodescanner.zxing.sample;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -10,7 +11,10 @@ import com.google.zxing.Result;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScalingScannerActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
+    private static final String FLASH_STATE = "FLASH_STATE";
+
     private ZXingScannerView mScannerView;
+    private boolean mFlash;
 
     @Override
     public void onCreate(Bundle state) {
@@ -27,12 +31,19 @@ public class ScalingScannerActivity extends BaseScannerActivity implements ZXing
         super.onResume();
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
+        mScannerView.setFlash(mFlash);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mScannerView.stopCamera();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(FLASH_STATE, mFlash);
     }
 
     @Override
@@ -51,5 +62,10 @@ public class ScalingScannerActivity extends BaseScannerActivity implements ZXing
                 mScannerView.resumeCameraPreview(ScalingScannerActivity.this);
             }
         }, 2000);
+    }
+
+    public void toggleFlash(View v) {
+        mFlash = !mFlash;
+        mScannerView.setFlash(mFlash);
     }
 }

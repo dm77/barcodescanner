@@ -18,23 +18,22 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <FrameLayout
             android:id="@+id/content_frame"
             android:layout_weight="1"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent" />
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:gravity="center"
             android:background="#222"
-            android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_width="150dp"
+            android:layout_height="match_parent">
             <Button
                 android:text="@string/toggle_flash"
-                android:layout_weight="1"
                 android:onClick="toggleFlash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

@@ -1,6 +1,7 @@
 package me.dm7.barcodescanner.core;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -13,10 +14,14 @@ public class ViewFinderView extends View implements IViewFinder {
 
     private Rect mFramingRect;
 
-    private static final int FRAME_HEIGHT = 240;
+    private static final float PORTRAIT_WIDTH_RATIO = 6f/8;
+    private static final float PORTRAIT_WIDTH_HEIGHT_RATIO = 0.75f;
 
-    private static final float HEIGHT_RATIO = 5f/8;
-    private static final int MAX_FRAME_HEIGHT = (int) (1080 * HEIGHT_RATIO); // = 5/8 * 1080
+    private static final float LANDSCAPE_HEIGHT_RATIO = 5f/8;
+    private static final float LANDSCAPE_WIDTH_HEIGHT_RATIO = 1.4f;
+    private static final int MIN_DIMENSION_DIFF = 50;
+
+    private static final float SQUARE_DIMENSION_RATIO = 5f/8;
 
     private static final int[] SCANNER_ALPHA = {0, 64, 128, 192, 255, 192, 128, 64};
     private int scannerAlpha;
@@ -33,6 +38,7 @@ public class ViewFinderView extends View implements IViewFinder {
     protected Paint mFinderMaskPaint;
     protected Paint mBorderPaint;
     protected int mBorderLineLength;
+    protected boolean mSquareViewFinder;
 
     public ViewFinderView(Context context) {
         super(context);
@@ -77,6 +83,11 @@ public class ViewFinderView extends View implements IViewFinder {
     }
     public void setBorderLineLength(int borderLineLength) {
         mBorderLineLength = borderLineLength;
+    }
+
+    // TODO: Need a better way to configure this. Revisit when working on 2.0
+    public void setSquareViewFinder(boolean set) {
+        mSquareViewFinder = set;
     }
 
     public void setupViewFinder() {
@@ -149,21 +160,38 @@ public class ViewFinderView extends View implements IViewFinder {
 
     public synchronized void updateFramingRect() {
         Point viewResolution = new Point(getWidth(), getHeight());
-        int height = findDesiredDimensionInRange(HEIGHT_RATIO, viewResolution.y, FRAME_HEIGHT, MAX_FRAME_HEIGHT);;
-        int width = height;
+        int width;
+        int height;
+        int orientation = DisplayUtils.getScreenOrientation(getContext());
+
+        if(mSquareViewFinder) {
+            if(orientation != Configuration.ORIENTATION_PORTRAIT) {
+                height = (int) (getHeight() * SQUARE_DIMENSION_RATIO);
+                width = height;
+            } else {
+                width = (int) (getWidth() * SQUARE_DIMENSION_RATIO);
+                height = width;
+            }
+        } else {
+            if(orientation != Configuration.ORIENTATION_PORTRAIT) {
+                height = (int) (getHeight() * LANDSCAPE_HEIGHT_RATIO);
+                width = (int) (LANDSCAPE_WIDTH_HEIGHT_RATIO * height);
+            } else {
+                width = (int) (getWidth() * PORTRAIT_WIDTH_RATIO);
+                height = (int) (PORTRAIT_WIDTH_HEIGHT_RATIO * width);
+            }
+        }
+
+        if(width > getWidth()) {
+            width = getWidth() - MIN_DIMENSION_DIFF;
+        }
+
+        if(height > getHeight()) {
+            height = getHeight() - MIN_DIMENSION_DIFF;
+        }
+
         int leftOffset = (viewResolution.x - width) / 2;
         int topOffset = (viewResolution.y - height) / 2;
         mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
-    }
-
-    private static int findDesiredDimensionInRange(float ratio, int resolution, int hardMin, int hardMax) {
-        int dim = (int) (ratio * resolution);
-        if (dim < hardMin) {
-            return hardMin;
-        }
-        if (dim > hardMax) {
-            return hardMax;
-        }
-        return dim;
     }
 }

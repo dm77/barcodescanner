@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         launchActivity(FullScreenScannerFragmentActivity.class);
     }
 
+    public void launchCustomViewFinderScannerActivity(View v) {
+        launchActivity(CustomViewFinderScannerActivity.class);
+    }
+
     public void launchScalingScannerActivity(View v) {
         launchActivity(ScalingScannerActivity.class);
     }
