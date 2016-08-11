@@ -3,6 +3,7 @@
     <string name="scanner_activity">ZBar Scanner - Full Activity</string>
     <string name="scanner_fragment_activity">ZBar Scanner - Full Fragment Activity</string>
     <string name="simple_scanner_activity">ZBar Scanner - Simple Activity</string>
+    <string name="simple_fragment_no_viewfinder_sample">Simple Fragment With No ViewFinder Activity</string>
     <string name="simple_scanner_fragment_activity">ZBar Scanner - Simple Fragment Activity</string>
     <string name="simple_activity_sample">Simple Activity Sample</string>
     <string name="simple_fragment_sample">Simple Fragment Sample</string>

@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         launchActivity(SimpleScannerFragmentActivity.class);
     }
 
+    public void launchSimpleFragmentNoViewFinderActivity(View v) {
+        launchActivity(SimpleScannerNoViewFinderFragmentActivity.class);
+    }
+
     public void launchFullActivity(View v) {
         launchActivity(FullScannerActivity.class);
     }
@@ -42,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     public void launchFullFragmentActivity(View v) {
         launchActivity(FullScannerFragmentActivity.class);
     }
+
+
 
     public void launchActivity(Class<?> clss) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)

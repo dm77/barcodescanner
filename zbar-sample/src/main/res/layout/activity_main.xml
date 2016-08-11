@@ -31,6 +31,10 @@
                 android:text="@string/simple_fragment_sample"
                 android:onClick="launchSimpleFragmentActivity" />
         <Button android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/simple_fragment_no_viewfinder_sample"
+            android:onClick="launchSimpleFragmentNoViewFinderActivity" />
+        <Button android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:text="@string/activity_sample"
                 android:onClick="launchFullActivity" />
