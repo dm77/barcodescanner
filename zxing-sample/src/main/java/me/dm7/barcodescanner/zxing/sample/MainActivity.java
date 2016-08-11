@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         launchActivity(SimpleScannerFragmentActivity.class);
     }
 
+    public void launchSimpleNoViewFinderFragmentActivity(View v) {
+        launchActivity(SimpleScannerNoViewFinderFragmentActivity.class);
+    }
+
     public void launchFullActivity(View v) {
         launchActivity(FullScannerActivity.class);
     }

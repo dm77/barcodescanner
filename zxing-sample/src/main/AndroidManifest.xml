@@ -41,6 +41,11 @@
                 android:label="@string/simple_scanner_fragment_activity">
         </activity>
 
+      <activity android:name=".SimpleScannerNoViewFinderFragmentActivity"
+          android:theme="@style/AppOverlayTheme"
+          android:label="@string/simple_scanner_no_view_finder_fragment_activity">
+      </activity>
+
         <activity android:name=".FullScreenScannerFragmentActivity"
                   android:theme="@style/AppOverlayTheme"
                 android:label="@string/full_screen_scanner_fragment_activity">

@@ -20,6 +20,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private Boolean mFlashState;
     private boolean mAutofocusState = true;
     private boolean mShouldScaleToFill = true;
+    private boolean showViewFinder = true;
 
     public BarcodeScannerView(Context context) {
         super(context);
@@ -54,13 +55,16 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
             addView(mPreview);
         }
 
-        mViewFinderView = createViewFinderView(getContext());
-        if (mViewFinderView instanceof View) {
-            addView((View) mViewFinderView);
-        } else {
-            throw new IllegalArgumentException("IViewFinder object returned by " +
-                    "'createViewFinderView()' should be instance of android.view.View");
-        }
+            mViewFinderView = createViewFinderView(getContext());
+
+
+            if (mViewFinderView instanceof View) {
+                addView((View) mViewFinderView);
+            } else {
+                throw new IllegalArgumentException("IViewFinder object returned by " +
+                        "'createViewFinderView()' should be instance of android.view.View");
+            }
+
     }
 
     /**
@@ -71,7 +75,10 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
      * @return {@link android.view.View} that implements {@link ViewFinderView}
      */
     protected IViewFinder createViewFinderView(Context context) {
-        return new ViewFinderView(context);
+        if (showViewFinder)
+            return new ViewFinderView(context);
+        else
+            return new TransparentViewFinderView(context);
     }
 
     public void startCamera(int cameraId) {
@@ -85,7 +92,8 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         mCameraWrapper = cameraWrapper;
         if(mCameraWrapper != null) {
             setupLayout(mCameraWrapper);
-            mViewFinderView.setupViewFinder();
+            if (showViewFinder)
+                mViewFinderView.setupViewFinder();
             if(mFlashState != null) {
                 setFlash(mFlashState);
             }
@@ -123,6 +131,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     }
 
     public synchronized Rect getFramingRectInPreview(int previewWidth, int previewHeight) {
+
         if (mFramingRectInPreview == null) {
             Rect framingRect = mViewFinderView.getFramingRect();
             int viewFinderViewWidth = mViewFinderView.getWidth();
@@ -197,6 +206,10 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         if(mPreview != null) {
             mPreview.setAutoFocus(state);
         }
+    }
+
+    public void hideViewFinder() {
+        this.showViewFinder = false;
     }
 
     public void setShouldScaleToFill(boolean shouldScaleToFill) {
