@@ -103,19 +103,19 @@ Specify front-facing or rear-facing cameras by using the `void startCamera(int c
 Supported Formats:
 
 ```java
-BarcodeFormat.UPC_A
-BarcodeFormat.UPC_E
-BarcodeFormat.EAN_13
-BarcodeFormat.EAN_8
-BarcodeFormat.RSS_14
-BarcodeFormat.CODE_39
-BarcodeFormat.CODE_93
-BarcodeFormat.CODE_128
+BarcodeFormat.UPCA
+BarcodeFormat.UPCE
+BarcodeFormat.EAN13
+BarcodeFormat.EAN8
+BarcodeFormat.RSS14
+BarcodeFormat.CODE39
+BarcodeFormat.CODE93
+BarcodeFormat.CODE128
 BarcodeFormat.ITF
 BarcodeFormat.CODABAR
-BarcodeFormat.QR_CODE
+BarcodeFormat.QRCODE
 BarcodeFormat.DATA_MATRIX
-BarcodeFormat.PDF_417
+BarcodeFormat.PDF417
 ```
 
 ZBar
