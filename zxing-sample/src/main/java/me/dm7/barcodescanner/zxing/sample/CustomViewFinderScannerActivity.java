@@ -31,7 +31,10 @@ public class CustomViewFinderScannerActivity extends BaseScannerActivity impleme
         mScannerView = new ZXingScannerView(this) {
             @Override
             protected IViewFinder createViewFinderView(Context context) {
-                return new CustomViewFinderView(context);
+                return new CustomViewFinderView(
+                        context,
+                        ViewFinderView.REC_PUT_CENTER,
+                        150);
             }
         };
         contentFrame.addView(mScannerView);
@@ -75,6 +78,10 @@ public class CustomViewFinderScannerActivity extends BaseScannerActivity impleme
 
         public CustomViewFinderView(Context context) {
             super(context);
+            init();
+        }
+        public CustomViewFinderView(Context context, int left, int top) {
+            super(context, left, top);
             init();
         }
 
