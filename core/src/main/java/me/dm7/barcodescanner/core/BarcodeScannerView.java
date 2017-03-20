@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 public abstract class BarcodeScannerView extends FrameLayout implements Camera.PreviewCallback  {
+
     private CameraWrapper mCameraWrapper;
     private CameraPreview mPreview;
     private IViewFinder mViewFinderView;
@@ -20,6 +22,13 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private Boolean mFlashState;
     private boolean mAutofocusState = true;
     private boolean mShouldScaleToFill = true;
+
+    private boolean mIsLaserEnabled = true;
+    private int mBorderWidth = getResources().getInteger(R.integer.viewfinder_border_width);
+    private int mBorderLength = getResources().getInteger(R.integer.viewfinder_border_length);
+    private int mMaskColor = getResources().getColor(R.color.viewfinder_mask);
+    @ColorInt private int mBorderColor = getResources().getColor(R.color.viewfinder_border);
+    @ColorInt private int mLaserColor = getResources().getColor(R.color.viewfinder_laser);
 
     public BarcodeScannerView(Context context) {
         super(context);
@@ -34,6 +43,12 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
 
         try {
             setShouldScaleToFill(a.getBoolean(R.styleable.BarcodeScannerView_shouldScaleToFill, true));
+            mLaserColor = a.getColor(R.styleable.BarcodeScannerView_laserColor, mLaserColor);
+            mBorderColor = a.getColor(R.styleable.BarcodeScannerView_borderColor, mBorderColor);
+            mMaskColor = a.getColor(R.styleable.BarcodeScannerView_maskColor, mMaskColor);
+            mIsLaserEnabled = a.getBoolean(R.styleable.BarcodeScannerView_laserEnabled, mIsLaserEnabled);
+            mBorderWidth = a.getDimensionPixelSize(R.styleable.BarcodeScannerView_borderWidth, mBorderWidth);
+            mBorderLength = a.getDimensionPixelSize(R.styleable.BarcodeScannerView_borderLength, mBorderLength);
         } finally {
             a.recycle();
         }
@@ -71,7 +86,14 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
      * @return {@link android.view.View} that implements {@link ViewFinderView}
      */
     protected IViewFinder createViewFinderView(Context context) {
-        return new ViewFinderView(context);
+        ViewFinderView viewFinderView = new ViewFinderView(context);
+        viewFinderView.setBorderColor(mBorderColor);
+        viewFinderView.setLaserColor(mLaserColor);
+        viewFinderView.setLaserEnabled(mIsLaserEnabled);
+        viewFinderView.setBorderStrokeWidth(mBorderWidth);
+        viewFinderView.setBorderLineLength(mBorderLength);
+        viewFinderView.setMaskColor(mMaskColor);
+        return viewFinderView;
     }
 
     public void startCamera(int cameraId) {
@@ -203,3 +225,4 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         mShouldScaleToFill = shouldScaleToFill;
     }
 }
+

@@ -39,14 +39,15 @@ public class ViewFinderView extends View implements IViewFinder {
     protected Paint mBorderPaint;
     protected int mBorderLineLength;
     protected boolean mSquareViewFinder;
+    private boolean mIsLaserEnabled;
 
     public ViewFinderView(Context context) {
         super(context);
         init();
     }
 
-    public ViewFinderView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public ViewFinderView(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
         init();
     }
 
@@ -67,6 +68,7 @@ public class ViewFinderView extends View implements IViewFinder {
         mBorderPaint.setStrokeWidth(mDefaultBorderStrokeWidth);
 
         mBorderLineLength = mDefaultBorderLineLength;
+        mBorderLineLength = 120;
     }
 
     public void setLaserColor(int laserColor) {
@@ -84,6 +86,7 @@ public class ViewFinderView extends View implements IViewFinder {
     public void setBorderLineLength(int borderLineLength) {
         mBorderLineLength = borderLineLength;
     }
+    public void setLaserEnabled(boolean isLaserEnabled) { mIsLaserEnabled = isLaserEnabled; }
 
     // TODO: Need a better way to configure this. Revisit when working on 2.0
     public void setSquareViewFinder(boolean set) {
@@ -107,7 +110,10 @@ public class ViewFinderView extends View implements IViewFinder {
 
         drawViewFinderMask(canvas);
         drawViewFinderBorder(canvas);
-        drawLaser(canvas);
+
+        if (mIsLaserEnabled) {
+            drawLaser(canvas);
+        }
     }
 
     public void drawViewFinderMask(Canvas canvas) {
@@ -123,18 +129,24 @@ public class ViewFinderView extends View implements IViewFinder {
 
     public void drawViewFinderBorder(Canvas canvas) {
         Rect framingRect = getFramingRect();
-        
-        canvas.drawLine(framingRect.left - 1, framingRect.top - 1, framingRect.left - 1, framingRect.top - 1 + mBorderLineLength, mBorderPaint);
-        canvas.drawLine(framingRect.left - 1, framingRect.top - 1, framingRect.left - 1 + mBorderLineLength, framingRect.top - 1, mBorderPaint);
 
-        canvas.drawLine(framingRect.left - 1, framingRect.bottom + 1, framingRect.left - 1, framingRect.bottom + 1 - mBorderLineLength, mBorderPaint);
-        canvas.drawLine(framingRect.left - 1, framingRect.bottom + 1, framingRect.left - 1 + mBorderLineLength, framingRect.bottom + 1, mBorderPaint);
+        float offset = mBorderPaint.getStrokeWidth() / 2;
 
-        canvas.drawLine(framingRect.right + 1, framingRect.top - 1, framingRect.right + 1, framingRect.top - 1 + mBorderLineLength, mBorderPaint);
-        canvas.drawLine(framingRect.right + 1, framingRect.top - 1, framingRect.right + 1 - mBorderLineLength, framingRect.top - 1, mBorderPaint);
+        // Top-left corner
+        canvas.drawLine(framingRect.left - offset, framingRect.top, framingRect.left + mBorderLineLength - offset, framingRect.top, mBorderPaint);
+        canvas.drawLine(framingRect.left, framingRect.top, framingRect.left, framingRect.top + mBorderLineLength, mBorderPaint);
 
-        canvas.drawLine(framingRect.right + 1, framingRect.bottom + 1, framingRect.right + 1, framingRect.bottom + 1 - mBorderLineLength, mBorderPaint);
-        canvas.drawLine(framingRect.right + 1, framingRect.bottom + 1, framingRect.right + 1 - mBorderLineLength, framingRect.bottom + 1, mBorderPaint);
+        // Top-right corner
+        canvas.drawLine(framingRect.right + offset, framingRect.top, framingRect.right - mBorderLineLength + offset, framingRect.top, mBorderPaint);
+        canvas.drawLine(framingRect.right, framingRect.top, framingRect.right, framingRect.top + mBorderLineLength, mBorderPaint);
+
+        // Bottom-right corner
+        canvas.drawLine(framingRect.right + offset, framingRect.bottom, framingRect.right - mBorderLineLength + offset, framingRect.bottom, mBorderPaint);
+        canvas.drawLine(framingRect.right, framingRect.bottom, framingRect.right, framingRect.bottom - mBorderLineLength, mBorderPaint);
+
+        // Bottom-left corner
+        canvas.drawLine(framingRect.left - offset, framingRect.bottom, framingRect.left + mBorderLineLength - offset, framingRect.bottom, mBorderPaint);
+        canvas.drawLine(framingRect.left, framingRect.bottom, framingRect.left, framingRect.bottom - mBorderLineLength, mBorderPaint);
     }
 
     public void drawLaser(Canvas canvas) {
@@ -195,3 +207,4 @@ public class ViewFinderView extends View implements IViewFinder {
         mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
     }
 }
+
