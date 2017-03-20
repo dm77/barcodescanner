@@ -9,4 +9,4 @@
         <attr name="borderWidth" format="dimension" />
         <attr name="borderLength" format="dimension" />
     </declare-styleable>
-</resources>⏎
+</resources>
