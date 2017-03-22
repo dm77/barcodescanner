@@ -11,5 +11,6 @@
         <attr name="roundedCorner" format="boolean" />
         <attr name="cornerRadius" format="dimension" />
         <attr name="squaredFinder" format="boolean" />
+        <attr name="borderAlpha" format="float" />
     </declare-styleable>
 </resources>
