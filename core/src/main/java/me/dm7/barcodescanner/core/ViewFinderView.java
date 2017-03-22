@@ -3,6 +3,7 @@ package me.dm7.barcodescanner.core;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -67,9 +68,9 @@ public class ViewFinderView extends View implements IViewFinder {
         mBorderPaint.setColor(mDefaultBorderColor);
         mBorderPaint.setStyle(Paint.Style.STROKE);
         mBorderPaint.setStrokeWidth(mDefaultBorderStrokeWidth);
+        mBorderPaint.setAntiAlias(true);
 
         mBorderLineLength = mDefaultBorderLineLength;
-        mBorderLineLength = 120;
     }
 
     @Override
@@ -100,7 +101,22 @@ public class ViewFinderView extends View implements IViewFinder {
     @Override
     public void setLaserEnabled(boolean isLaserEnabled) { mIsLaserEnabled = isLaserEnabled; }
 
+    @Override
+    public void setBorderCornerRounded(boolean isBorderCornersRounded) {
+        if (isBorderCornersRounded) {
+            mBorderPaint.setStrokeJoin(Paint.Join.ROUND);
+        } else {
+            mBorderPaint.setStrokeJoin(Paint.Join.BEVEL);
+        }
+    }
+
+    @Override
+    public void setBorderCornerRadius(int borderCornersRadius) {
+        mBorderPaint.setPathEffect(new CornerPathEffect(borderCornersRadius));
+    }
+
     // TODO: Need a better way to configure this. Revisit when working on 2.0
+    @Override
     public void setSquareViewFinder(boolean set) {
         mSquareViewFinder = set;
     }

@@ -10,6 +10,10 @@ public interface IViewFinder {
     void setBorderStrokeWidth(int borderStrokeWidth);
     void setBorderLineLength(int borderLineLength);
     void setLaserEnabled(boolean isLaserEnabled);
+
+    void setBorderCornerRounded(boolean isBorderCornersRounded);
+    void setBorderCornerRadius(int borderCornersRadius);
+    void setSquareViewFinder(boolean isSquareViewFinder);
     /**
      * Method that executes when Camera preview is starting.
      * It is recommended to update framing rect here and invalidate view after that. <br/>

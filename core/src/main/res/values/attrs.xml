@@ -8,5 +8,8 @@
         <attr name="maskColor" format="color" />
         <attr name="borderWidth" format="dimension" />
         <attr name="borderLength" format="dimension" />
+        <attr name="roundedCorner" format="boolean" />
+        <attr name="cornerRadius" format="dimension" />
+        <attr name="squaredFinder" format="boolean" />
     </declare-styleable>
 </resources>
