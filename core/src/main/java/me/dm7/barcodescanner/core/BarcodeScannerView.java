@@ -32,6 +32,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
 
     public BarcodeScannerView(Context context) {
         super(context);
+        init();
     }
 
     public BarcodeScannerView(Context context, AttributeSet attributeSet) {
@@ -52,6 +53,12 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         } finally {
             a.recycle();
         }
+
+        init();
+    }
+
+    private void init() {
+        mViewFinderView = createViewFinderView(getContext());
     }
 
     public final void setupLayout(CameraWrapper cameraWrapper) {
@@ -69,7 +76,6 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
             addView(mPreview);
         }
 
-        mViewFinderView = createViewFinderView(getContext());
         if (mViewFinderView instanceof View) {
             addView((View) mViewFinderView);
         } else {
@@ -94,6 +100,31 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         viewFinderView.setBorderLineLength(mBorderLength);
         viewFinderView.setMaskColor(mMaskColor);
         return viewFinderView;
+    }
+
+    public void setLaserColor(int laserColor) {
+        mViewFinderView.setLaserColor(laserColor);
+        mViewFinderView.setupViewFinder();
+    }
+    public void setMaskColor(int maskColor) {
+        mViewFinderView.setMaskColor(maskColor);
+        mViewFinderView.setupViewFinder();
+    }
+    public void setBorderColor(int borderColor) {
+        mViewFinderView.setBorderColor(borderColor);
+        mViewFinderView.setupViewFinder();
+    }
+    public void setBorderStrokeWidth(int borderStrokeWidth) {
+        mViewFinderView.setBorderStrokeWidth(borderStrokeWidth);
+        mViewFinderView.setupViewFinder();
+    }
+    public void setBorderLineLength(int borderLineLength) {
+        mViewFinderView.setBorderLineLength(borderLineLength);
+        mViewFinderView.setupViewFinder();
+    }
+    public void setLaserEnabled(boolean isLaserEnabled) {
+        mViewFinderView.setLaserEnabled(isLaserEnabled);
+        mViewFinderView.setupViewFinder();
     }
 
     public void startCamera(int cameraId) {

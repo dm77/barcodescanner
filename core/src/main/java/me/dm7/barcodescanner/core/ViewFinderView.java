@@ -71,21 +71,32 @@ public class ViewFinderView extends View implements IViewFinder {
         mBorderLineLength = 120;
     }
 
+    @Override
     public void setLaserColor(int laserColor) {
         mLaserPaint.setColor(laserColor);
     }
+
+    @Override
     public void setMaskColor(int maskColor) {
         mFinderMaskPaint.setColor(maskColor);
     }
+
+    @Override
     public void setBorderColor(int borderColor) {
         mBorderPaint.setColor(borderColor);
     }
+
+    @Override
     public void setBorderStrokeWidth(int borderStrokeWidth) {
         mBorderPaint.setStrokeWidth(borderStrokeWidth);
     }
+
+    @Override
     public void setBorderLineLength(int borderLineLength) {
         mBorderLineLength = borderLineLength;
     }
+
+    @Override
     public void setLaserEnabled(boolean isLaserEnabled) { mIsLaserEnabled = isLaserEnabled; }
 
     // TODO: Need a better way to configure this. Revisit when working on 2.0
