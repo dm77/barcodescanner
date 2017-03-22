@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.3.0'
     }
 }
 
@@ -20,7 +20,7 @@ allprojects {
     }
 
     ext {
-        supportLibraryDependency = 'com.android.support:support-v4:23.2.1'
+        supportLibraryDependency = 'com.android.support:support-v4:25.3.0'
         isLibrary = false
     }
 }
@@ -28,10 +28,10 @@ allprojects {
 subprojects {
     afterEvaluate { Project project ->
         ext.pluginContainer = project.getPlugins()
-        if(ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
+        if (ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
             android {
-                compileSdkVersion 23
-                buildToolsVersion '23.0.3'
+                compileSdkVersion 25
+                buildToolsVersion '25.0.2'
 
                 android {
                     lintOptions {
@@ -41,13 +41,13 @@ subprojects {
 
                 defaultConfig {
                     minSdkVersion 9
-                    targetSdkVersion 23
+                    targetSdkVersion 25
                     versionCode 184
-                    versionName "1.8.4"
+                    versionName "1.8.4.t"
                 }
             }
         }
-        if(project.isLibrary && rootProject.hasProperty('sonatypeUsername') && rootProject.hasProperty('sonatypePassword')) {
+        if (project.isLibrary && rootProject.hasProperty('sonatypeUsername') && rootProject.hasProperty('sonatypePassword')) {
             configure(project) {
                 apply plugin: 'maven'
                 apply plugin: 'signing'
@@ -62,12 +62,12 @@ subprojects {
                         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
                         repository(url: sonatypeRepo) {
-                            authentication(userName: sonatypeUsername , password: sonatypePassword)
+                            authentication(userName: sonatypeUsername, password: sonatypePassword)
                             releases(updatePolicy: 'always')
                         }
 
                         snapshotRepository(url: sonatypeSnapshotRepo) {
-                            authentication(userName: sonatypeUsername , password: sonatypePassword)
+                            authentication(userName: sonatypeUsername, password: sonatypePassword)
                             snapshots(updatePolicy: 'always')
                         }
 
@@ -110,5 +110,5 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.14'
+    gradleVersion = '3.3'
 }
