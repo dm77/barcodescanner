@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -141,23 +142,30 @@ public class ViewFinderView extends View implements IViewFinder {
     public void drawViewFinderBorder(Canvas canvas) {
         Rect framingRect = getFramingRect();
 
-        float offset = mBorderPaint.getStrokeWidth() / 2;
-
         // Top-left corner
-        canvas.drawLine(framingRect.left - offset, framingRect.top, framingRect.left + mBorderLineLength - offset, framingRect.top, mBorderPaint);
-        canvas.drawLine(framingRect.left, framingRect.top, framingRect.left, framingRect.top + mBorderLineLength, mBorderPaint);
+        Path path = new Path();
+        path.moveTo(framingRect.left, framingRect.top + mBorderLineLength);
+        path.lineTo(framingRect.left, framingRect.top);
+        path.lineTo(framingRect.left + mBorderLineLength, framingRect.top);
+        canvas.drawPath(path, mBorderPaint);
 
         // Top-right corner
-        canvas.drawLine(framingRect.right + offset, framingRect.top, framingRect.right - mBorderLineLength + offset, framingRect.top, mBorderPaint);
-        canvas.drawLine(framingRect.right, framingRect.top, framingRect.right, framingRect.top + mBorderLineLength, mBorderPaint);
+        path.moveTo(framingRect.right, framingRect.top + mBorderLineLength);
+        path.lineTo(framingRect.right, framingRect.top);
+        path.lineTo(framingRect.right - mBorderLineLength, framingRect.top);
+        canvas.drawPath(path, mBorderPaint);
 
         // Bottom-right corner
-        canvas.drawLine(framingRect.right + offset, framingRect.bottom, framingRect.right - mBorderLineLength + offset, framingRect.bottom, mBorderPaint);
-        canvas.drawLine(framingRect.right, framingRect.bottom, framingRect.right, framingRect.bottom - mBorderLineLength, mBorderPaint);
+        path.moveTo(framingRect.right, framingRect.bottom - mBorderLineLength);
+        path.lineTo(framingRect.right, framingRect.bottom);
+        path.lineTo(framingRect.right - mBorderLineLength, framingRect.bottom);
+        canvas.drawPath(path, mBorderPaint);
 
         // Bottom-left corner
-        canvas.drawLine(framingRect.left - offset, framingRect.bottom, framingRect.left + mBorderLineLength - offset, framingRect.bottom, mBorderPaint);
-        canvas.drawLine(framingRect.left, framingRect.bottom, framingRect.left, framingRect.bottom - mBorderLineLength, mBorderPaint);
+        path.moveTo(framingRect.left, framingRect.bottom - mBorderLineLength);
+        path.lineTo(framingRect.left, framingRect.bottom);
+        path.lineTo(framingRect.left + mBorderLineLength, framingRect.bottom);
+        canvas.drawPath(path, mBorderPaint);
     }
 
     public void drawLaser(Canvas canvas) {
