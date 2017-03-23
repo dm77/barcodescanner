@@ -1,2 +1,3 @@
 include ':vision', "vision-sample"
+include ':visionOrZXing', ':visionorzxing-sample'
 include "core", "zxing", "zxing-sample", "zbar", "zbar-sample"
