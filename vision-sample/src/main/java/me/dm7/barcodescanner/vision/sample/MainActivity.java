@@ -64,4 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 }
         }
     }
+
+    public void launchFullFragmentActivity(View view) {
+        launchActivity(FullScannerFragmentActivity.class);
+    }
 }

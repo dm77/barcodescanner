@@ -3,7 +3,9 @@
     <string name="scanner_activity">Google Mobile Vision Scanner - Full Activity</string>
     <string name="simple_scanner_activity">Google Mobile Vision Scanner - Simple Activity</string>
     <string name="simple_activity_sample">Simple Activity Sample</string>
-    <string name="activity_sample">Full Activity Sample</string>
+    <string name="full_activity_sample">Full Activity Sample</string>
+    <string name="full_fragment_sample">Full Fragment Sample</string>
+
     <string name="toggle_flash">Flash</string>
     <string name="flash_on">Flash [ON]</string>
     <string name="flash_off">Flash [OFF]</string>

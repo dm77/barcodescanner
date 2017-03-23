@@ -38,7 +38,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="launchFullActivity"
-                android:text="@string/activity_sample"/>
+                android:text="@string/full_activity_sample"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="launchFullFragmentActivity"
+                android:text="@string/full_fragment_sample"/>
 
         </LinearLayout>
     </ScrollView>

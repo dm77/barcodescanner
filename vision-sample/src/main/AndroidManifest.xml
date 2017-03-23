@@ -21,7 +21,7 @@
 
         <activity
             android:name=".FullScannerActivity"
-            android:label="@string/scanner_activity"
+            android:label="@string/full_activity_sample"
             android:theme="@style/AppOverlayTheme"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
@@ -36,6 +36,15 @@
             android:theme="@style/AppOverlayTheme">
         </activity>
 
+        <activity
+            android:name=".FullScannerFragmentActivity"
+            android:label="@string/full_fragment_sample"
+            android:theme="@style/AppOverlayTheme"
+            android:uiOptions="splitActionBarWhenNarrow">
+            <meta-data
+                android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow"/>
+        </activity>
 
     </application>
 </manifest>
