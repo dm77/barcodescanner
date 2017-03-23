@@ -9,6 +9,7 @@ ext {
 }
 
 dependencies {
-    compile project(":core")
+    //compile project(":core")
+    compile 'me.dm7.barcodescanner:zxing:1.9'
     compile 'com.google.android.gms:play-services-vision:10.2.1'
 }
