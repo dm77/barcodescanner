@@ -12,5 +12,6 @@
         <attr name="cornerRadius" format="dimension" />
         <attr name="squaredFinder" format="boolean" />
         <attr name="borderAlpha" format="float" />
+        <attr name="finderOffset" format="dimension" />
     </declare-styleable>
 </resources>

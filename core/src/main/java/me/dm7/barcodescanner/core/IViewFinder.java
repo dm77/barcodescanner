@@ -14,6 +14,7 @@ public interface IViewFinder {
     void setBorderCornerRounded(boolean isBorderCornersRounded);
     void setBorderAlpha(float alpha);
     void setBorderCornerRadius(int borderCornersRadius);
+    void setViewFinderOffset(int offset);
     void setSquareViewFinder(boolean isSquareViewFinder);
     /**
      * Method that executes when Camera preview is starting.

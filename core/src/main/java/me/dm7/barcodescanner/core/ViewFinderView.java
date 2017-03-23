@@ -23,7 +23,7 @@ public class ViewFinderView extends View implements IViewFinder {
     private static final float LANDSCAPE_WIDTH_HEIGHT_RATIO = 1.4f;
     private static final int MIN_DIMENSION_DIFF = 50;
 
-    private static final float SQUARE_DIMENSION_RATIO = 5f/8;
+    private static final float DEFAULT_SQUARE_DIMENSION_RATIO = 5f / 8;
 
     private static final int[] SCANNER_ALPHA = {0, 64, 128, 192, 255, 192, 128, 64};
     private int scannerAlpha;
@@ -42,7 +42,8 @@ public class ViewFinderView extends View implements IViewFinder {
     protected int mBorderLineLength;
     protected boolean mSquareViewFinder;
     private boolean mIsLaserEnabled;
-    private float bordersAlpha;
+    private float mBordersAlpha;
+    private int mViewFinderOffset = 0;
 
     public ViewFinderView(Context context) {
         super(context);
@@ -114,12 +115,18 @@ public class ViewFinderView extends View implements IViewFinder {
     @Override
     public void setBorderAlpha(float alpha) {
         int colorAlpha = (int) (255 * alpha);
+        mBordersAlpha = alpha;
         mBorderPaint.setAlpha(colorAlpha);
     }
 
     @Override
     public void setBorderCornerRadius(int borderCornersRadius) {
         mBorderPaint.setPathEffect(new CornerPathEffect(borderCornersRadius));
+    }
+
+    @Override
+    public void setViewFinderOffset(int offset) {
+        mViewFinderOffset = offset;
     }
 
     // TODO: Need a better way to configure this. Revisit when working on 2.0
@@ -220,10 +227,10 @@ public class ViewFinderView extends View implements IViewFinder {
 
         if(mSquareViewFinder) {
             if(orientation != Configuration.ORIENTATION_PORTRAIT) {
-                height = (int) (getHeight() * SQUARE_DIMENSION_RATIO);
+                height = (int) (getHeight() * DEFAULT_SQUARE_DIMENSION_RATIO);
                 width = height;
             } else {
-                width = (int) (getWidth() * SQUARE_DIMENSION_RATIO);
+                width = (int) (getWidth() * DEFAULT_SQUARE_DIMENSION_RATIO);
                 height = width;
             }
         } else {
@@ -246,7 +253,7 @@ public class ViewFinderView extends View implements IViewFinder {
 
         int leftOffset = (viewResolution.x - width) / 2;
         int topOffset = (viewResolution.y - height) / 2;
-        mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
+        mFramingRect = new Rect(leftOffset + mViewFinderOffset, topOffset + mViewFinderOffset, leftOffset + width - mViewFinderOffset, topOffset + height - mViewFinderOffset);
     }
 }
 

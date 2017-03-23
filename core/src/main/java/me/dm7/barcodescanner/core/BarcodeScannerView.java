@@ -33,6 +33,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private int mCornerRadius = 0;
     private boolean mSquaredFinder = false;
     private float mBorderAlpha = 1.0f;
+    private int mViewFinderOffset = 0;
 
     public BarcodeScannerView(Context context) {
         super(context);
@@ -60,6 +61,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
             mCornerRadius = a.getDimensionPixelSize(R.styleable.BarcodeScannerView_cornerRadius, mCornerRadius);
             mSquaredFinder = a.getBoolean(R.styleable.BarcodeScannerView_squaredFinder, mSquaredFinder);
             mBorderAlpha = a.getFloat(R.styleable.BarcodeScannerView_borderAlpha, mBorderAlpha);
+            mViewFinderOffset = a.getDimensionPixelSize(R.styleable.BarcodeScannerView_finderOffset, mViewFinderOffset);
         } finally {
             a.recycle();
         }
@@ -113,6 +115,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         viewFinderView.setBorderCornerRounded(mRoundedCorner);
         viewFinderView.setBorderCornerRadius(mCornerRadius);
         viewFinderView.setSquareViewFinder(mSquaredFinder);
+        viewFinderView.setViewFinderOffset(mViewFinderOffset);
         return viewFinderView;
     }
 
