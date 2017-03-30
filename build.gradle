@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.3.0'
     }
 }
 
@@ -20,7 +20,7 @@ allprojects {
     }
 
     ext {
-        supportLibraryDependency = 'com.android.support:support-v4:23.2.1'
+        supportLibraryDependency = 'com.android.support:support-v4:25.3.1'
         isLibrary = false
     }
 }
@@ -30,8 +30,8 @@ subprojects {
         ext.pluginContainer = project.getPlugins()
         if(ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
             android {
-                compileSdkVersion 23
-                buildToolsVersion '23.0.3'
+                compileSdkVersion 25
+                buildToolsVersion '25.0.2'
 
                 android {
                     lintOptions {
@@ -41,7 +41,7 @@ subprojects {
 
                 defaultConfig {
                     minSdkVersion 9
-                    targetSdkVersion 23
+                    targetSdkVersion 25
                     versionCode 184
                     versionName "1.8.4"
                 }
