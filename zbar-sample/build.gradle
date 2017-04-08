@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 
 dependencies {
     //compile project(":zbar")
-    compile 'me.dm7.barcodescanner:zbar:1.9.1'
-    compile supportLibraryDependency
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+    compile libraries.barcodescanner_zbar
+    compile libraries.support_v4
+    compile libraries.appcompat_v7
+    compile libraries.design_support
 }
 
 android {
     defaultConfig {
         applicationId "${project.group}.zbar.sample"
     }
-    buildToolsVersion '25.0.2'
+    buildToolsVersion versions.build_tools
 }

@@ -1,3 +1,5 @@
+apply from: 'dependencies.gradle'
+
 buildscript {
     repositories {
         mavenCentral()
@@ -21,7 +23,6 @@ allprojects {
     }
 
     ext {
-        supportLibraryDependency = 'com.android.support:support-v4:25.3.1'
         isLibrary = false
     }
 }
