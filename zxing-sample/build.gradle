@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    //compile project(":zxing")
+//    compile project(":zxing")
     compile 'me.dm7.barcodescanner:zxing:1.9'
     compile supportLibraryDependency
     compile 'com.android.support:appcompat-v7:25.3.1'
