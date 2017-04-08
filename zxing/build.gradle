@@ -10,6 +10,6 @@ ext {
 
 dependencies {
     //compile project(":core")
-    compile 'me.dm7.barcodescanner:core:1.9'
+    compile 'me.dm7.barcodescanner:core:1.9.1'
     compile 'com.google.zxing:core:3.3.0'
 }

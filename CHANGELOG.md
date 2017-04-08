@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.9.1] - April 8, 2017
+* Add ability to scan inverted/negative codes with ZXing. Thanks to @manijshrestha for this pull request #265
+
 ## [1.9] - July 25, 2016
 * Scale camera preview when the view size isn't full screen. Thanks to @xolan for this pull request PR #219
 * Fix inverted camera in devices with differently oriented back and forward facing cameras. Thanks to @thadcodes for PR #191

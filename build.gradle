@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -10,7 +11,7 @@ buildscript {
 
 allprojects {
     group = 'me.dm7.barcodescanner'
-    version = '1.9'
+    version = '1.9.1'
 
     repositories {
         mavenCentral()
@@ -42,8 +43,8 @@ subprojects {
                 defaultConfig {
                     minSdkVersion 9
                     targetSdkVersion 25
-                    versionCode 184
-                    versionName "1.8.4"
+                    versionCode 191
+                    versionName "1.9.1"
                 }
             }
         }
@@ -53,7 +54,7 @@ subprojects {
                 apply plugin: 'signing'
 
                 signing {
-                    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+                    required { gradle.taskGraph.hasTask("uploadArchives") }
                     sign configurations.archives
                 }
 
@@ -110,5 +111,5 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.14'
+    gradleVersion = '3.4.1'
 }
