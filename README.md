@@ -1,4 +1,4 @@
-Introduction
+Introduction [![CodeHunt.io](https://img.shields.io/badge/vote-codehunt.io-02AFD1.svg)](http://codehunt.io/sub/barcode-scanner-libraries-for-android/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 ============
 
 Android library projects that provides easy to use and extensible Barcode Scanner views based on ZXing and ZBar.
