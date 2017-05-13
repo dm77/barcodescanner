@@ -21,6 +21,10 @@ public class ViewFinderView extends View implements IViewFinder {
     private static final float LANDSCAPE_WIDTH_HEIGHT_RATIO = 1.4f;
     private static final int MIN_DIMENSION_DIFF = 50;
 
+    public static final int REC_PUT_CENTER = -1;
+    private int recTop = REC_PUT_CENTER;
+    private int recLeft = REC_PUT_CENTER;
+
     private static final float SQUARE_DIMENSION_RATIO = 5f/8;
 
     private static final int[] SCANNER_ALPHA = {0, 64, 128, 192, 255, 192, 128, 64};
@@ -42,6 +46,14 @@ public class ViewFinderView extends View implements IViewFinder {
 
     public ViewFinderView(Context context) {
         super(context);
+        init();
+    }
+
+    public ViewFinderView(Context context, int recLeft, int recTop) {
+        super(context);
+
+        this.recLeft = recLeft < 0 ? REC_PUT_CENTER : recLeft;
+        this.recTop = recTop < 0 ? REC_PUT_CENTER : recTop;
         init();
     }
 
@@ -190,8 +202,18 @@ public class ViewFinderView extends View implements IViewFinder {
             height = getHeight() - MIN_DIMENSION_DIFF;
         }
 
-        int leftOffset = (viewResolution.x - width) / 2;
-        int topOffset = (viewResolution.y - height) / 2;
+        int leftOffsetRange = (viewResolution.x - width);
+        int topOffsetRange = (viewResolution.y - width);
+
+        int leftOffset =
+                this.recLeft == REC_PUT_CENTER ?
+                        leftOffsetRange / 2 :
+                        Math.min(this.recLeft, leftOffsetRange);
+        int topOffset =
+                this.recTop == REC_PUT_CENTER ?
+                        topOffsetRange / 2 :
+                        Math.min(this.recTop, topOffsetRange);
+
         mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
     }
 }
