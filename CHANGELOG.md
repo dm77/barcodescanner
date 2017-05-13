@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.9.2] - May 13, 2017
+* Add support for AZTEC codes in ZXing: #299, #288.
+
 ## [1.9.1] - April 8, 2017
 * Add ability to scan inverted/negative codes with ZXing. Thanks to @manijshrestha for this pull request #265
 
