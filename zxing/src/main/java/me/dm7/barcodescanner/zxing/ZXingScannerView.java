@@ -122,7 +122,7 @@ public class ZXingScannerView extends BarcodeScannerView {
              * Fixed Nexus 5x barcode scanning issues
              * https://github.com/dm77/barcodescanner/issues/280
              * https://github.com/dm77/barcodescanner/issues/313
-             * The above code actually rotates only 90 degree.It works fine
+             * The above commented code actually rotates only 90 degree.It works fine
              * if device having normal camera orientation(Landscape).But
              * for Nexus 5X device camera orientation is reverse landscape and
              * it rotates 90 degree,so the preview data will be upside down.
