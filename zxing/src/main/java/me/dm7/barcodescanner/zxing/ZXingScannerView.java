@@ -106,7 +106,7 @@ public class ZXingScannerView extends BarcodeScannerView {
             int width = size.width;
             int height = size.height;
 
-            if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
+            /*if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
                 byte[] rotatedData = new byte[data.length];
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++)
@@ -116,6 +116,45 @@ public class ZXingScannerView extends BarcodeScannerView {
                 width = height;
                 height = tmp;
                 data = rotatedData;
+            }*/
+
+            /**
+             * Fixed Nexus 5x barcode scanning issues
+             * https://github.com/dm77/barcodescanner/issues/280
+             * https://github.com/dm77/barcodescanner/issues/313
+             * The above code actually rotates only 90 degree.It works fine
+             * if device having normal camera orientation(Landscape).But
+             * for Nexus 5X device camera orientation is reverse landscape and
+             * it rotates 90 degree,so the preview data will be upside down.
+             * Normally when we use rectangle at center,it is very hard to identify this issue,
+             * because zxing scans barcode even if it is in reverse angle.When we move the
+             * rectangle points we can identify this issue.
+             * To fix this issue,I have rotated data based on camera orientation.Now it rotates
+             * 270 degree on Nexus device and 90 degree on normal orientation devices.
+             */
+            int displayOrientation = getCameraPreview().getDisplayOrientation();
+
+            int rotationCount = 0;
+            switch (displayOrientation) {
+                case 0: rotationCount = 0; break;
+                case 90: rotationCount = 1; break;
+                case 180: rotationCount = 2; break;
+                case 270: rotationCount = 3; break;
+            }
+
+            for (int i = 0; i < rotationCount; i++) {
+                if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
+                    byte[] rotatedData = new byte[data.length];
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width; x++)
+                            rotatedData[x * height + height - y - 1] = data[x + y * width];
+                    }
+                    int tmp = width;
+                    width = height;
+                    height = tmp;
+                    data = rotatedData;
+                    Log.d(TAG, "onPreviewFrame: rotated data");
+                }
             }
 
             Result rawResult = null;

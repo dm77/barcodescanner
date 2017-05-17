@@ -21,6 +21,10 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private boolean mAutofocusState = true;
     private boolean mShouldScaleToFill = true;
 
+    public CameraPreview getCameraPreview() {
+        return mPreview;
+    }
+
     public BarcodeScannerView(Context context) {
         super(context);
     }
