@@ -1,0 +1,14 @@
+apply plugin: 'com.android.library'
+
+ext {
+    isLibrary = true
+    pomPackaging = "aar"
+    pomArtifactId = "vision"
+    pomName = "Google Mobile Vision Scanner View"
+    pomDescription = 'An android library project which contains the Google mobile vision barcode scanner view'
+}
+
+dependencies {
+    compile project(":core")
+    compile 'com.google.android.gms:play-services-vision:10.2.1'
+}

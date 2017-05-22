@@ -13,3 +13,7 @@ dependencies {
     compile libraries.barcodescanner_core
     compile fileTree(dir: 'libs', include: '*.jar')
 }
+
+android {
+    buildToolsVersion '25.0.2'
+}
