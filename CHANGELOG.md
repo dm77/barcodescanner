@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.9.3] - May 27, 2017
+* Add ability to customize view finder with custom attributes. See #285 for more info. Thanks to @albinpoignot for the pull request
+
 ## [1.9.2] - May 13, 2017
 * Add support for AZTEC codes in ZXing: #299, #288.
 
