@@ -3,7 +3,9 @@ package me.dm7.barcodescanner.core;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -21,7 +23,7 @@ public class ViewFinderView extends View implements IViewFinder {
     private static final float LANDSCAPE_WIDTH_HEIGHT_RATIO = 1.4f;
     private static final int MIN_DIMENSION_DIFF = 50;
 
-    private static final float SQUARE_DIMENSION_RATIO = 5f/8;
+    private static final float DEFAULT_SQUARE_DIMENSION_RATIO = 5f / 8;
 
     private static final int[] SCANNER_ALPHA = {0, 64, 128, 192, 255, 192, 128, 64};
     private int scannerAlpha;
@@ -39,14 +41,17 @@ public class ViewFinderView extends View implements IViewFinder {
     protected Paint mBorderPaint;
     protected int mBorderLineLength;
     protected boolean mSquareViewFinder;
+    private boolean mIsLaserEnabled;
+    private float mBordersAlpha;
+    private int mViewFinderOffset = 0;
 
     public ViewFinderView(Context context) {
         super(context);
         init();
     }
 
-    public ViewFinderView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public ViewFinderView(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
         init();
     }
 
@@ -65,27 +70,67 @@ public class ViewFinderView extends View implements IViewFinder {
         mBorderPaint.setColor(mDefaultBorderColor);
         mBorderPaint.setStyle(Paint.Style.STROKE);
         mBorderPaint.setStrokeWidth(mDefaultBorderStrokeWidth);
+        mBorderPaint.setAntiAlias(true);
 
         mBorderLineLength = mDefaultBorderLineLength;
     }
 
+    @Override
     public void setLaserColor(int laserColor) {
         mLaserPaint.setColor(laserColor);
     }
+
+    @Override
     public void setMaskColor(int maskColor) {
         mFinderMaskPaint.setColor(maskColor);
     }
+
+    @Override
     public void setBorderColor(int borderColor) {
         mBorderPaint.setColor(borderColor);
     }
+
+    @Override
     public void setBorderStrokeWidth(int borderStrokeWidth) {
         mBorderPaint.setStrokeWidth(borderStrokeWidth);
     }
+
+    @Override
     public void setBorderLineLength(int borderLineLength) {
         mBorderLineLength = borderLineLength;
     }
 
+    @Override
+    public void setLaserEnabled(boolean isLaserEnabled) { mIsLaserEnabled = isLaserEnabled; }
+
+    @Override
+    public void setBorderCornerRounded(boolean isBorderCornersRounded) {
+        if (isBorderCornersRounded) {
+            mBorderPaint.setStrokeJoin(Paint.Join.ROUND);
+        } else {
+            mBorderPaint.setStrokeJoin(Paint.Join.BEVEL);
+        }
+    }
+
+    @Override
+    public void setBorderAlpha(float alpha) {
+        int colorAlpha = (int) (255 * alpha);
+        mBordersAlpha = alpha;
+        mBorderPaint.setAlpha(colorAlpha);
+    }
+
+    @Override
+    public void setBorderCornerRadius(int borderCornersRadius) {
+        mBorderPaint.setPathEffect(new CornerPathEffect(borderCornersRadius));
+    }
+
+    @Override
+    public void setViewFinderOffset(int offset) {
+        mViewFinderOffset = offset;
+    }
+
     // TODO: Need a better way to configure this. Revisit when working on 2.0
+    @Override
     public void setSquareViewFinder(boolean set) {
         mSquareViewFinder = set;
     }
@@ -107,7 +152,10 @@ public class ViewFinderView extends View implements IViewFinder {
 
         drawViewFinderMask(canvas);
         drawViewFinderBorder(canvas);
-        drawLaser(canvas);
+
+        if (mIsLaserEnabled) {
+            drawLaser(canvas);
+        }
     }
 
     public void drawViewFinderMask(Canvas canvas) {
@@ -123,18 +171,31 @@ public class ViewFinderView extends View implements IViewFinder {
 
     public void drawViewFinderBorder(Canvas canvas) {
         Rect framingRect = getFramingRect();
-        
-        canvas.drawLine(framingRect.left - 1, framingRect.top - 1, framingRect.left - 1, framingRect.top - 1 + mBorderLineLength, mBorderPaint);
-        canvas.drawLine(framingRect.left - 1, framingRect.top - 1, framingRect.left - 1 + mBorderLineLength, framingRect.top - 1, mBorderPaint);
 
-        canvas.drawLine(framingRect.left - 1, framingRect.bottom + 1, framingRect.left - 1, framingRect.bottom + 1 - mBorderLineLength, mBorderPaint);
-        canvas.drawLine(framingRect.left - 1, framingRect.bottom + 1, framingRect.left - 1 + mBorderLineLength, framingRect.bottom + 1, mBorderPaint);
+        // Top-left corner
+        Path path = new Path();
+        path.moveTo(framingRect.left, framingRect.top + mBorderLineLength);
+        path.lineTo(framingRect.left, framingRect.top);
+        path.lineTo(framingRect.left + mBorderLineLength, framingRect.top);
+        canvas.drawPath(path, mBorderPaint);
 
-        canvas.drawLine(framingRect.right + 1, framingRect.top - 1, framingRect.right + 1, framingRect.top - 1 + mBorderLineLength, mBorderPaint);
-        canvas.drawLine(framingRect.right + 1, framingRect.top - 1, framingRect.right + 1 - mBorderLineLength, framingRect.top - 1, mBorderPaint);
+        // Top-right corner
+        path.moveTo(framingRect.right, framingRect.top + mBorderLineLength);
+        path.lineTo(framingRect.right, framingRect.top);
+        path.lineTo(framingRect.right - mBorderLineLength, framingRect.top);
+        canvas.drawPath(path, mBorderPaint);
 
-        canvas.drawLine(framingRect.right + 1, framingRect.bottom + 1, framingRect.right + 1, framingRect.bottom + 1 - mBorderLineLength, mBorderPaint);
-        canvas.drawLine(framingRect.right + 1, framingRect.bottom + 1, framingRect.right + 1 - mBorderLineLength, framingRect.bottom + 1, mBorderPaint);
+        // Bottom-right corner
+        path.moveTo(framingRect.right, framingRect.bottom - mBorderLineLength);
+        path.lineTo(framingRect.right, framingRect.bottom);
+        path.lineTo(framingRect.right - mBorderLineLength, framingRect.bottom);
+        canvas.drawPath(path, mBorderPaint);
+
+        // Bottom-left corner
+        path.moveTo(framingRect.left, framingRect.bottom - mBorderLineLength);
+        path.lineTo(framingRect.left, framingRect.bottom);
+        path.lineTo(framingRect.left + mBorderLineLength, framingRect.bottom);
+        canvas.drawPath(path, mBorderPaint);
     }
 
     public void drawLaser(Canvas canvas) {
@@ -166,10 +227,10 @@ public class ViewFinderView extends View implements IViewFinder {
 
         if(mSquareViewFinder) {
             if(orientation != Configuration.ORIENTATION_PORTRAIT) {
-                height = (int) (getHeight() * SQUARE_DIMENSION_RATIO);
+                height = (int) (getHeight() * DEFAULT_SQUARE_DIMENSION_RATIO);
                 width = height;
             } else {
-                width = (int) (getWidth() * SQUARE_DIMENSION_RATIO);
+                width = (int) (getWidth() * DEFAULT_SQUARE_DIMENSION_RATIO);
                 height = width;
             }
         } else {
@@ -192,6 +253,7 @@ public class ViewFinderView extends View implements IViewFinder {
 
         int leftOffset = (viewResolution.x - width) / 2;
         int topOffset = (viewResolution.y - height) / 2;
-        mFramingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
+        mFramingRect = new Rect(leftOffset + mViewFinderOffset, topOffset + mViewFinderOffset, leftOffset + width - mViewFinderOffset, topOffset + height - mViewFinderOffset);
     }
 }
+

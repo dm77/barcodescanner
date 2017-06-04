@@ -143,7 +143,7 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`compile 'me.dm7.barcodescanner:zxing:1.9'`
+`compile 'me.dm7.barcodescanner:zxing:1.9.3'`
 
 Simple Usage
 ------------
@@ -244,7 +244,7 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`compile 'me.dm7.barcodescanner:zbar:1.9'`
+`compile 'me.dm7.barcodescanner:zbar:1.9.3'`
 
 Simple Usage
 ------------
@@ -333,7 +333,7 @@ BarcodeFormat.DATABAR_EXP
 BarcodeFormat.CODABAR
 BarcodeFormat.CODE39
 BarcodeFormat.PDF417
-BarcodeFormat.QRCODE
+BarcodeFormat.QR_CODE
 BarcodeFormat.CODE93
 BarcodeFormat.CODE128
 ```
