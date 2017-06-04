@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -9,20 +10,16 @@ buildscript {
 }
 
 allprojects {
-    group = 'me.dm7.barcodescanner'
-    version = '1.9'
-
-    repositories {
-        mavenCentral()
-        maven {
-            url 'https://oss.sonatype.org/content/groups/public'
-        }
-    }
-
     ext {
         supportLibraryDependency = 'com.android.support:support-v4:25.3.0'
         isLibrary = false
     }
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
 }
 
 subprojects {
@@ -40,69 +37,10 @@ subprojects {
                 }
 
                 defaultConfig {
-                    minSdkVersion 14
+                    minSdkVersion 17
                     targetSdkVersion 25
                     versionCode 184
                     versionName "1.8.4"
-                }
-            }
-        }
-        if (project.isLibrary && rootProject.hasProperty('sonatypeUsername') && rootProject.hasProperty('sonatypePassword')) {
-            configure(project) {
-                apply plugin: 'maven'
-                apply plugin: 'signing'
-
-                signing {
-                    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
-                    sign configurations.archives
-                }
-
-                uploadArchives {
-                    repositories.mavenDeployer {
-                        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                        repository(url: sonatypeRepo) {
-                            authentication(userName: sonatypeUsername, password: sonatypePassword)
-                            releases(updatePolicy: 'always')
-                        }
-
-                        snapshotRepository(url: sonatypeSnapshotRepo) {
-                            authentication(userName: sonatypeUsername, password: sonatypePassword)
-                            snapshots(updatePolicy: 'always')
-                        }
-
-                        pom.project {
-                            name project.pomName
-                            version project.version
-                            groupId project.group
-                            packaging project.pomPackaging
-                            artifactId project.pomArtifactId
-                            description project.pomDescription
-                            url 'https://github.com/dm77/barcodescanner'
-
-                            scm {
-                                url 'scm:git@github.com:dm77/barcodescanner.git'
-                                connection 'scm:git@github.com:dm77/barcodescanner.git'
-                                developerConnection 'scm:git@github.com:dm77/barcodescanner.git'
-                            }
-
-                            licenses {
-                                license {
-                                    name 'The Apache Software License, Version 2.0'
-                                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                                    distribution 'repo'
-                                }
-                            }
-
-                            developers {
-                                developer {
-                                    id 'dm77'
-                                    name 'Dushyanth Maguluru'
-                                    email 'dushyanth.maguluru@gmail.com'
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
