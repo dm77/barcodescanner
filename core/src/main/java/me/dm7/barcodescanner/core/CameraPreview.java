@@ -235,7 +235,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             w = portraitWidth;
         }
 
-        final double ASPECT_TOLERANCE = 0.1;
+        final double ASPECT_TOLERANCE = 0.5;
         double targetRatio = (double) w / h;
         if (sizes == null) return null;
 
