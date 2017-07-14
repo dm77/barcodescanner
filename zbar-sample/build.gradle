@@ -7,7 +7,7 @@ dependencies {
     compile libraries.appcompat_v7
     compile libraries.design_support
     compile 'org.altbeacon:android-beacon-library:2.+'
-    compile 'com.android.support.constraint:constraint-layout:+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 android {

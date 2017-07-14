@@ -12,6 +12,7 @@
         <item name="android:textColorSecondary">@color/secondary_text</item>
     </style>
 
+
     <style name="AppOverlayTheme" parent="@style/Theme.AppCompat.Light">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>

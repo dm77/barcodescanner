@@ -39,15 +39,18 @@
         <activity
             android:name=".SimpleScannerActivity"
             android:label="@string/simple_scanner_activity"
-            android:theme="@style/AppOverlayTheme"></activity>
+            android:theme="@style/AppOverlayTheme" />
         <activity
             android:name=".SimpleScannerFragmentActivity"
             android:label="@string/simple_scanner_fragment_activity"
-            android:theme="@style/AppOverlayTheme"></activity>
-        <activity
-            android:name=".LauncherActivity"
-            android:label="@string/title_activity_launcher"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppOverlayTheme" />
+        <activity android:name=".LaunchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
