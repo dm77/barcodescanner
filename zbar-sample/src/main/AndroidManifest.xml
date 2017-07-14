@@ -40,19 +40,20 @@
             android:theme="@style/AppOverlayTheme" />
         <activity
             android:name=".LaunchActivity"
-            android:theme="@style/shopsesh">
-        </activity>
-        <activity android:name=".MenuActivity"
-            android:theme="@style/shopsesh">
-            <intent-filter> <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-
-
-        <activity android:name=".ShoppingList"
             android:theme="@style/shopsesh"></activity>
+        <activity
+            android:name=".MenuActivity"
+            android:theme="@style/shopsesh">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ShoppingList"
+            android:theme="@style/shopsesh" />
+        <activity android:name=".ShopScan"></activity>
     </application>
 
 </manifest>

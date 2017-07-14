@@ -18,6 +18,13 @@ public class MenuActivity extends Activity {
                 startActivity(toShopping);
             }
         });
+        findViewById(R.id.itemsearch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toScan = new Intent(MenuActivity.this,ShopScan.class);
+                startActivity(toScan);
+            }
+        });
     }
 
 }
