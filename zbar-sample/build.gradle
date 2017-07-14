@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 dependencies {
     //compile project(":zbar")
     compile libraries.barcodescanner_zbar
+    compile 'org.altbeacon:android-beacon-library:2+'
     compile libraries.support_v4
     compile libraries.appcompat_v7
     compile libraries.design_support
