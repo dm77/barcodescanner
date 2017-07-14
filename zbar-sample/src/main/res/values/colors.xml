@@ -9,5 +9,6 @@
     <color name="secondary_text">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
-    <color name="shopsheshcol">#60f39e</color>
+    <color name="shopsheshcol">#c6ebce</color>
+    <color name="shopseshtext">#003e01</color>
 </resources>
