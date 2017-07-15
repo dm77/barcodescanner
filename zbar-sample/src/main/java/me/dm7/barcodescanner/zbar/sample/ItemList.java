@@ -6,6 +6,8 @@ package me.dm7.barcodescanner.zbar.sample;
 
 public class ItemList {
     public static ShopItem[] items = {
-          new ShopItem("5018730000066", "Water", "£1")
+            new ShopItem("5018730000066", "Water", "£1"),
+            new ShopItem("5449000011527", "Fanta", "50p"),
+            new ShopItem("544909000053879", "Coke", "50p")
     };
 }
