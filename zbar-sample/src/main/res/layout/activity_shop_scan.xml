@@ -18,7 +18,7 @@
             android:id="@+id/fragment"
             android:name="me.dm7.barcodescanner.zbar.sample.FullScannerFragment"
             android:layout_width="match_parent"
-            android:layout_height="300dip"
+            android:layout_height="400dip"
             android:layout_weight="1"
             tools:layout_editor_absoluteX="187dp"
             tools:layout_editor_absoluteY="32dp" />
@@ -52,7 +52,7 @@
                 app:srcCompat="@drawable/line" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -75,8 +75,13 @@
 
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50" />
+
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/itemnum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

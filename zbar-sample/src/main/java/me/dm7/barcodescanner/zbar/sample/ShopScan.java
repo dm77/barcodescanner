@@ -17,6 +17,8 @@ public class ShopScan extends FragmentActivity implements ItemScannedListener {
     @Override
     public void itemScanned(String barcode) {
         ((EditText)findViewById(R.id.itemName)).setText("Doom Bar");
+        ((EditText)findViewById(R.id.price)).setText("3.40");
+        ((EditText)findViewById(R.id.itemnum)).setText("2/34");
 
     }
 }
