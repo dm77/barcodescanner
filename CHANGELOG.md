@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.9.4] - July 15, 2017
+* Add ability to customize aspect ratio tolerance that is used in figuring out the optimal camera preview size. This is just a temporary fix for #249,#287,#293
+
 ## [1.9.3] - May 27, 2017
 * Add ability to customize view finder with custom attributes. See #285 for more info. Thanks to @albinpoignot for the pull request
 
