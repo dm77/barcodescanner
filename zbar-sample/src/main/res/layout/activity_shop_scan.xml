@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="368dp"
         android:layout_height="576dp"
+        android:gravity="center"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
@@ -17,20 +18,76 @@
             android:id="@+id/fragment"
             android:name="me.dm7.barcodescanner.zbar.sample.FullScannerFragment"
             android:layout_width="match_parent"
-            android:layout_height="100dip"
+            android:layout_height="300dip"
             android:layout_weight="1"
             tools:layout_editor_absoluteX="187dp"
             tools:layout_editor_absoluteY="32dp" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/itemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#00000000"
             android:editable="false"
             android:ems="10"
+            android:gravity="center"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="Bananas"
+            android:textAlignment="center"
+            android:textColor="@color/shopseshtext"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/line" />
+
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:textColor="@color/shopseshtext"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="£0.34" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/line" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:text="1/34"
+            android:textColor="@color/shopseshtext"
+            android:textSize="24sp" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

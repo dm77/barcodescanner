@@ -53,7 +53,9 @@
         <activity
             android:name=".ShoppingList"
             android:theme="@style/shopsesh" />
-        <activity android:name=".ShopScan"></activity>
+        <activity android:name=".ShopScan"
+            android:theme="@style/shopsesh"></activity>
+
     </application>
 
 </manifest>

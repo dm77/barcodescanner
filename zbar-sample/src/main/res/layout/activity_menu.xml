@@ -39,7 +39,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="3dip"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:paddingLeft="10dip"
             android:paddingRight="10dip"
             app:srcCompat="@drawable/line" />
