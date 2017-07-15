@@ -77,7 +77,7 @@
         android:layout_weight="50" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/totalPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -87,6 +87,15 @@
         android:textColor="@color/shopseshtext"
         android:textSize="18sp"
         tools:text="Total price:" />
+
+    <Button
+        android:id="@+id/donebutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Done"
+        android:textColor="@color/shopseshtext"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/itemnum"
