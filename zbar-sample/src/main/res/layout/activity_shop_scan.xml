@@ -28,7 +28,7 @@
         android:enabled="false"
         android:gravity="center"
         android:inputType="none"
-        android:text="Bananas"
+        android:text="Scan an item"
         android:textAlignment="center"
         android:textColor="@color/shopseshtext"
         android:textSize="30sp" />
@@ -57,11 +57,9 @@
             android:enabled="false"
             android:gravity="center"
             android:inputType="none"
-            android:text="Name"
             android:textColor="@color/shopseshtext"
             android:textSize="24sp"
-            android:textStyle="bold"
-            tools:text="£0.34" />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView4"
