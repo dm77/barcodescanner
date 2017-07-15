@@ -59,7 +59,8 @@
         <activity
             android:name=".ShopComplete"
             android:theme="@style/shopsesh" />
-
+        <activity android:name=".Nav"
+            android:theme="@style/shopsesh"></activity>
     </application>
 
 </manifest>
