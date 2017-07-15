@@ -76,6 +76,18 @@
         android:layout_height="wrap_content"
         android:layout_weight="50" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingBottom="10dip"
+        android:text="TextView"
+        android:textColor="@color/shopseshtext"
+        android:textSize="18sp"
+        tools:text="Total price:" />
+
     <EditText
         android:id="@+id/itemnum"
         android:layout_width="wrap_content"

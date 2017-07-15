@@ -7,8 +7,8 @@ package me.dm7.barcodescanner.zbar.sample;
 public class ShopItem {
     private String barcode;
     private String name;
-    private String price;
-    public ShopItem(String barcode, String name, String price){
+    private double price;
+    public ShopItem(String barcode, String name, double price){
         this.barcode = barcode;
         this.name = name;
         this.price = price;
@@ -21,7 +21,7 @@ public class ShopItem {
         return name;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 }

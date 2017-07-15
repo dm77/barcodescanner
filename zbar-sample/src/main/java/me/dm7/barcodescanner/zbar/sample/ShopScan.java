@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 public class ShopScan extends FragmentActivity implements ItemScannedListener {
 
+    long lastPurchaseDate = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,14 +19,17 @@ public class ShopScan extends FragmentActivity implements ItemScannedListener {
     @Override
     public void itemScanned(String barcode) {
         Log.d("ShopScan",barcode);
-        for (ShopItem item:ItemList.items){
-            if (item.getBarcode().contains(barcode)){
-                ((EditText)findViewById(R.id.itemName)).setText(item.getName());
-                ((EditText)findViewById(R.id.price)).setText(item.getPrice());
-                ((EditText)findViewById(R.id.itemnum)).setText("2/34");
-            }
-        }
 
+        if (System.currentTimeMillis() - lastPurchaseDate > 2000){
+            for (ShopItem item:ItemList.items){
+                if (item.getBarcode().contains(barcode)){
+                    ((EditText)findViewById(R.id.itemName)).setText(item.getName());
+                    ((EditText)findViewById(R.id.price)).setText("£" + Double.toString(item.getPrice()));
+                    ((EditText)findViewById(R.id.itemnum)).setText("2/34");
+                }
+            }
+            lastPurchaseDate = System.currentTimeMillis();
+        }
 
     }
 }
