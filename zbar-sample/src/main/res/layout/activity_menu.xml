@@ -42,6 +42,7 @@
             android:layout_weight="0"
             android:paddingLeft="10dip"
             android:paddingRight="10dip"
+            android:src="@drawable/line"
             app:srcCompat="@drawable/line" />
 
         <Button
