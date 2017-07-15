@@ -17,7 +17,7 @@ public class ShopScan extends FragmentActivity implements ItemScannedListener {
 
     @Override
     public void itemScanned(String barcode) {
-        Log.d("ShopScan","barcode");
+        Log.d("ShopScan",barcode);
         for (ShopItem item:ItemList.items){
             if (item.getBarcode().contains(barcode)){
                 ((EditText)findViewById(R.id.itemName)).setText(item.getName());
