@@ -34,6 +34,8 @@ public class FullScannerFragment extends Fragment implements MessageDialogFragme
     private boolean mAutoFocus;
     private ArrayList<Integer> mSelectedIndices;
     private int mCameraId = -1;
+    private ItemScannedListener listener;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
@@ -56,6 +58,7 @@ public class FullScannerFragment extends Fragment implements MessageDialogFragme
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
+        listener = (ShopScan)getActivity();
         setHasOptionsMenu(true);
     }
 
@@ -147,7 +150,9 @@ public class FullScannerFragment extends Fragment implements MessageDialogFragme
             Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
             r.play();
         } catch (Exception e) {}
-        showMessageDialog("Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
+        listener.itemScanned(rawResult.getContents());
+        mScannerView.resumeCameraPreview(this);
+        //showMessageDialog("Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
     }
 
     public void showMessageDialog(String message) {

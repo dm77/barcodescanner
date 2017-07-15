@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="me.dm7.barcodescanner.zbar.sample.ShopComplete">
+    android:orientation="horizontal"
+    tools:layout_editor_absoluteY="8dp"
+    tools:layout_editor_absoluteX="8dp">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="110dip"
+        android:layout_height="110dip"
+        android:layout_marginTop="20dip"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/logo" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="100" />
+
+    <TextView
+        android:id="@+id/completeprice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="£31.83"
+        android:textColor="@color/shopseshtext"
+        android:textSize="40dip"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="100" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="SHOPPING\nCOMPLETE"
+        android:textColor="@color/shopseshtext"
+        android:textSize="36dip" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="100" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="match_parent"
+        android:layout_height="3dip"
+        android:layout_weight="1"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        app:srcCompat="@drawable/line" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="100" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Pay Now"
+        android:textColor="@color/shopseshtext"
+        android:textSize="24sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="100" />
+
+</LinearLayout>

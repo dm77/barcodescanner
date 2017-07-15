@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="me.dm7.barcodescanner.zbar.sample.FullScannerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="400dip"
+        android:layout_weight="1"
+        tools:layout_editor_absoluteX="187dp"
+        tools:layout_editor_absoluteY="32dp" />
+
+    <EditText
+        android:id="@+id/itemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#00000000"
+        android:editable="false"
+        android:ems="10"
+        android:enabled="false"
+        android:gravity="center"
+        android:inputType="none"
+        android:text="Scan an item"
+        android:textAlignment="center"
+        android:textColor="@color/shopseshtext"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_weight="1"
+            android:src="@drawable/bagicon"
+            app:srcCompat="@drawable/bagicon" />
+
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:ems="10"
+            android:enabled="false"
+            android:gravity="center"
+            android:inputType="none"
+            android:textColor="@color/shopseshtext"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_weight="1"
+            android:src="@drawable/burgericon"
+            app:srcCompat="@drawable/burgericon" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="50" />
+
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingBottom="10dip"
+        android:text="TextView"
+        android:textColor="@color/shopseshtext"
+        android:textSize="18sp"
+        tools:text="Total price:" />
+
+    <Button
+        android:id="@+id/donebutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Done"
+        android:textColor="@color/shopseshtext"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/itemnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#00000000"
+        android:ems="10"
+        android:enabled="false"
+        android:gravity="center"
+        android:inputType="none"
+        android:text="1/34"
+        android:textColor="@color/shopseshtext"
+        android:textSize="24sp" />
+
+</LinearLayout>
+

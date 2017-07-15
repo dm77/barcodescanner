@@ -1,4 +1,5 @@
 <resources>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <!-- darker variant for the status bar and contextual app bars -->
@@ -9,6 +10,12 @@
         <item name="android:textColorPrimary">@color/primary_text</item>
         <!-- color of the menu overflow icon (three vertical dots) -->
         <item name="android:textColorSecondary">@color/secondary_text</item>
+    </style>
+
+    <style name="shopseshbutton" parent="android:Widget.Button">
+        <item name="android:background">#00000000</item>
+        <item name="android:textColor">@color/shopseshtext</item>
+        <item name="android:textSize">40dip</item>
     </style>
 
     <style name="AppOverlayTheme" parent="@style/Theme.AppCompat.Light">
@@ -32,5 +39,18 @@
         <item name="android:windowActionBarOverlay">true</item>
         <!-- Support Library compability -->
         <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="shopsesh" parent="android:Theme.Black.NoTitleBar.Fullscreen" >
+        <item name="android:colorBackground">@color/shopsheshcol</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/shopsheshcol</item>
+        <item name="android:textColorPrimary">@color/shopseshtext</item>
     </style>
 </resources>
