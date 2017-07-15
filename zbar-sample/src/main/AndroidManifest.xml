@@ -40,7 +40,7 @@
             android:theme="@style/AppOverlayTheme" />
         <activity
             android:name=".LaunchActivity"
-            android:theme="@style/shopsesh"></activity>
+            android:theme="@style/shopsesh" />
         <activity
             android:name=".MenuActivity"
             android:theme="@style/shopsesh">
@@ -53,9 +53,11 @@
         <activity
             android:name=".ShoppingList"
             android:theme="@style/shopsesh" />
-        <activity android:name=".ShopScan"
+        <activity
+            android:name=".ShopScan"
+            android:theme="@style/shopsesh" />
+        <activity android:name=".ShopComplete"
             android:theme="@style/shopsesh"></activity>
-
     </application>
 
 </manifest>

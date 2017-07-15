@@ -7,7 +7,7 @@
     tools:context="me.dm7.barcodescanner.zbar.sample.ShopScan">
 
     <LinearLayout
-        android:layout_width="368dp"
+        android:layout_width="344dp"
         android:layout_height="576dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -46,10 +46,10 @@
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/line" />
+                app:srcCompat="@drawable/bagicon" />
 
             <EditText
                 android:id="@+id/price"
@@ -68,10 +68,10 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/line" />
+                app:srcCompat="@drawable/burgericon" />
 
         </LinearLayout>
 
