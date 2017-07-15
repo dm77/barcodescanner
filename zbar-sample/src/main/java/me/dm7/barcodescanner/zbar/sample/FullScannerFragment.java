@@ -151,7 +151,7 @@ public class FullScannerFragment extends Fragment implements MessageDialogFragme
             r.play();
         } catch (Exception e) {}
         listener.itemScanned(rawResult.getContents());
-        //onCreateView();
+        mScannerView.resumeCameraPreview(this);
         //showMessageDialog("Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
     }
 
