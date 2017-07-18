@@ -9,7 +9,12 @@ ext {
 }
 
 dependencies {
+<<<<<<< HEAD
     //compile project(":core")
     compile libraries.barcodescanner_core
     compile libraries.zxing_core
+=======
+    compile project(":core")
+    compile 'com.google.zxing:core:3.2.1'
+>>>>>>> master
 }
