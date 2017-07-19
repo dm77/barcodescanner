@@ -34,6 +34,8 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private boolean mSquaredFinder = false;
     private float mBorderAlpha = 1.0f;
     private int mViewFinderOffset = 0;
+    private float mAspectTolerance = 0.1f;
+
 
     public BarcodeScannerView(Context context) {
         super(context);
@@ -77,6 +79,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
         removeAllViews();
 
         mPreview = new CameraPreview(getContext(), cameraWrapper, this);
+        mPreview.setAspectTolerance(mAspectTolerance);
         mPreview.setShouldScaleToFill(mShouldScaleToFill);
         if (!mShouldScaleToFill) {
             RelativeLayout relativeLayout = new RelativeLayout(getContext());
@@ -297,6 +300,10 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
 
     public void setShouldScaleToFill(boolean shouldScaleToFill) {
         mShouldScaleToFill = shouldScaleToFill;
+    }
+
+    public void setAspectTolerance(float aspectTolerance) {
+        mAspectTolerance = aspectTolerance;
     }
 }
 

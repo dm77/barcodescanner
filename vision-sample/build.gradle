@@ -2,10 +2,11 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile project(":vision")
-    //    //compile 'me.dm7.barcodescanner:vision:1.9'
-    compile libraries.support_v4
-    compile libraries.appcompat_v7
-    compile libraries.design_support
+
+    //compile 'me.dm7.barcodescanner:vision:1.9'
+    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:design:25.3.0'
 }
 
 android {

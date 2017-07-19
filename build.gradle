@@ -7,14 +7,14 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+
+        classpath 'com.android.tools.build:gradle:2.3.3'
     }
 }
 
 allprojects {
     group = 'me.dm7.barcodescanner'
-    version = '1.9.3'
-
+    version = '1.9.4'
     repositories {
         mavenCentral()
         maven {
@@ -26,7 +26,6 @@ allprojects {
         isLibrary = false
     }
 }
-
 subprojects {
     afterEvaluate { Project project ->
         ext.pluginContainer = project.getPlugins()
@@ -44,8 +43,9 @@ subprojects {
                 defaultConfig {
                     minSdkVersion versions.min_sdk
                     targetSdkVersion versions.target_sdk
-                    versionCode 193
-                    versionName "1.9.3"
+
+                    versionCode 194
+                    versionName "1.9.4"
                 }
             }
         }
