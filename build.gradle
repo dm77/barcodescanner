@@ -7,50 +7,30 @@ buildscript {
     }
 
     dependencies {
-<<<<<<< HEAD
         classpath 'com.android.tools.build:gradle:2.3.3'
-=======
-        classpath 'com.android.tools.build:gradle:2.3.0'
->>>>>>> master
     }
 }
 
 allprojects {
-<<<<<<< HEAD
     group = 'me.dm7.barcodescanner'
     version = '1.9.4'
-=======
-    ext {
-        supportLibraryDependency = 'com.android.support:support-v4:25.3.0'
-        isLibrary = false
-    }
->>>>>>> master
-
     repositories {
         mavenCentral()
         jcenter()
     }
 
-<<<<<<< HEAD
     ext {
         isLibrary = false
     }
-=======
->>>>>>> master
-}
 
+}
 subprojects {
     afterEvaluate { Project project ->
         ext.pluginContainer = project.getPlugins()
         if (ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
             android {
-<<<<<<< HEAD
                 compileSdkVersion versions.compile_sdk
                 buildToolsVersion versions.build_tools
-=======
-                compileSdkVersion 25
-                buildToolsVersion '25.0.2'
->>>>>>> master
 
                 android {
                     lintOptions {
@@ -59,7 +39,6 @@ subprojects {
                 }
 
                 defaultConfig {
-<<<<<<< HEAD
                     minSdkVersion versions.min_sdk
                     targetSdkVersion versions.target_sdk
                     versionCode 194
@@ -126,22 +105,9 @@ subprojects {
                 }
             }
         }
-=======
-                    minSdkVersion 17
-                    targetSdkVersion 25
-                    versionCode 184
-                    versionName "1.8.4"
-                }
-            }
-        }
->>>>>>> master
     }
 }
 
 task wrapper(type: Wrapper) {
-<<<<<<< HEAD
     gradleVersion = '3.4.1'
-=======
-    gradleVersion = '3.3'
->>>>>>> master
 }

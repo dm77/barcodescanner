@@ -1,6 +1,6 @@
 ext.versions = [
         compile_sdk   : 25,
-        min_sdk       : 9,
+        min_sdk       : 14,
         target_sdk    : 25,
         build_tools   : "25.0.2",
         support_lib   : "25.3.1",
