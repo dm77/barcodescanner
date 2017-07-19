@@ -1,3 +1,5 @@
+apply from: 'dependencies.gradle'
+
 buildscript {
     repositories {
         mavenCentral()
@@ -5,30 +7,30 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.3'
     }
 }
 
 allprojects {
-    ext {
-        supportLibraryDependency = 'com.android.support:support-v4:25.3.0'
-        isLibrary = false
-    }
-
+    group = 'me.dm7.barcodescanner'
+    version = '1.9.4'
     repositories {
         mavenCentral()
         jcenter()
     }
 
-}
+    ext {
+        isLibrary = false
+    }
 
+}
 subprojects {
     afterEvaluate { Project project ->
         ext.pluginContainer = project.getPlugins()
         if (ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
             android {
-                compileSdkVersion 25
-                buildToolsVersion '25.0.2'
+                compileSdkVersion versions.compile_sdk
+                buildToolsVersion versions.build_tools
 
                 android {
                     lintOptions {
@@ -37,10 +39,69 @@ subprojects {
                 }
 
                 defaultConfig {
-                    minSdkVersion 17
-                    targetSdkVersion 25
-                    versionCode 184
-                    versionName "1.8.4"
+                    minSdkVersion versions.min_sdk
+                    targetSdkVersion versions.target_sdk
+                    versionCode 194
+                    versionName "1.9.4"
+                }
+            }
+        }
+        if(project.isLibrary && rootProject.hasProperty('sonatypeUsername') && rootProject.hasProperty('sonatypePassword')) {
+            configure(project) {
+                apply plugin: 'maven'
+                apply plugin: 'signing'
+
+                signing {
+                    required { gradle.taskGraph.hasTask("uploadArchives") }
+                    sign configurations.archives
+                }
+
+                uploadArchives {
+                    repositories.mavenDeployer {
+                        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                        repository(url: sonatypeRepo) {
+                            authentication(userName: sonatypeUsername , password: sonatypePassword)
+                            releases(updatePolicy: 'always')
+                        }
+
+                        snapshotRepository(url: sonatypeSnapshotRepo) {
+                            authentication(userName: sonatypeUsername , password: sonatypePassword)
+                            snapshots(updatePolicy: 'always')
+                        }
+
+                        pom.project {
+                            name project.pomName
+                            version project.version
+                            groupId project.group
+                            packaging project.pomPackaging
+                            artifactId project.pomArtifactId
+                            description project.pomDescription
+                            url 'https://github.com/dm77/barcodescanner'
+
+                            scm {
+                                url 'scm:git@github.com:dm77/barcodescanner.git'
+                                connection 'scm:git@github.com:dm77/barcodescanner.git'
+                                developerConnection 'scm:git@github.com:dm77/barcodescanner.git'
+                            }
+
+                            licenses {
+                                license {
+                                    name 'The Apache Software License, Version 2.0'
+                                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                                    distribution 'repo'
+                                }
+                            }
+
+                            developers {
+                                developer {
+                                    id 'dm77'
+                                    name 'Dushyanth Maguluru'
+                                    email 'dushyanth.maguluru@gmail.com'
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -48,5 +109,5 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.3'
+    gradleVersion = '3.4.1'
 }

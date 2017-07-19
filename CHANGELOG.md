@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.9.4] - July 15, 2017
+* Add ability to customize aspect ratio tolerance that is used in figuring out the optimal camera preview size. This is just a temporary fix for #249,#287,#293
+
+## [1.9.3] - May 27, 2017
+* Add ability to customize view finder with custom attributes. See #285 for more info. Thanks to @albinpoignot for the pull request
+
+## [1.9.2] - May 13, 2017
+* Add support for AZTEC codes in ZXing: #299, #288.
+
+## [1.9.1] - April 8, 2017
+* Add ability to scan inverted/negative codes with ZXing. Thanks to @manijshrestha for this pull request #265
+
 ## [1.9] - July 25, 2016
 * Scale camera preview when the view size isn't full screen. Thanks to @xolan for this pull request PR #219
 * Fix inverted camera in devices with differently oriented back and forward facing cameras. Thanks to @thadcodes for PR #191

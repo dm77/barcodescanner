@@ -27,6 +27,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private boolean mSurfaceCreated = false;
     private boolean mShouldScaleToFill = true;
     private Camera.PreviewCallback mPreviewCallback;
+    private float mAspectTolerance = 0.1f;
 
     public CameraPreview(Context context, CameraWrapper cameraWrapper, Camera.PreviewCallback previewCallback) {
         super(context);
@@ -52,6 +53,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     public void setShouldScaleToFill(boolean scaleToFill) {
         mShouldScaleToFill = scaleToFill;
+    }
+
+    public void setAspectTolerance(float aspectTolerance) {
+        mAspectTolerance = aspectTolerance;
     }
 
     @Override
@@ -235,7 +240,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             w = portraitWidth;
         }
 
-        final double ASPECT_TOLERANCE = 0.1;
         double targetRatio = (double) w / h;
         if (sizes == null) return null;
 
@@ -247,7 +251,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // Try to find an size match aspect ratio and size
         for (Camera.Size size : sizes) {
             double ratio = (double) size.width / size.height;
-            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
+            if (Math.abs(ratio - targetRatio) > mAspectTolerance) continue;
             if (Math.abs(size.height - targetHeight) < minDiff) {
                 optimalSize = size;
                 minDiff = Math.abs(size.height - targetHeight);

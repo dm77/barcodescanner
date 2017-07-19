@@ -12,7 +12,9 @@ import android.util.Log;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
+import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
 import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
@@ -31,28 +33,32 @@ public class ZXingScannerView extends BarcodeScannerView {
     private static final String TAG = "ZXingScannerView";
 
     public interface ResultHandler {
-        public void handleResult(Result rawResult);
+        void handleResult(Result rawResult);
     }
 
     private MultiFormatReader mMultiFormatReader;
-    public static final List<BarcodeFormat> ALL_FORMATS = new ArrayList<BarcodeFormat>();
+    public static final List<BarcodeFormat> ALL_FORMATS = new ArrayList<>();
     private List<BarcodeFormat> mFormats;
     private ResultHandler mResultHandler;
 
     static {
-        ALL_FORMATS.add(BarcodeFormat.UPC_A);
-        ALL_FORMATS.add(BarcodeFormat.UPC_E);
-        ALL_FORMATS.add(BarcodeFormat.EAN_13);
-        ALL_FORMATS.add(BarcodeFormat.EAN_8);
-        ALL_FORMATS.add(BarcodeFormat.RSS_14);
+        ALL_FORMATS.add(BarcodeFormat.AZTEC);
+        ALL_FORMATS.add(BarcodeFormat.CODABAR);
         ALL_FORMATS.add(BarcodeFormat.CODE_39);
         ALL_FORMATS.add(BarcodeFormat.CODE_93);
         ALL_FORMATS.add(BarcodeFormat.CODE_128);
-        ALL_FORMATS.add(BarcodeFormat.ITF);
-        ALL_FORMATS.add(BarcodeFormat.CODABAR);
-        ALL_FORMATS.add(BarcodeFormat.QR_CODE);
         ALL_FORMATS.add(BarcodeFormat.DATA_MATRIX);
+        ALL_FORMATS.add(BarcodeFormat.EAN_8);
+        ALL_FORMATS.add(BarcodeFormat.EAN_13);
+        ALL_FORMATS.add(BarcodeFormat.ITF);
+        ALL_FORMATS.add(BarcodeFormat.MAXICODE);
         ALL_FORMATS.add(BarcodeFormat.PDF_417);
+        ALL_FORMATS.add(BarcodeFormat.QR_CODE);
+        ALL_FORMATS.add(BarcodeFormat.RSS_14);
+        ALL_FORMATS.add(BarcodeFormat.RSS_EXPANDED);
+        ALL_FORMATS.add(BarcodeFormat.UPC_A);
+        ALL_FORMATS.add(BarcodeFormat.UPC_E);
+        ALL_FORMATS.add(BarcodeFormat.UPC_EAN_EXTENSION);
     }
 
     public ZXingScannerView(Context context) {
@@ -82,7 +88,7 @@ public class ZXingScannerView extends BarcodeScannerView {
     }
 
     private void initMultiFormatReader() {
-        Map<DecodeHintType,Object> hints = new EnumMap<DecodeHintType,Object>(DecodeHintType.class);
+        Map<DecodeHintType,Object> hints = new EnumMap<>(DecodeHintType.class);
         hints.put(DecodeHintType.POSSIBLE_FORMATS, getFormats());
         mMultiFormatReader = new MultiFormatReader();
         mMultiFormatReader.setHints(hints);
@@ -127,6 +133,18 @@ public class ZXingScannerView extends BarcodeScannerView {
 
                 } finally {
                     mMultiFormatReader.reset();
+                }
+
+                if (rawResult == null) {
+                    LuminanceSource invertedSource = source.invert();
+                    bitmap = new BinaryBitmap(new HybridBinarizer(invertedSource));
+                    try {
+                        rawResult = mMultiFormatReader.decodeWithState(bitmap);
+                    } catch (NotFoundException e) {
+                        // continue
+                    } finally {
+                        mMultiFormatReader.reset();
+                    }
                 }
             }
 
