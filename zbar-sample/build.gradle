@@ -12,5 +12,4 @@ android {
     defaultConfig {
         applicationId "${project.group}.zbar.sample"
     }
-    buildToolsVersion '25.0.2'
 }

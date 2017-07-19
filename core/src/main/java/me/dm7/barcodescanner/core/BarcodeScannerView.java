@@ -36,6 +36,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private int mViewFinderOffset = 0;
     private float mAspectTolerance = 0.1f;
 
+
     public BarcodeScannerView(Context context) {
         super(context);
         init();

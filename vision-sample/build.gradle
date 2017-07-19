@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile project(":vision")
+
     //compile 'me.dm7.barcodescanner:vision:1.9'
     compile 'com.android.support:support-v4:25.3.0'
     compile 'com.android.support:appcompat-v7:25.3.0'
@@ -12,5 +13,4 @@ android {
     defaultConfig {
         applicationId "${project.group}.vision.sample"
     }
-    buildToolsVersion '25.0.2'
 }
