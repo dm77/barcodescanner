@@ -1,6 +1,7 @@
 package me.dm7.barcodescanner.core;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -303,6 +304,47 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
 
     public void setAspectTolerance(float aspectTolerance) {
         mAspectTolerance = aspectTolerance;
+    }
+
+    public byte[] getRotatedData(byte[] data, Camera camera) {
+        if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
+            Camera.Parameters parameters = camera.getParameters();
+            Camera.Size size = parameters.getPreviewSize();
+            int width = size.width;
+            int height = size.height;
+
+            int displayOrientation = mPreview.getDisplayOrientation();
+
+            int rotationCount = 0;
+            switch (displayOrientation) {
+                case 0:
+                    rotationCount = 0;
+                    break;
+                case 90:
+                    rotationCount = 1;
+                    break;
+                case 180:
+                    rotationCount = 2;
+                    break;
+                case 270:
+                    rotationCount = 3;
+                    break;
+            }
+
+            for (int i = 0; i < rotationCount; i++) {
+                byte[] rotatedData = new byte[data.length];
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++)
+                        rotatedData[x * height + height - y - 1] = data[x + y * width];
+                }
+                int tmp = width;
+                width = height;
+                height = tmp;
+                data = rotatedData;
+            }
+        }
+
+        return data;
     }
 }
 
