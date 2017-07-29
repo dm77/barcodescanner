@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.9.5] - July 28, 2017
+* Fix incorrectly rotated data on Nexus 5x devices. Thanks to @rramprasad for the pull request #315
+
 ## [1.9.4] - July 15, 2017
 * Add ability to customize aspect ratio tolerance that is used in figuring out the optimal camera preview size. This is just a temporary fix for #249,#287,#293
 
