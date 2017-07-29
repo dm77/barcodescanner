@@ -106,17 +106,7 @@ public class ZXingScannerView extends BarcodeScannerView {
             int width = size.width;
             int height = size.height;
 
-            if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
-                byte[] rotatedData = new byte[data.length];
-                for (int y = 0; y < height; y++) {
-                    for (int x = 0; x < width; x++)
-                        rotatedData[x * height + height - y - 1] = data[x + y * width];
-                }
-                int tmp = width;
-                width = height;
-                height = tmp;
-                data = rotatedData;
-            }
+            data = getRotatedData(data, camera);
 
             Result rawResult = null;
             PlanarYUVLuminanceSource source = buildLuminanceSource(data, width, height);
