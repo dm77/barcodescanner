@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.hardware.Camera;
 import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -308,22 +307,31 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     }
 
     public byte[] getRotatedData(byte[] data, Camera camera) {
-        Camera.Parameters parameters = camera.getParameters();
-        Camera.Size size = parameters.getPreviewSize();
-        int width = size.width;
-        int height = size.height;
-        int displayOrientation = mPreview.getDisplayOrientation();
+        if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
+            Camera.Parameters parameters = camera.getParameters();
+            Camera.Size size = parameters.getPreviewSize();
+            int width = size.width;
+            int height = size.height;
 
-        int rotationCount = 0;
-        switch (displayOrientation) {
-            case 0: rotationCount = 0; break;
-            case 90: rotationCount = 1; break;
-            case 180: rotationCount = 2; break;
-            case 270: rotationCount = 3; break;
-        }
+            int displayOrientation = mPreview.getDisplayOrientation();
 
-        for (int i = 0; i < rotationCount; i++) {
-            if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
+            int rotationCount = 0;
+            switch (displayOrientation) {
+                case 0:
+                    rotationCount = 0;
+                    break;
+                case 90:
+                    rotationCount = 1;
+                    break;
+                case 180:
+                    rotationCount = 2;
+                    break;
+                case 270:
+                    rotationCount = 3;
+                    break;
+            }
+
+            for (int i = 0; i < rotationCount; i++) {
                 byte[] rotatedData = new byte[data.length];
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++)

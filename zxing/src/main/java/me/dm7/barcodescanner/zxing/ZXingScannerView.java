@@ -1,7 +1,6 @@
 package me.dm7.barcodescanner.zxing;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Handler;
@@ -27,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import me.dm7.barcodescanner.core.BarcodeScannerView;
-import me.dm7.barcodescanner.core.DisplayUtils;
 
 public class ZXingScannerView extends BarcodeScannerView {
     private static final String TAG = "ZXingScannerView";

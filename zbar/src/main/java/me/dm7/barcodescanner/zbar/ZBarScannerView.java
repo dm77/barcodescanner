@@ -1,7 +1,6 @@
 package me.dm7.barcodescanner.zbar;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,7 +19,6 @@ import java.util.Collection;
 import java.util.List;
 
 import me.dm7.barcodescanner.core.BarcodeScannerView;
-import me.dm7.barcodescanner.core.DisplayUtils;
 
 public class ZBarScannerView extends BarcodeScannerView {
     private static final String TAG = "ZBarScannerView";
