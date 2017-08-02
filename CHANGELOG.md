@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.9.6] - July 28, 2017
+* Revert changes from 1.9.5 as it causes more harm than good (See #336)
+
 ## [1.9.5] - July 28, 2017
 * Fix incorrectly rotated data on Nexus 5x devices. Thanks to @rramprasad for the pull request #315
 

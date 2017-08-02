@@ -315,21 +315,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
 
             int displayOrientation = mPreview.getDisplayOrientation();
 
-            int rotationCount = 0;
-            switch (displayOrientation) {
-                case 0:
-                    rotationCount = 0;
-                    break;
-                case 90:
-                    rotationCount = 1;
-                    break;
-                case 180:
-                    rotationCount = 2;
-                    break;
-                case 270:
-                    rotationCount = 3;
-                    break;
-            }
+            int rotationCount = 1;
 
             for (int i = 0; i < rotationCount; i++) {
                 byte[] rotatedData = new byte[data.length];
