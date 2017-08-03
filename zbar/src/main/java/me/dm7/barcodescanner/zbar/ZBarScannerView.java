@@ -1,6 +1,7 @@
 package me.dm7.barcodescanner.zbar;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
@@ -83,11 +84,18 @@ public class ZBarScannerView extends BarcodeScannerView {
             Camera.Size size = parameters.getPreviewSize();
             int width = size.width;
             int height = size.height;
-
+            int rotationCount = getRotationCount();
+            if(rotationCount == 1 || rotationCount == 3) {
+                int tmp = width;
+                width = height;
+                height = tmp;
+            }
             data = getRotatedData(data, camera);
 
+            Rect rect = getFramingRectInPreview(width, height);
             Image barcode = new Image(width, height, "Y800");
             barcode.setData(data);
+            barcode.setCrop(rect.left, rect.top, rect.width(), rect.height());
 
             int result = mScanner.scanImage(barcode);
 

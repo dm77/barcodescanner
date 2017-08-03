@@ -1,6 +1,9 @@
 # Change Log
 
-## [1.9.6] - July 28, 2017
+## [1.9.7] - August 2, 2017
+* Fix everything that was broken since 1.9.5 (Relevant issues: #336, #315, #339, #338)
+
+## [1.9.6] - August 1, 2017
 * Revert changes from 1.9.5 as it causes more harm than good (See #336)
 
 ## [1.9.5] - July 28, 2017

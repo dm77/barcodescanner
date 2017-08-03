@@ -307,30 +307,30 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     }
 
     public byte[] getRotatedData(byte[] data, Camera camera) {
-        if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
-            Camera.Parameters parameters = camera.getParameters();
-            Camera.Size size = parameters.getPreviewSize();
-            int width = size.width;
-            int height = size.height;
+        Camera.Parameters parameters = camera.getParameters();
+        Camera.Size size = parameters.getPreviewSize();
+        int width = size.width;
+        int height = size.height;
 
-            int displayOrientation = mPreview.getDisplayOrientation();
+        int rotationCount = getRotationCount();
 
-            int rotationCount = 1;
-
+        if(rotationCount == 1 || rotationCount == 3) {
             for (int i = 0; i < rotationCount; i++) {
                 byte[] rotatedData = new byte[data.length];
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++)
                         rotatedData[x * height + height - y - 1] = data[x + y * width];
                 }
-                int tmp = width;
-                width = height;
-                height = tmp;
                 data = rotatedData;
             }
         }
 
         return data;
+    }
+
+    public int getRotationCount() {
+        int displayOrientation = mPreview.getDisplayOrientation();
+        return displayOrientation / 90;
     }
 }
 

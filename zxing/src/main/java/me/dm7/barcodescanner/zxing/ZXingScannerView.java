@@ -103,6 +103,12 @@ public class ZXingScannerView extends BarcodeScannerView {
             Camera.Size size = parameters.getPreviewSize();
             int width = size.width;
             int height = size.height;
+            int rotationCount = getRotationCount();
+            if(rotationCount == 1 || rotationCount == 3) {
+                int tmp = width;
+                width = height;
+                height = tmp;
+            }
 
             data = getRotatedData(data, camera);
 

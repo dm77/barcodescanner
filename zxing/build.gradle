@@ -9,7 +9,7 @@ ext {
 }
 
 dependencies {
-    //compile project(":core")
-    compile libraries.barcodescanner_core
+    compile project(":core")
+    //compile libraries.barcodescanner_core
     compile libraries.zxing_core
 }
