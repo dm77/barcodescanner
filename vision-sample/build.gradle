@@ -1,0 +1,14 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile project(":vision")
+    compile libraries.support_v4
+    compile libraries.appcompat_v7
+    compile libraries.design_support
+}
+
+android {
+    defaultConfig {
+        applicationId "${project.group}.vision.sample"
+    }
+}
