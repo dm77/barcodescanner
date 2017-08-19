@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.9.8] - August 18, 2017
+* One more attempt to fix Nexus 5x portrait scanning problems
+
 ## [1.9.7] - August 2, 2017
 * Fix everything that was broken since 1.9.5 (Relevant issues: #336, #315, #339, #338)
 

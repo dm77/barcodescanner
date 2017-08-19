@@ -1,6 +1,7 @@
 package me.dm7.barcodescanner.zxing;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Handler;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.dm7.barcodescanner.core.BarcodeScannerView;
+import me.dm7.barcodescanner.core.DisplayUtils;
 
 public class ZXingScannerView extends BarcodeScannerView {
     private static final String TAG = "ZXingScannerView";
@@ -103,14 +105,16 @@ public class ZXingScannerView extends BarcodeScannerView {
             Camera.Size size = parameters.getPreviewSize();
             int width = size.width;
             int height = size.height;
-            int rotationCount = getRotationCount();
-            if(rotationCount == 1 || rotationCount == 3) {
-                int tmp = width;
-                width = height;
-                height = tmp;
-            }
 
-            data = getRotatedData(data, camera);
+            if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
+                int rotationCount = getRotationCount();
+                if (rotationCount == 1 || rotationCount == 3) {
+                    int tmp = width;
+                    width = height;
+                    height = tmp;
+                }
+                data = getRotatedData(data, camera);
+            }
 
             Result rawResult = null;
             PlanarYUVLuminanceSource source = buildLuminanceSource(data, width, height);

@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.hardware.Camera;
 import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -322,6 +323,9 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
                         rotatedData[x * height + height - y - 1] = data[x + y * width];
                 }
                 data = rotatedData;
+                int tmp = width;
+                width = height;
+                height = tmp;
             }
         }
 
