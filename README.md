@@ -100,6 +100,17 @@ void startCamera(int cameraId);
 
 Specify front-facing or rear-facing cameras by using the `void startCamera(int cameraId);` method.
 
+
+For HUAWEI mobile phone like P9, P10, when scanning using the default settings, it won't work due to the
+"preview size",  please adjust the parameter as below:
+
+```java
+mScannerView = (ZXingScannerView) findViewById(R.id.zx_view);
+
+// this paramter will make your HUAWEI phone works great!
+mScannerView.setAspectTolerance(0.5f);
+```
+
 Supported Formats:
 
 ```java
