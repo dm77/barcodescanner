@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    //compile project(":zxing")
+    compile project(":zxing")
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile libraries.barcodescanner_zxing
     compile libraries.support_v4
     compile libraries.appcompat_v7
@@ -12,4 +13,5 @@ android {
     defaultConfig {
         applicationId "${project.group}.zxing.sample"
     }
+    buildToolsVersion '26.0.2'
 }

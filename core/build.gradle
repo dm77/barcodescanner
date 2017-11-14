@@ -11,3 +11,7 @@ ext {
 dependencies {
     compile libraries.support_v4
 }
+
+android {
+    buildToolsVersion '26.0.2'
+}

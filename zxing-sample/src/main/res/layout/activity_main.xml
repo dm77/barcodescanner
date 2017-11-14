@@ -38,6 +38,10 @@
                     android:text="@string/activity_sample"
                     android:onClick="launchFullActivity" />
             <Button android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/activity_sample_texture"
+                android:onClick="launchFullActivityWithTextureView" />
+            <Button android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:text="@string/fragment_sample"
                     android:onClick="launchFullFragmentActivity" />

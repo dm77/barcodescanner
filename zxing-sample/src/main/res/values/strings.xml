@@ -10,6 +10,7 @@
     <string name="simple_activity_sample">Simple Activity Sample</string>
     <string name="simple_fragment_sample">Simple Fragment Sample</string>
     <string name="activity_sample">Full Activity Sample</string>
+    <string name="activity_sample_texture">Full Activity Sample with Texture View</string>
     <string name="fragment_sample">Full Fragment Sample</string>
     <string name="full_screen_sample">Full Screen Fragment Sample</string>
     <string name="custom_view_finder_sample">Custom View Finder Sample</string>

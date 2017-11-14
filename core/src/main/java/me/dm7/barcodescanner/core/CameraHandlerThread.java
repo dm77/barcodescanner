@@ -11,10 +11,17 @@ public class CameraHandlerThread extends HandlerThread {
     private static final String LOG_TAG = "CameraHandlerThread";
 
     private BarcodeScannerView mScannerView;
+    private BarcodeScannerViewWithTextureView scannerViewWithTextureView;
 
     public CameraHandlerThread(BarcodeScannerView scannerView) {
         super("CameraHandlerThread");
         mScannerView = scannerView;
+        start();
+    }
+
+    public CameraHandlerThread(BarcodeScannerViewWithTextureView scannerViewWithTextureView) {
+        super("CameraHandlerThread");
+        this.scannerViewWithTextureView = scannerViewWithTextureView;
         start();
     }
 
@@ -28,7 +35,12 @@ public class CameraHandlerThread extends HandlerThread {
                 mainHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mScannerView.setupCameraPreview(CameraWrapper.getWrapper(camera, cameraId));
+                        if(mScannerView != null)
+                            mScannerView.setupCameraPreview(CameraWrapper.getWrapper(camera, cameraId));
+                        else if(scannerViewWithTextureView != null) {
+                            scannerViewWithTextureView.setupCameraPreview(CameraWrapper.getWrapper(camera, cameraId));
+                        }
+
                     }
                 });
             }

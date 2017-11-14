@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
         launchActivity(FullScannerActivity.class);
     }
 
+    public void launchFullActivityWithTextureView(View view) {
+        launchActivity(FullScannerActivityWithTextureView.class);
+    }
+
     public void launchFullFragmentActivity(View v) {
         launchActivity(FullScannerFragmentActivity.class);
     }
