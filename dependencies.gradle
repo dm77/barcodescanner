@@ -1,0 +1,19 @@
+ext.versions = [
+        compile_sdk   : 25,
+        min_sdk       : 9,
+        target_sdk    : 25,
+        build_tools   : "25.0.2",
+        support_lib   : "25.3.1",
+        zxing         : "3.3.0",
+        barcodescanner: "1.9.8"
+]
+
+ext.libraries = [
+        support_v4          : "com.android.support:support-v4:$versions.support_lib",
+        appcompat_v7        : "com.android.support:appcompat-v7:$versions.support_lib",
+        design_support      : "com.android.support:design:$versions.support_lib",
+        zxing_core          : "com.google.zxing:core:$versions.zxing",
+        barcodescanner_core : "me.dm7.barcodescanner:core:$versions.barcodescanner",
+        barcodescanner_zbar : "me.dm7.barcodescanner:zbar:$versions.barcodescanner",
+        barcodescanner_zxing: "me.dm7.barcodescanner:zxing:$versions.barcodescanner"
+]

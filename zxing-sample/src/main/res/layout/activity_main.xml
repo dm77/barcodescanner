@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <android.support.design.widget.AppBarLayout
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:gravity="center">
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/simple_activity_sample"
+                    android:onClick="launchSimpleActivity" />
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/simple_fragment_sample"
+                    android:onClick="launchSimpleFragmentActivity" />
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/activity_sample"
+                    android:onClick="launchFullActivity" />
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/fragment_sample"
+                    android:onClick="launchFullFragmentActivity" />
+            <Button android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/full_screen_sample"
+                android:onClick="launchFullScreenScannerFragmentActivity" />
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/custom_view_finder_sample"
+                    android:onClick="launchCustomViewFinderScannerActivity" />
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/scaling_sample"
+                    android:onClick="launchScalingScannerActivity" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

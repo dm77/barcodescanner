@@ -1,0 +1,15 @@
+apply plugin: 'com.android.library'
+
+ext {
+    isLibrary = true
+    pomPackaging = "aar"
+    pomArtifactId = "zxing"
+    pomName = "ZXing Scanner View"
+    pomDescription = 'An android library project which contains the zxing barcode scanner view'
+}
+
+dependencies {
+    //compile project(":core")
+    compile libraries.barcodescanner_core
+    compile libraries.zxing_core
+}

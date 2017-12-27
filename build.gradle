@@ -1,16 +1,19 @@
+apply from: 'dependencies.gradle'
+
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.android.tools.build:gradle:2.3.3'
     }
 }
 
 allprojects {
     group = 'me.dm7.barcodescanner'
-    version = '1.7'
+    version = '1.9.8'
 
     repositories {
         mavenCentral()
@@ -20,7 +23,6 @@ allprojects {
     }
 
     ext {
-        supportLibraryDependency = 'com.android.support:support-v4:21.0.3'
         isLibrary = false
     }
 }
@@ -30,8 +32,8 @@ subprojects {
         ext.pluginContainer = project.getPlugins()
         if(ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
             android {
-                compileSdkVersion 21
-                buildToolsVersion '21.1.2'
+                compileSdkVersion versions.compile_sdk
+                buildToolsVersion versions.build_tools
 
                 android {
                     lintOptions {
@@ -40,10 +42,10 @@ subprojects {
                 }
 
                 defaultConfig {
-                    minSdkVersion 9
-                    targetSdkVersion 21
-                    versionCode 170
-                    versionName "1.7.0"
+                    minSdkVersion versions.min_sdk
+                    targetSdkVersion versions.target_sdk
+                    versionCode 198
+                    versionName "1.9.8"
                 }
             }
         }
@@ -53,7 +55,7 @@ subprojects {
                 apply plugin: 'signing'
 
                 signing {
-                    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+                    required { gradle.taskGraph.hasTask("uploadArchives") }
                     sign configurations.archives
                 }
 
@@ -107,4 +109,8 @@ subprojects {
             }
         }
     }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4.1'
 }
