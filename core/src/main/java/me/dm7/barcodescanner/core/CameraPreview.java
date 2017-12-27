@@ -90,8 +90,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 mCameraWrapper.mCamera.setOneShotPreviewCallback(mPreviewCallback);
                 mCameraWrapper.mCamera.startPreview();
                 if(mAutoFocus) {
-                    if (mSurfaceCreated) { // check if surface created before using autofocus
-                        safeAutoFocus();
+
                     } else {
                         scheduleAutoFocus(); // wait 1 sec and then do check again
                     }
@@ -231,14 +230,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             return null;
         }
 
-        List<Camera.Size> sizes = mCameraWrapper.mCamera.getParameters().getSupportedPreviewSizes();
-        int w = getWidth();
-        int h = getHeight();
-        if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
-            int portraitWidth = h;
-            h = w;
-            w = portraitWidth;
-        }
+
 
         double targetRatio = (double) w / h;
         if (sizes == null) return null;
@@ -278,12 +270,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             }
             mAutoFocus = state;
             if(mAutoFocus) {
-                if (mSurfaceCreated) { // check if surface created before using autofocus
-                    Log.v(TAG, "Starting autofocus");
-                    safeAutoFocus();
-                } else {
-                    scheduleAutoFocus(); // wait 1 sec and then do check again
-                }
+
             } else {
                 Log.v(TAG, "Cancelling autofocus");
                 mCameraWrapper.mCamera.cancelAutoFocus();
@@ -306,7 +293,4 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
     };
 
-    private void scheduleAutoFocus() {
-        mAutoFocusHandler.postDelayed(doAutoFocus, 1000);
-    }
 }
