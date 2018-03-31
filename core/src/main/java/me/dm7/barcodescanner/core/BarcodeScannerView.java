@@ -26,7 +26,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private boolean mShouldScaleToFill = true;
 
     private boolean mIsLaserEnabled = true;
-    @ColorInt private int mLaserColor = getResources().getColor(R.color.viewfinder_laser);
+    @ColorInt private int mLaserColor = getResources().getColor(R.color.white);
     @ColorInt private int mBorderColor = getResources().getColor(R.color.viewfinder_border);
     private int mMaskColor = getResources().getColor(R.color.viewfinder_mask);
     private int mBorderWidth = getResources().getInteger(R.integer.viewfinder_border_width);
