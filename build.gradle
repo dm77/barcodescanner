@@ -52,8 +52,8 @@ subprojects {
         defaultConfig {
           minSdkVersion versions.min_sdk
           targetSdkVersion versions.target_sdk
-          versionCode 1911
-          versionName "1.9.11"
+          versionCode 1912
+          versionName "1.9.12"
         }
       }
     }
