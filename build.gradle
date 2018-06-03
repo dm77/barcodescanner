@@ -1,66 +1,63 @@
 apply from: 'dependencies.gradle'
 
 buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-      maven {
-        url 'https://maven.google.com/'
-        name 'Google'
-      }
-        google()
+  repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+      url 'https://maven.google.com/'
+      name 'Google'
     }
+    google()
+  }
 
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
-    }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.1.2'
+  }
 }
 
 allprojects {
-    group = 'me.dm7.barcodescanner'
-    version = '1.9.9'
-
-    repositories {
-        mavenCentral()
-        maven {
-            url 'https://oss.sonatype.org/content/groups/public'
-        }
-      maven {
-        url 'https://maven.google.com/'
-        name 'Google'
-      }
+  repositories {
+    mavenCentral()
+    google()
+    jcenter()
+    maven {
+      url 'https://maven.google.com/'
+      name 'Google'
     }
+  }
 
-    ext {
-        isLibrary = false
-    }
+  ext {
+    isLibrary = false
+  }
 }
 
 subprojects {
-    afterEvaluate { Project project ->
-        ext.pluginContainer = project.getPlugins()
-        if(ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
-            android {
-                compileSdkVersion versions.compile_sdk
-                buildToolsVersion versions.build_tools
+  afterEvaluate { Project project ->
+    ext.pluginContainer = project.getPlugins()
+    if (ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin(
+        "com.android.library")) {
+      android {
+        compileSdkVersion versions.compile_sdk
+        buildToolsVersion versions.build_tools
 
-                android {
-                    lintOptions {
-                        abortOnError false
-                    }
-                }
-
-                defaultConfig {
-                    minSdkVersion versions.min_sdk
-                    targetSdkVersion versions.target_sdk
-                    versionCode 199
-                    versionName "1.9.9"
-                }
-            }
+        android {
+          lintOptions {
+            abortOnError false
+          }
         }
+
+        defaultConfig {
+          minSdkVersion versions.min_sdk
+          targetSdkVersion versions.target_sdk
+          versionCode 199
+          versionName "1.9.9"
+        }
+      }
     }
+  }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.4.1'
+  gradleVersion = '3.4.1'
 }
