@@ -18,7 +18,7 @@ buildscript {
 
 allprojects {
     group = 'me.dm7.barcodescanner'
-    version = '1.9.8'
+    version = '1.9.9'
 
     repositories {
         mavenCentral()
@@ -53,67 +53,8 @@ subprojects {
                 defaultConfig {
                     minSdkVersion versions.min_sdk
                     targetSdkVersion versions.target_sdk
-                    versionCode 198
-                    versionName "1.9.8"
-                }
-            }
-        }
-        if(project.isLibrary && rootProject.hasProperty('sonatypeUsername') && rootProject.hasProperty('sonatypePassword')) {
-            configure(project) {
-                apply plugin: 'maven'
-                apply plugin: 'signing'
-
-                signing {
-                    required { gradle.taskGraph.hasTask("uploadArchives") }
-                    sign configurations.archives
-                }
-
-                uploadArchives {
-                    repositories.mavenDeployer {
-                        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                        repository(url: sonatypeRepo) {
-                            authentication(userName: sonatypeUsername , password: sonatypePassword)
-                            releases(updatePolicy: 'always')
-                        }
-
-                        snapshotRepository(url: sonatypeSnapshotRepo) {
-                            authentication(userName: sonatypeUsername , password: sonatypePassword)
-                            snapshots(updatePolicy: 'always')
-                        }
-
-                        pom.project {
-                            name project.pomName
-                            version project.version
-                            groupId project.group
-                            packaging project.pomPackaging
-                            artifactId project.pomArtifactId
-                            description project.pomDescription
-                            url 'https://github.com/dm77/barcodescanner'
-
-                            scm {
-                                url 'scm:git@github.com:dm77/barcodescanner.git'
-                                connection 'scm:git@github.com:dm77/barcodescanner.git'
-                                developerConnection 'scm:git@github.com:dm77/barcodescanner.git'
-                            }
-
-                            licenses {
-                                license {
-                                    name 'The Apache Software License, Version 2.0'
-                                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                                    distribution 'repo'
-                                }
-                            }
-
-                            developers {
-                                developer {
-                                    id 'dm77'
-                                    name 'Dushyanth Maguluru'
-                                    email 'dushyanth.maguluru@gmail.com'
-                                }
-                            }
-                        }
-                    }
+                    versionCode 199
+                    versionName "1.9.9"
                 }
             }
         }
