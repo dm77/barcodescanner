@@ -9,7 +9,7 @@
         <attr name="borderWidth" format="dimension" />
         <attr name="borderLength" format="dimension" />
         <attr name="roundedCorner" format="boolean" />
-        <attr name="cornerRadius" format="dimension" />
+        <attr name="barcodeCornerRadius" format="dimension" />
         <attr name="squaredFinder" format="boolean" />
         <attr name="borderAlpha" format="float" />
         <attr name="finderOffset" format="dimension" />
