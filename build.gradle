@@ -3,6 +3,7 @@ apply from: 'dependencies.gradle'
 buildscript {
   repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
     jcenter()
     maven {
       url 'https://maven.google.com/'
@@ -19,6 +20,7 @@ buildscript {
 allprojects {
   repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
     google()
     jcenter()
     maven {
@@ -50,8 +52,8 @@ subprojects {
         defaultConfig {
           minSdkVersion versions.min_sdk
           targetSdkVersion versions.target_sdk
-          versionCode 199
-          versionName "1.9.9"
+          versionCode 1911
+          versionName "1.9.11"
         }
       }
     }
