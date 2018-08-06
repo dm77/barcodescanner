@@ -5,12 +5,16 @@ import android.hardware.Camera;
 import java.util.List;
 
 public class CameraUtils {
-    /** A safe way to get an instance of the Camera object. */
-    public static Camera getCameraInstance() {
+    /**
+     * A safe way to get an instance of the Camera object.
+     */
+    public static synchronized Camera getCameraInstance() {
         return getCameraInstance(getDefaultCameraId());
     }
 
-    /** Favor back-facing camera by default. If none exists, fallback to whatever camera is available **/
+    /**
+     * Favor back-facing camera by default. If none exists, fallback to whatever camera is available
+     **/
     public static int getDefaultCameraId() {
         int numberOfCameras = Camera.getNumberOfCameras();
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
@@ -25,39 +29,44 @@ public class CameraUtils {
         return defaultCameraId;
     }
 
-    /** A safe way to get an instance of the Camera object. */
-    public static Camera getCameraInstance(int cameraId) {
+    /**
+     * A safe way to get an instance of the Camera object.
+     */
+    public static synchronized Camera getCameraInstance(int cameraId) {
         Camera c = null;
         try {
-            if(cameraId == -1) {
+            if (cameraId == -1) {
                 c = Camera.open(); // attempt to get a Camera instance
             } else {
                 c = Camera.open(cameraId); // attempt to get a Camera instance
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // Camera is not available (in use or does not exist)
         }
         return c; // returns null if camera is unavailable
     }
 
-    public static boolean isFlashSupported(Camera camera) {
-        /* Credits: Top answer at http://stackoverflow.com/a/19599365/868173 */
-        if (camera != null) {
-            Camera.Parameters parameters = camera.getParameters();
+    public static synchronized boolean isFlashSupported(Camera camera) {
+        try {
+            /* Credits: Top answer at http://stackoverflow.com/a/19599365/868173 */
+            if (camera != null) {
+                Camera.Parameters parameters = camera.getParameters();
 
-            if (parameters.getFlashMode() == null) {
+                if (parameters.getFlashMode() == null) {
+                    return false;
+                }
+
+                List<String> supportedFlashModes = parameters.getSupportedFlashModes();
+                if (supportedFlashModes == null || supportedFlashModes.isEmpty() || supportedFlashModes.size() == 1 && supportedFlashModes.get(0).equals(Camera.Parameters.FLASH_MODE_OFF)) {
+                    return false;
+                }
+            } else {
                 return false;
             }
 
-            List<String> supportedFlashModes = parameters.getSupportedFlashModes();
-            if (supportedFlashModes == null || supportedFlashModes.isEmpty() || supportedFlashModes.size() == 1 && supportedFlashModes.get(0).equals(Camera.Parameters.FLASH_MODE_OFF)) {
-                return false;
-            }
-        } else {
+            return true;
+        } catch (Exception exception) {
             return false;
         }
-
-        return true;
     }
 }
