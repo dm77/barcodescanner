@@ -1,10 +1,10 @@
 ext.versions = [
-        compile_sdk   : 25,
-        min_sdk       : 9,
-        target_sdk    : 25,
-        build_tools   : "25.0.2",
-        support_lib   : "25.3.1",
-        zxing         : "3.3.0",
+        compile_sdk   : 28,
+        min_sdk       : 14,
+        target_sdk    : 28,
+        build_tools   : "28.0.3",
+        support_lib   : "28.0.0",
+        zxing         : "3.3.3",
         barcodescanner: "1.9.8"
 ]
 
