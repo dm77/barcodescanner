@@ -1,14 +1,12 @@
 package me.dm7.barcodescanner.core;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;

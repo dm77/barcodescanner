@@ -5,7 +5,7 @@ ext.versions = [
         build_tools   : "28.0.3",
         support_lib   : "28.0.0",
         zxing         : "3.3.3",
-        barcodescanner: "1.9.8"
+        barcodescanner: "1.9.13"
 ]
 
 ext.libraries = [

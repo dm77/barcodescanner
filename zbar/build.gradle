@@ -9,7 +9,7 @@ ext {
 }
 
 dependencies {
-    //compile project(":core")
-    implementation libraries.barcodescanner_core
-    implementation fileTree(dir: 'libs', include: '*.jar')
+//    api project(":core")
+    api libraries.barcodescanner_core
+    api fileTree(dir: 'libs', include: '*.jar')
 }

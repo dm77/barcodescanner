@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.9.13] - February  16, 2019
+* Update plugin, build tools and library versions
+* Min SDK version is now 14
+* Upload artifacts to jcenter/bintray instead of Maven central/Sonatype
+
 ## [1.9.8] - August 18, 2017
 * One more attempt to fix Nexus 5x portrait scanning problems
 
