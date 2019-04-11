@@ -63,7 +63,7 @@ public class MainActivity extends  AppCompatActivity {
 
     private void goToScannerActivity() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            val scannerActivityIntent = Intent(this, ScannerActivity.class);
+            Intent scannerActivityIntent = new Intent(this, ScannerActivity.class);
             startActivityForResult(scannerActivityIntent, REQUEST_SEARCH_QR);
         } else {
             // prompt for camera permission
@@ -214,7 +214,7 @@ public class MainActivity extends  AppCompatActivity {
 
     private void goToScannerActivity() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            val scannerActivityIntent = Intent(this, ScannerActivity.class);
+            Intent scannerActivityIntent = new Intent(this, ScannerActivity.class);
             startActivityForResult(scannerActivityIntent, REQUEST_SEARCH_QR);
         } else {
             // prompt for camera permission
