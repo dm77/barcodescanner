@@ -41,6 +41,41 @@ Simple Usage
 <uses-permission android:name="android.permission.CAMERA" />
 ```
 
+1.b) If Using API 23 or later, make sure to request camera permission at runtime. 
+
+```java
+public class MainActivity extends  AppCompatActivity {
+
+    public static int REQUEST_CAMERA_PERMISSION_CODE = 1001;
+
+    @Override
+    protected void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CAMERA_PERMISSION_CODE: {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    goToScannerActivity();
+                } else {
+                    //boo.. user doesn't want to use camera
+                }
+            }
+        }
+    }
+
+    private void goToScannerActivity() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            val scannerActivityIntent = Intent(this, ScannerActivity.class);
+            startActivityForResult(scannerActivityIntent, REQUEST_SEARCH_QR);
+        } else {
+            // prompt for camera permission
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
+                            REQUEST_CAMERA_PERMISSION_CODE);
+        }
+    }
+}
+```
+
+
+
 2.) A very basic activity would look like this:
 
 ```java
@@ -156,6 +191,38 @@ Simple Usage
 
 ```xml
 <uses-permission android:name="android.permission.CAMERA" />
+```
+1.b) If Using API 23 or later, make sure to request camera permission at runtime. 
+
+```java
+public class MainActivity extends  AppCompatActivity {
+
+    public static int REQUEST_CAMERA_PERMISSION_CODE = 1001;
+
+    @Override
+    protected void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CAMERA_PERMISSION_CODE: {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    goToScannerActivity();
+                } else {
+                    //boo.. user doesn't want to use camera
+                }
+            }
+        }
+    }
+
+    private void goToScannerActivity() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            val scannerActivityIntent = Intent(this, ScannerActivity.class);
+            startActivityForResult(scannerActivityIntent, REQUEST_SEARCH_QR);
+        } else {
+            // prompt for camera permission
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
+                            REQUEST_CAMERA_PERMISSION_CODE);
+        }
+    }
+}
 ```
 
 2.) A very basic activity would look like this:
