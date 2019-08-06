@@ -106,7 +106,7 @@ public class ZXingScannerView extends BarcodeScannerView {
             int width = size.width;
             int height = size.height;
 
-            if (DisplayUtils.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
+            if (DisplayUtils.INSTANCE.getScreenOrientation(getContext()) == Configuration.ORIENTATION_PORTRAIT) {
                 int rotationCount = getRotationCount();
                 if (rotationCount == 1 || rotationCount == 3) {
                     int tmp = width;
