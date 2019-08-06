@@ -2,7 +2,12 @@ package me.dm7.barcodescanner.core
 
 import android.content.Context
 import android.content.res.Configuration
-import android.graphics.*
+import android.graphics.Rect
+import android.graphics.Paint
+import android.graphics.CornerPathEffect
+import android.graphics.Canvas
+import android.graphics.Path
+import android.graphics.Point
 import android.util.AttributeSet
 import android.view.View
 
@@ -128,7 +133,7 @@ open class ViewFinderView : View, IViewFinder {
     }
 
     override fun onDraw(canvas: Canvas?) {
-        if(getFramingRect() == null) {
+        if (getFramingRect() == null) {
             return
         }
 
@@ -142,8 +147,8 @@ open class ViewFinderView : View, IViewFinder {
         }
     }
 
-    fun drawViewFinderMask(canvas : Canvas) {
-        canvas.let {c ->
+    fun drawViewFinderMask(canvas: Canvas) {
+        canvas.let { c ->
             val width = c.width.toFloat()
             val height = c.height.toFloat()
             val framingRect = getFramingRect()
