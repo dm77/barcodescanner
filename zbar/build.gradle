@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 ext {
     isLibrary = true
@@ -12,4 +14,8 @@ dependencies {
     api project(":core")
 //    api libraries.barcodescanner_core
     api fileTree(dir: 'libs', include: '*.jar')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

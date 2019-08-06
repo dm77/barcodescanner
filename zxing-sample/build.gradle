@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 dependencies {
     implementation project(":zxing")
@@ -6,10 +8,14 @@ dependencies {
     implementation libraries.support_v4
     implementation libraries.appcompat_v7
     implementation libraries.design_support
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 android {
     defaultConfig {
         applicationId "${project.group}.zxing.sample"
     }
+}
+repositories {
+    mavenCentral()
 }
