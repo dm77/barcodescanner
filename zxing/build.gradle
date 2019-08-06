@@ -9,7 +9,7 @@ ext {
 }
 
 dependencies {
-//    api project(":core")
-    api libraries.barcodescanner_core
+    api project(":core")
+//    api libraries.barcodescanner_core
     api libraries.zxing_core
 }
