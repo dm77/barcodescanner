@@ -42,10 +42,10 @@ public class FormatSelectorDialogFragment extends DialogFragment {
             return null;
         }
 
-        String[] formats = new String[ZXingScannerView.ALL_FORMATS.size()];
-        boolean[] checkedIndices = new boolean[ZXingScannerView.ALL_FORMATS.size()];
+        String[] formats = new String[ZXingScannerView.Companion.ALL_FORMATS().size()];
+        boolean[] checkedIndices = new boolean[ZXingScannerView.Companion.ALL_FORMATS().size()];
         int i = 0;
-        for(BarcodeFormat format : ZXingScannerView.ALL_FORMATS) {
+        for(BarcodeFormat format : ZXingScannerView.Companion.ALL_FORMATS()) {
             formats[i] = format.toString();
             if(mSelectedIndices.contains(i)) {
                 checkedIndices[i] = true;

@@ -193,13 +193,13 @@ public class FullScannerActivity extends BaseScannerActivity implements MessageD
         List<BarcodeFormat> formats = new ArrayList<BarcodeFormat>();
         if(mSelectedIndices == null || mSelectedIndices.isEmpty()) {
             mSelectedIndices = new ArrayList<Integer>();
-            for(int i = 0; i < ZXingScannerView.ALL_FORMATS.size(); i++) {
+            for(int i = 0; i < ZXingScannerView.Companion.ALL_FORMATS().size(); i++) {
                 mSelectedIndices.add(i);
             }
         }
 
         for(int index : mSelectedIndices) {
-            formats.add(ZXingScannerView.ALL_FORMATS.get(index));
+            formats.add(ZXingScannerView.Companion.ALL_FORMATS().get(index));
         }
         if(mScannerView != null) {
             mScannerView.setFormats(formats);
