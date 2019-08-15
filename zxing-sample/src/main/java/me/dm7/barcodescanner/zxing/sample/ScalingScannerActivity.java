@@ -32,7 +32,7 @@ public class ScalingScannerActivity extends BaseScannerActivity implements ZXing
         mScannerView.setResultHandler(this);
         // You can optionally set aspect ratio tolerance level
         // that is used in calculating the optimal Camera preview size
-        mScannerView.setAspectTolerance(0.2f);
+        //mScannerView.setAspectTolerance(0.2f);
         mScannerView.startCamera();
         mScannerView.setFlash(mFlash);
     }
