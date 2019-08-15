@@ -6,6 +6,7 @@ import android.graphics.Rect
 import android.hardware.Camera
 import android.support.annotation.ColorInt
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
@@ -37,10 +38,12 @@ abstract class BarcodeScannerView : FrameLayout, Camera.PreviewCallback {
     private var mViewFinderOffset = 0
     private var mAspectTolerance = 0.1f
 
-    constructor(context: Context) : super(context)
+    constructor(context: Context) : super(context){
+        mViewFinderView = createViewFinderView(context)
+    }
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
-        val a = context.theme.obtainStyledAttributes(
+        val a = context.obtainStyledAttributes(
                 attributeSet, R.styleable.BarcodeScannerView, 0, 0
         )
         try {
@@ -48,6 +51,9 @@ abstract class BarcodeScannerView : FrameLayout, Camera.PreviewCallback {
             mIsLaserEnabled = a.getBoolean(R.styleable.BarcodeScannerView_laserEnabled, mIsLaserEnabled)
             mLaserColor = a.getColor(R.styleable.BarcodeScannerView_laserColor, mLaserColor)
             mBorderColor = a.getColor(R.styleable.BarcodeScannerView_borderColor, mBorderColor)
+
+            Log.e("DATA_BORDER", " - " + mBorderColor + " - " + mLaserColor)
+
             mMaskColor = a.getColor(R.styleable.BarcodeScannerView_maskColor, mMaskColor)
             mBorderWidth = a.getDimensionPixelSize(R.styleable.BarcodeScannerView_borderWidth, mBorderWidth)
             mBorderLength = a.getDimensionPixelSize(R.styleable.BarcodeScannerView_borderLength, mBorderLength)
@@ -57,12 +63,11 @@ abstract class BarcodeScannerView : FrameLayout, Camera.PreviewCallback {
             mSquaredFinder = a.getBoolean(R.styleable.BarcodeScannerView_squaredFinder, mSquaredFinder)
             mBorderAlpha = a.getFloat(R.styleable.BarcodeScannerView_borderAlpha, mBorderAlpha)
             mViewFinderOffset = a.getDimensionPixelSize(R.styleable.BarcodeScannerView_finderOffset, mViewFinderOffset)
+        } catch (e : Exception){
+            Log.e("ERROR_TYPE_ARRAY", e.toString() , e)
         } finally {
             a.recycle()
         }
-    }
-
-    init {
         mViewFinderView = createViewFinderView(context)
     }
 

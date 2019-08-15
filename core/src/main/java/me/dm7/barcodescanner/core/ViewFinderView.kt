@@ -170,7 +170,8 @@ open class ViewFinderView : View, IViewFinder {
         framingRect?.let {
             path.moveTo(it.left.toFloat(), (it.top + mBorderLineLength).toFloat())
             path.lineTo(it.left.toFloat(), it.top.toFloat())
-            path.lineTo((it.left + mBorderLineLength).toFloat(), it.top.toFloat())
+            path.lineTo((it.right).toFloat(), it.top.toFloat())
+            //path.lineTo((it.left + mBorderLineLength).toFloat(), it.top.toFloat())
             canvas.drawPath(path, mBorderPaint)
 
             // Top-right corner
@@ -188,7 +189,8 @@ open class ViewFinderView : View, IViewFinder {
             // Bottom-left corner
             path.moveTo(it.left.toFloat(), (it.bottom - mBorderLineLength).toFloat())
             path.lineTo(it.left.toFloat(), it.bottom.toFloat())
-            path.lineTo((it.left + mBorderLineLength).toFloat(), it.bottom.toFloat())
+            path.lineTo(it.right.toFloat(), it.bottom.toFloat())
+            //path.lineTo((it.left + mBorderLineLength).toFloat(), it.bottom.toFloat())
             canvas.drawPath(path, mBorderPaint)
         }
     }
