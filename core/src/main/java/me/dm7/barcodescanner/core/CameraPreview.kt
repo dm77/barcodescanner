@@ -261,7 +261,7 @@ class CameraPreview : SurfaceView, SurfaceHolder.Callback {
 
         // Try to find an size match aspect ratio and size
         for (size in sizes) {
-            val ratio = (size.width / size.height).toDouble()
+            val ratio = size.width.toDouble() / size.height
             if (Math.abs(ratio - targetRatio) > mAspectTolerance) continue
             if (Math.abs(size.height - targetHeight) < minDiff) {
                 optimalSize = size

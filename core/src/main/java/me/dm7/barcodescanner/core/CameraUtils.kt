@@ -27,7 +27,7 @@ object CameraUtils {
         val numberOfCameras = Camera.getNumberOfCameras()
         val cameraInfo = Camera.CameraInfo()
         var defaultCameraId = -1
-        for (i in 0..numberOfCameras) {
+        for (i in 0 until numberOfCameras) {
             defaultCameraId = i
             Camera.getCameraInfo(i, cameraInfo)
             if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
