@@ -29,6 +29,7 @@ class BarcodeFormat constructor(var id: Int, var name: String) {
                 UPCE,
                 ISBN10,
                 UPCA,
+                EAN13,
                 ISBN13,
                 I25,
                 DATABAR,

@@ -142,7 +142,7 @@ class ZBarScannerView : BarcodeScannerView {
             }
         } catch (e: RuntimeException) {
             // TODO: Terrible hack. It is possible that this method is invoked after camera is released.
-            Log.e(TAG, e.toString(), e);
+            Log.e(TAG, e.toString(), e)
         }
     }
 
