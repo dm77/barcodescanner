@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-//    implementation project(":zbar")
-    implementation libraries.barcodescanner_zbar
-    implementation libraries.support_v4
-    implementation libraries.appcompat_v7
-    implementation libraries.design_support
+    implementation project(":zbar")
+//    implementation libraries.barcodescanner_zbar
+    implementation libraries.annotation
+    implementation libraries.appcompat
+    implementation libraries.material
 }
 
 android {

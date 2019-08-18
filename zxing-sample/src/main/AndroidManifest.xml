@@ -18,18 +18,12 @@
         <activity android:name=".FullScannerActivity"
                   android:theme="@style/AppOverlayTheme"
                   android:uiOptions="splitActionBarWhenNarrow"
-                  android:label="@string/scanner_activity">
-            <meta-data android:name="android.support.UI_OPTIONS"
-                       android:value="splitActionBarWhenNarrow" />
-        </activity>
+                  android:label="@string/scanner_activity"/>
 
         <activity android:name=".FullScannerFragmentActivity"
                   android:theme="@style/AppOverlayTheme"
                   android:uiOptions="splitActionBarWhenNarrow"
-                  android:label="@string/scanner_fragment_activity">
-            <meta-data android:name="android.support.UI_OPTIONS"
-                       android:value="splitActionBarWhenNarrow" />
-        </activity>
+                  android:label="@string/scanner_fragment_activity"/>
 
         <activity android:name=".SimpleScannerActivity"
                 android:theme="@style/AppOverlayTheme"

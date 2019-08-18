@@ -1,7 +1,8 @@
 package me.dm7.barcodescanner.core;
 
 import android.hardware.Camera;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 public class CameraWrapper {
     public final Camera mCamera;

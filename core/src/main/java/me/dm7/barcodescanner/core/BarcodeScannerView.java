@@ -5,12 +5,13 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
-import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.ColorInt;
 
 public abstract class BarcodeScannerView extends FrameLayout implements Camera.PreviewCallback  {
 
