@@ -13,5 +13,6 @@
         <attr name="squaredFinder" format="boolean" />
         <attr name="borderAlpha" format="float" />
         <attr name="finderOffset" format="dimension" />
+        <attr name="scanEnabled" format="boolean" />
     </declare-styleable>
 </resources>

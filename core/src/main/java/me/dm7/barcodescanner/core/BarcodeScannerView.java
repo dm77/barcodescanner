@@ -22,6 +22,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private Boolean mFlashState;
     private boolean mAutofocusState = true;
     private boolean mShouldScaleToFill = true;
+    private boolean mScanEnabled = true;
 
     private boolean mIsLaserEnabled = true;
     @ColorInt private int mLaserColor = getResources().getColor(R.color.viewfinder_laser);
@@ -35,6 +36,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private float mBorderAlpha = 1.0f;
     private int mViewFinderOffset = 0;
     private float mAspectTolerance = 0.1f;
+
 
     public BarcodeScannerView(Context context) {
         super(context);
@@ -300,6 +302,10 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     public void setShouldScaleToFill(boolean shouldScaleToFill) {
         mShouldScaleToFill = shouldScaleToFill;
     }
+
+    public void setScanEnabled(boolean isEnabled) { mScanEnabled = isEnabled; }
+
+    public boolean getScanEnabled() { return mScanEnabled; }
 
     public void setAspectTolerance(float aspectTolerance) {
         mAspectTolerance = aspectTolerance;

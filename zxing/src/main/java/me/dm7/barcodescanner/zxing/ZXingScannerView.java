@@ -96,10 +96,10 @@ public class ZXingScannerView extends BarcodeScannerView {
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-        if(mResultHandler == null) {
+        if(mResultHandler == null && !getScanEnabled()) {
             return;
         }
-        
+
         try {
             Camera.Parameters parameters = camera.getParameters();
             Camera.Size size = parameters.getPreviewSize();
