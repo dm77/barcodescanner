@@ -3,11 +3,15 @@ package me.dm7.barcodescanner.core;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -39,6 +43,7 @@ public class ViewFinderView extends View implements IViewFinder {
     protected Paint mLaserPaint;
     protected Paint mFinderMaskPaint;
     protected Paint mBorderPaint;
+    protected int mBorderCornersRadius;
     protected int mBorderLineLength;
     protected boolean mSquareViewFinder;
     private boolean mIsLaserEnabled;
@@ -121,7 +126,8 @@ public class ViewFinderView extends View implements IViewFinder {
 
     @Override
     public void setBorderCornerRadius(int borderCornersRadius) {
-        mBorderPaint.setPathEffect(new CornerPathEffect(borderCornersRadius));
+        mBorderCornersRadius = borderCornersRadius;
+        mBorderPaint.setPathEffect(new CornerPathEffect(mBorderCornersRadius));
     }
 
     @Override
@@ -162,11 +168,20 @@ public class ViewFinderView extends View implements IViewFinder {
         int width = canvas.getWidth();
         int height = canvas.getHeight();
         Rect framingRect = getFramingRect();
-        
-        canvas.drawRect(0, 0, width, framingRect.top, mFinderMaskPaint);
-        canvas.drawRect(0, framingRect.top, framingRect.left, framingRect.bottom + 1, mFinderMaskPaint);
-        canvas.drawRect(framingRect.right + 1, framingRect.top, width, framingRect.bottom + 1, mFinderMaskPaint);
-        canvas.drawRect(0, framingRect.bottom + 1, width, height, mFinderMaskPaint);
+
+        // Cover the whole screen in the mask
+        canvas.drawRect(0, 0, width, height, mFinderMaskPaint);
+
+        // Cut out the preview window
+        Paint clearPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        clearPaint.setColor(Color.TRANSPARENT);
+        clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
+        canvas.drawRoundRect(
+          new RectF(framingRect.left, framingRect.top, framingRect.right, framingRect.bottom),
+          (float) mBorderCornersRadius / 2,
+          (float) mBorderCornersRadius / 2,
+          clearPaint
+        );
     }
 
     public void drawViewFinderBorder(Canvas canvas) {
@@ -200,7 +215,7 @@ public class ViewFinderView extends View implements IViewFinder {
 
     public void drawLaser(Canvas canvas) {
         Rect framingRect = getFramingRect();
-        
+
         // Draw a red "laser scanner" line through the middle to show decoding is active
         mLaserPaint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
         scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
