@@ -12,9 +12,11 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScalingScannerActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
     private static final String FLASH_STATE = "FLASH_STATE";
+    private static final String FLASH_ZOOM = "FLASH_ZOOM";
 
     private ZXingScannerView mScannerView;
     private boolean mFlash;
+    private boolean mZoom;
 
     @Override
     public void onCreate(Bundle state) {
@@ -35,6 +37,7 @@ public class ScalingScannerActivity extends BaseScannerActivity implements ZXing
         mScannerView.setAspectTolerance(0.2f);
         mScannerView.startCamera();
         mScannerView.setFlash(mFlash);
+        mScannerView.setZoom(mZoom?mScannerView.getMaxZoom():0);
     }
 
     @Override
@@ -47,6 +50,7 @@ public class ScalingScannerActivity extends BaseScannerActivity implements ZXing
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(FLASH_STATE, mFlash);
+        outState.putBoolean(FLASH_ZOOM, mZoom);
     }
 
     @Override
@@ -70,5 +74,10 @@ public class ScalingScannerActivity extends BaseScannerActivity implements ZXing
     public void toggleFlash(View v) {
         mFlash = !mFlash;
         mScannerView.setFlash(mFlash);
+    }
+
+    public void toggleZoom(View view) {
+        mZoom = !mZoom;
+        mScannerView.setZoom(mZoom?mScannerView.getMaxZoom():0);
     }
 }

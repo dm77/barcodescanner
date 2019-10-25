@@ -20,6 +20,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     private Rect mFramingRectInPreview;
     private CameraHandlerThread mCameraHandlerThread;
     private Boolean mFlashState;
+    private int mZoom;
     private boolean mAutofocusState = true;
     private boolean mShouldScaleToFill = true;
 
@@ -288,6 +289,41 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
             }
             mCameraWrapper.mCamera.setParameters(parameters);
         }
+    }
+
+    /**
+     * Set the zoom level
+     * @param zoom the new zoom level
+     * @return true if it worked
+     */
+    public boolean setZoom(int zoom) {
+        if(mCameraWrapper != null && CameraUtils.isZoomSupported(mCameraWrapper.mCamera)) {
+
+            Camera.Parameters parameters = mCameraWrapper.mCamera.getParameters();
+            if (zoom>=0 && zoom <= parameters.getMaxZoom()) {
+                mZoom = zoom;
+                parameters.setZoom(zoom);
+                mCameraWrapper.mCamera.setParameters(parameters);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getZoom() {
+        if(mCameraWrapper != null && CameraUtils.isZoomSupported(mCameraWrapper.mCamera)) {
+            Camera.Parameters parameters = mCameraWrapper.mCamera.getParameters();
+            return parameters.getZoom();
+        }
+        return -1;
+    }
+
+    public int getMaxZoom() {
+        if(mCameraWrapper != null && CameraUtils.isZoomSupported(mCameraWrapper.mCamera)) {
+            Camera.Parameters parameters = mCameraWrapper.mCamera.getParameters();
+            return parameters.getMaxZoom();
+        }
+        return 0;
     }
 
     public void setAutoFocus(boolean state) {

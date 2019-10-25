@@ -60,4 +60,9 @@ public class CameraUtils {
 
         return true;
     }
+    public static boolean isZoomSupported(Camera camera) {
+        return camera != null
+                && camera.getParameters() != null
+                && camera.getParameters().isZoomSupported();
+    }
 }

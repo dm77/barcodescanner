@@ -15,6 +15,7 @@
     <string name="custom_view_finder_sample">Custom View Finder Sample</string>
     <string name="scaling_sample">Scaling Sample</string>
     <string name="toggle_flash">Flash</string>
+    <string name="toggle_zoom">Zoom</string>
     <string name="flash_on">Flash [ON]</string>
     <string name="flash_off">Flash [OFF]</string>
     <string name="auto_focus_on">Auto Focus [ON]</string>
