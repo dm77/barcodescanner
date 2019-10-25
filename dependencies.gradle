@@ -13,7 +13,10 @@ ext.libraries = [
         appcompat_v7        : "com.android.support:appcompat-v7:$versions.support_lib",
         design_support      : "com.android.support:design:$versions.support_lib",
         zxing_core          : "com.google.zxing:core:$versions.zxing",
-        barcodescanner_core : "me.dm7.barcodescanner:core:$versions.barcodescanner",
-        barcodescanner_zbar : "me.dm7.barcodescanner:zbar:$versions.barcodescanner",
-        barcodescanner_zxing: "me.dm7.barcodescanner:zxing:$versions.barcodescanner"
+        //barcodescanner_core : "me.dm7.barcodescanner:core:$versions.barcodescanner",
+        //barcodescanner_zbar : "me.dm7.barcodescanner:zbar:$versions.barcodescanner",
+        //barcodescanner_zxing: "me.dm7.barcodescanner:zxing:$versions.barcodescanner"
+        barcodescanner_core : project(":core"),
+        barcodescanner_zbar : project(":zbar"),
+        barcodescanner_zxing: project(":zxing")
 ]
