@@ -295,4 +295,8 @@ https://github.com/dm77/barcodescanner/graphs/contributors
 
 License
 =======
-Apache License, Version 2.0
+License for code written in this project is: Apache License, Version 2.0
+
+License for zxing and zbar projects is here:
+https://github.com/ZBar/ZBar/tree/master/android
+https://github.com/zxing/zxing/blob/master/LICENSE
