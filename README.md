@@ -286,7 +286,7 @@ Almost all of the code for these library projects is based on:
 
 1. CameraPreview app from Android SDK APIDemos
 2. The ZXing project: https://github.com/zxing/zxing
-3. The ZBar Android SDK: http://sourceforge.net/projects/zbar/files/AndroidSDK/
+3. The ZBar Android SDK: https://github.com/ZBar/ZBar/tree/master/android (Previously: http://sourceforge.net/projects/zbar/files/AndroidSDK/)
 
 Contributors
 ============
