@@ -9,5 +9,5 @@ ext {
 }
 
 dependencies {
-    compile libraries.support_v4
+    implementation libraries.support_v4
 }

@@ -2,24 +2,24 @@ apply from: 'dependencies.gradle'
 
 buildscript {
     repositories {
-        mavenCentral()
         jcenter()
+        google()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.3.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
 
 allprojects {
     group = 'me.dm7.barcodescanner'
-    version = '1.9.4'
+    version = '1.9.13'
 
     repositories {
-        mavenCentral()
-        maven {
-            url 'https://oss.sonatype.org/content/groups/public'
-        }
+        google()
+        jcenter()
     }
 
     ext {
@@ -44,35 +44,24 @@ subprojects {
                 defaultConfig {
                     minSdkVersion versions.min_sdk
                     targetSdkVersion versions.target_sdk
-                    versionCode 194
-                    versionName "1.9.4"
+                    versionCode 1913
+                    versionName "1.9.13"
                 }
             }
         }
-        if(project.isLibrary && rootProject.hasProperty('sonatypeUsername') && rootProject.hasProperty('sonatypePassword')) {
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def bintrayUser = properties.getProperty('bintray.user')
+        def bintrayApikey = properties.getProperty('bintray.apikey')
+
+        if(project.isLibrary && bintrayUser?.trim() && bintrayApikey?.trim()) {
             configure(project) {
-                apply plugin: 'maven'
-                apply plugin: 'signing'
+                apply plugin: 'com.github.dcendents.android-maven'
+                group = project.group                               // Maven Group ID for the artifact
 
-                signing {
-                    required { gradle.taskGraph.hasTask("uploadArchives") }
-                    sign configurations.archives
-                }
-
-                uploadArchives {
-                    repositories.mavenDeployer {
-                        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                        repository(url: sonatypeRepo) {
-                            authentication(userName: sonatypeUsername , password: sonatypePassword)
-                            releases(updatePolicy: 'always')
-                        }
-
-                        snapshotRepository(url: sonatypeSnapshotRepo) {
-                            authentication(userName: sonatypeUsername , password: sonatypePassword)
-                            snapshots(updatePolicy: 'always')
-                        }
-
+                install {
+                    repositories.mavenInstaller {
                         pom.project {
                             name project.pomName
                             version project.version
@@ -106,11 +95,55 @@ subprojects {
                         }
                     }
                 }
+
+                apply plugin: 'com.jfrog.bintray'
+
+                version = '1.9.13'
+
+                if (project.hasProperty("android")) { // Android libraries
+                    task sourcesJar(type: Jar) {
+                        classifier = 'sources'
+                        from android.sourceSets.main.java.srcDirs
+                    }
+                } else { // Java libraries
+                    task sourcesJar(type: Jar, dependsOn: classes) {
+                        classifier = 'sources'
+                        from sourceSets.main.allSource
+                    }
+                }
+
+
+                artifacts {
+                    archives sourcesJar
+                }
+
+                bintray {
+                    user = properties.getProperty("bintray.user")
+                    key = properties.getProperty("bintray.apikey")
+
+                    configurations = ['archives']
+                    pkg {
+                        repo = 'maven'
+                        name = 'me.dm7.barcodescanner:' + project.pomArtifactId
+                        desc = 'Barcode Scanner Libraries for Android'
+                        websiteUrl = 'https://github.com/dm77/barcodescanner'
+                        vcsUrl = 'https://github.com/dm77/barcodescanner.git'
+                        licenses = ["Apache-2.0"]
+                        publish = true
+                        publicDownloadNumbers = true
+                        version {
+                            desc = 'Barcode Scanner Libraries for Android'
+                            gpg {
+                                sign = false
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.4.1'
+    gradleVersion = '4.10.1'
 }

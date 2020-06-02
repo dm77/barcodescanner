@@ -25,7 +25,12 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`compile 'me.dm7.barcodescanner:zxing:1.9.4'`
+```
+repositories {
+   jcenter()
+}
+implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+```
 
 Simple Usage
 ------------
@@ -100,6 +105,17 @@ void startCamera(int cameraId);
 
 Specify front-facing or rear-facing cameras by using the `void startCamera(int cameraId);` method.
 
+
+For HUAWEI mobile phone like P9, P10, when scanning using the default settings, it won't work due to the
+"preview size",  please adjust the parameter as below:
+
+```java
+mScannerView = (ZXingScannerView) findViewById(R.id.zx_view);
+
+// this paramter will make your HUAWEI phone works great!
+mScannerView.setAspectTolerance(0.5f);
+```
+
 Supported Formats:
 
 ```java
@@ -126,7 +142,12 @@ Installation
 
 Add the following dependency to your build.gradle file.
 
-`compile 'me.dm7.barcodescanner:zbar:1.9.4'`
+```
+repositories {
+   jcenter()
+}
+implementation 'me.dm7.barcodescanner:zbar:1.9.13'
+```
 
 Simple Usage
 ------------
@@ -265,7 +286,7 @@ Almost all of the code for these library projects is based on:
 
 1. CameraPreview app from Android SDK APIDemos
 2. The ZXing project: https://github.com/zxing/zxing
-3. The ZBar Android SDK: http://sourceforge.net/projects/zbar/files/AndroidSDK/
+3. The ZBar Android SDK: https://github.com/ZBar/ZBar/tree/master/android (Previously: http://sourceforge.net/projects/zbar/files/AndroidSDK/)
 
 Contributors
 ============
@@ -274,4 +295,8 @@ https://github.com/dm77/barcodescanner/graphs/contributors
 
 License
 =======
-Apache License, Version 2.0
+License for code written in this project is: Apache License, Version 2.0
+
+License for zxing and zbar projects is here:
+* https://github.com/zxing/zxing/blob/master/LICENSE
+* https://github.com/ZBar/ZBar/tree/master/android
